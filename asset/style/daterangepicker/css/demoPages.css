@@ -1,0 +1,47 @@
+/*styles to be used in Filament Group Lab example pages*/
+body {
+	font-family: "Segoe UI", Frutiger, Tahoma, "Helvetica", "Helvetica Neue", Arial, sans-serif; 
+	font-size:62.5%;
+	background:#fff; 
+	color: #444;
+margin: 20px;
+}
+
+#demoHeader {
+	background:#3d8717;	
+	padding: 15px;
+	position: relative;
+margin: 0 0 5em 0;
+height: 1%;
+}
+a img {border: 0;}
+#demoHeader img {float: left; margin-bottom: .9em;}
+
+#demoHeader h1 { float:left; font-size:1.4em; line-height: 1.8em; font-weight:bold; margin: 0; color: #fff; padding-left: 20px; border-left: 1px solid #fff; margin-left: 20px;}
+#demoHeader h1 a {color: #fff; font-weight:bold;}
+p#copyright {color: #fff; padding: .5em 0 0; margin: 0; clear: both; border-top: 1px solid #fff; width: 100%; font-size: 1.1em;}
+
+div.rangePicker { width: 250px; margin: .5em 0;}
+	
+		.toggleRPpos {
+			display: block;
+			margin: 20px 0;
+		}
+		form, fieldset {
+		border: 0;
+		outline: 0;
+		margin: 0;
+		padding: 0;
+		}
+		h3 {
+		font-size: 1.3em;
+		}
+		label, input {
+		display: block;
+		font-size: 1.2em;
+		margin: .2em 0;
+		}
+		input {
+		margin-bottom: 1em;
+		}
+

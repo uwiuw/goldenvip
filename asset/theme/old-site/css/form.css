@@ -1,0 +1,83 @@
+.clr { clear: both; height: 0 !important; }
+.et-form div{
+    height: 40px;
+    margin-bottom: 10px;
+    width: 910px;    	
+}
+.et-form .desc{
+    padding: 10px;
+    width: 250px;
+	margin: 0 20px 0 0;
+	padding-top: 11px;
+	font-size: 14px;
+	text-align: right;
+	display: block;
+	float: left;
+}
+.et-form div p{
+    padding: 8px 5px;	
+	font-size: 11px;
+	color: #888;
+	display: block;
+	float: left;	
+}
+.et-form div .errdisp{
+    padding: 8px 5px;	
+	font-size: 11px;
+    font-weight: bold;
+	color: red;
+	display: block;
+	float: left;	
+}
+.et-form div input[type="radio"]{
+    margin: 15px 5px 0 0;
+}
+.et-form div textarea,
+.et-form div select,
+.et-form div input[type="file"],
+.et-form div input[type="password"],
+.et-form div input[type="text"] {
+    margin-right: 5px;
+	padding: 8px 5px;
+	border: 2px solid #ccc;
+	font-size: 16px;
+	color: #888;
+	display: block;
+	float: left;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.et-form div .et-form-btn {
+    /*background: url(../images/button_submit_contact.png) no-repeat; 
+    width:161px ; 
+    border: none; 
+    height: 40px; 
+    color: #fff; 
+    cursor: pointer;
+    margin-left: 300px;
+    */
+    /*
+	margin: 20px 10px 20px 300px;
+	padding: 10px 30px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ccc;
+	background-color: #666666;
+	border: 2px solid #ccc;
+	display: block;
+	cursor: pointer;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    */
+}
+.et-form div#disp_address{
+    min-height: 110px;
+}
+.et-form div#disp_distributor{
+    min-height: 100px;
+}
+.et-form div#disp_regional{
+    min-height: 80px;
+}
