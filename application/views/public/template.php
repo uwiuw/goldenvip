@@ -1,6 +1,6 @@
 <?php $this->load->view('public/header'); ?>
 <div id="content">
-	<?php $this->load->view('public/page/'.$page); ?>
+	<?php  $this->load->view('public/page/'.$page); ?>
 </div>
 
 <div id="foot">

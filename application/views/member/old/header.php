@@ -36,14 +36,7 @@
 					<span id="logout">
                     	<a id="c88"></a>
 							<div class="tx-felogin-pi1">
-								<form action="member/back-office/" target="_top" method="post">
-									<fieldset style="border: none;"><legend>Logout</legend>
-										<div style="display: none;"><label>Username:</label> Successfully </div>
-										<div><input type="submit" name="submit" value="Logout" /></div>
-
-										<div class="felogin-hidden"><input type="hidden" name="logintype" value="logout" /><input type="hidden" name="pid" value="67" /><input type="hidden" name="tx_felogin_pi1[noredirect]" value="0" /></div>
-									</fieldset>
-								</form>
+								<a href="<?php echo site_url('member/logout'); ?>">Logout</a>								 
 							</div>
                     </span>
 				</div>

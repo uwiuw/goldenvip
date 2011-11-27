@@ -10,6 +10,16 @@ if(!function_exists("is_member"))
 {
 	function is_member()
 	{
+		$CI =& get_instance();
+		if($CI->session->userdata('member'))
+		{
+			return TRUE;
+		}
+		else
+		{
+			redirect('member/back-office');
+		}
+		
 	}
 }
 
@@ -17,6 +27,15 @@ if(!function_exists("is_login"))
 {
 	function is_login()
 	{
+		$CI =& get_instance();
+		if($CI->session->userdata('name'))
+		{
+			redirect('member');
+		}
+		else
+		{
+			return TRUE;
+		}
 	}
 }
 
