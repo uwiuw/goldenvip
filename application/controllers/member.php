@@ -3,6 +3,7 @@ class Member extends CI_Controller
 {
 	function index()
 	{
+		is_member();
 		$this->homepage();
 	}
 	# home page
@@ -129,9 +130,16 @@ class Member extends CI_Controller
 			$pwd = $this->input->post('pwd');
 			if(check_user($name,$pwd))
 			{
-				$data = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$name,'username');
-				echo $data['uid'];
-				//$this->session->set_userdata($data);
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$name,'username');
+				$data['member'] = $d['uid'];
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','firstname',$name,'username');
+				$data['name'] = $d['firstname'];
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','lastname',$name,'username');
+				$data['name'] =$data['name']." ".$d['lastname']; 
+				
+				$this->session->set_userdata($data);
+				print_r($data);
+				redirect('member','refresh');
 			}
 			else
 			{
@@ -147,6 +155,7 @@ class Member extends CI_Controller
 	function back_office()
 	{
 		# jika user belum login akan di redirect ke member_login
+		is_login();
 		$this->member_login();	
 	}
 	
@@ -160,5 +169,12 @@ class Member extends CI_Controller
 		
 		$this->load->vars($data);
 		$this->load->view('public/template');
+	}
+	
+	function member_logout()
+	{
+		$this->session->unset_userdata("member");
+		$this->session->unset_userdata("name");
+		redirect('member/back-office','refresh');
 	}
 }
