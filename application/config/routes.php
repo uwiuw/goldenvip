@@ -70,7 +70,7 @@ $route['_admin/home_page'] = 'panel/main/home_page';
 $route['member'] = 'member';
 	#navigasi
 	$route['member/home-page'] = 'member';
-	$route['member/profile'] = 'member/profile';
+	$route['member/profile'] = 'member/profile'; 
 	$route['member/report'] = 'member/report';
 	$route['member/opportunity'] = 'member/opportunity';
 	$route['member/reservation'] = 'member/reservation';
@@ -80,6 +80,8 @@ $route['member'] = 'member';
 	$route['member/back-office'] = 'member/back_office';
 	# member chcek login
 	$route['member/check-login'] = 'member/check_login';
+	# member logout
+	$route['member/logout'] = 'member/member_logout';
 	# member join-now
 	$route['member/join-now'] = 'member/join_now';
 	# member join-now/saving
