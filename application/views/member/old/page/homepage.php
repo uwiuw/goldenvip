@@ -7,8 +7,8 @@
                         </div>						
 					</div>
 					<div id="home-bottom">
-						<p>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php $this->session->userdata('regional'); ?>
-By clicking HERE You can register and fill in your new member's profile completely</p>
+						<p><b>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php $this->session->userdata('regional'); ?>
+By clicking HERE You can register and fill in your new member's profile completely</b></p>
 					</div>
 				</div> 
                 <div class="garis-homeoffice"></div>
