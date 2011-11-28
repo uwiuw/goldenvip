@@ -67,7 +67,7 @@
  *  Define a custom error handler so we can log PHP errors
  * ------------------------------------------------------
  */
-	set_error_handler('_exception_handler');
+//	set_error_handler('_exception_handler'); //batalin execption saat development
 
 	if ( ! is_php('5.3'))
 	{
@@ -169,7 +169,7 @@
  */
 	$RTR =& load_class('Router', 'core');
 	$RTR->_set_routing();
-
+     
 	// Set any routing overrides that may exist in the main index file
 	if (isset($routing))
 	{

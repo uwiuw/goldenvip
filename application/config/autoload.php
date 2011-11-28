@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','rdata','mlm','voucher','admin');
+$autoload['helper'] = array('url','form','rdata','mlm','voucher','admin', 'admin_hotel');
 
 
 /*
