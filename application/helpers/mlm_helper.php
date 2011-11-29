@@ -13,7 +13,7 @@ if(!function_exists('setGradeMember'))
 						b. sudah pernah sekali cycle bonus                 
 		
 		2. SILVER
-			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2
+			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2l
 						b. silver permanent                 
 		
 		3. GOLD
@@ -377,7 +377,7 @@ if(!function_exists('get_leaf_right'))
 			$result = $CI->Mix->read_rows_by_sql($sql);
 			
 		}
-		echo $uid;
+		return $uid;
 	}
 }
 

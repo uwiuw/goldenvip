@@ -6,18 +6,18 @@ class Main extends CI_Controller {
 	 * 	Index Page for this controller.
 	 *
 	 *	contact : archievenolgede@ymail.com
-	 *	30/09/2011
+	 *	15/10/2011
 	 */
 	function index()
 	{
 		$this->homepage();
 	}
-	function homepage()
+	function homepage()	# home uri
 	{
 		$uri = $this->uri->segment('2');
 		if($uri=='post_data')
 		{
-			# check valid admin
+			is_login(); # check valid user {member or admin} 
 			$url = $this->uri->segment('3');
 			$this->post_data($url);
 		}
@@ -83,13 +83,11 @@ class Main extends CI_Controller {
 		$this->load->view('public/template');
 	}
 	
-	# function redirect url path
-	
-	function post_data($data)
+	function post_data($data) # fungsi untuk redirect url path
 	{
 		switch($data)
 		{
-			case "del_dist":
+			case "del_dist": # site_url/segment_2/del_dist/segment_4
 				$this->del_dist();
 				break;
 			case "get_member";
@@ -126,7 +124,8 @@ class Main extends CI_Controller {
 		}
 	}
 	
-	# call action function
+	# call action function from site_url/segment_2/segment_3/uri
+	
 	function del_dist()
 	{
 		$uri = $this->uri->segment('4');

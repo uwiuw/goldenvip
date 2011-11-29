@@ -7,8 +7,10 @@
                         </div>						
 					</div>
 					<div id="home-bottom">
-						<p>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php $this->session->userdata('regional'); ?>
-By clicking HERE You can register and fill in your new member's profile completely </p>
+						<p>
+                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); ?> By clicking HERE You can register and fill in your new member's profile completely 
+                            </b>
+                        </p>
 					</div>
 				</div> 
                 <div class="garis-homeoffice"></div>
@@ -23,7 +25,13 @@ By clicking HERE You can register and fill in your new member's profile complete
                                 
                                 <div style='width:100%;text-align:center;float:left;'>
                                     <!-- root -->
-                                    <p class='gen'>Successfully</p>
+                                    <p class='gen'>
+										<?php 
+											echo $this->session->userdata('member'); 
+											$child_left = get_leaf_left($this->session->userdata('member'), $pid='67'); 
+											$child_right = get_leaf_right($this->session->userdata('member'), $pid='67'); 
+										?>
+                                    </p>
                                     
                                     <!-- geneology left  
                                     <div style='width:50%;text-align:center;float:right;'>
@@ -69,49 +77,73 @@ By clicking HERE You can register and fill in your new member's profile complete
 										#		write </div>
 										#	end if
 									?>
-                                    	<div style='width:50%;text-align:center;float:right;'>
-                                        	<p class='gen'>child 1</p> 
+                                    
+                                    <div style='width:50%;text-align:center;float:left;'>
+                                        	<p class='gen'>
+												<?php 
+													echo $child_left; 
+													$id = $child_left;
+													$child_left2 = get_leaf_left($id, $pid='67'); 
+													$child_right2 = get_leaf_right($id, $pid='67'); 
+												?>
+                                             </p> 
                                         	 <div style='width:50%;text-align:center;float:right;'>
-                                             	<p class='gen'>child 1</p>
+                                             	<p class='gen'>
+                                                	<?php 
+														echo $child_left2; 
+														$id = $child_left2;
+														$child_left21 = get_leaf_left($id, $pid='67'); 
+														$child_right21 = get_leaf_right($id, $pid='67'); 
+													?>
+                                                </p>
                                                 	<div style='width:50%;text-align:center;float:right;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 10</p>
                                                     </div>
                                                     <div style='width:50%;text-align:center;float:left;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 9</p>
                                                     </div>
                                               </div> 
                                               <div style='width:50%;text-align:center;float:left;'>
-                                              	<p class='gen'>child 1</p>
+                                              	<p class='gen'>child 3</p>
                                                 	<div style='width:50%;text-align:center;float:right;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 8</p>
                                                     </div>
                                                     <div style='width:50%;text-align:center;float:left;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 7</p>
                                                     </div>
                                               </div> 
                                         </div>
                                         
-                                        <div style='width:50%;text-align:center;float:left;'>
-                                        	<p class='gen'>child 1</p> 
+                                    	<div style='width:50%;text-align:center;float:right;'>
+                                        	<p class='gen'><?php echo $child_right; ?></p> 
+                                            
+                                            <div style='width:50%;text-align:center;float:left;'>
+                                              	<p class='gen'>child 5</p>
+                                                	
+                                                    <div style='width:50%;text-align:center;float:left;'>
+                                                    	<p class='gen'>child 11</p>
+                                                    </div>
+                                                	<div style='width:50%;text-align:center;float:right;'>
+                                                    	<p class='gen'>child 12</p>
+                                                    </div>
+                                                    
+                                             </div> 
+                                              
                                         	 <div style='width:50%;text-align:center;float:right;'>
-                                             	<p class='gen'>child 1</p>
-                                                	<div style='width:50%;text-align:center;float:right;'>
-                                                    	<p class='gen'>child 1</p>
-                                                    </div>
+                                             	<p class='gen'>child 6</p>
+                                                	
                                                     <div style='width:50%;text-align:center;float:left;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 13</p>
                                                     </div>
-                                              </div> 
-                                              <div style='width:50%;text-align:center;float:left;'>
-                                              	<p class='gen'>child 1</p>
                                                 	<div style='width:50%;text-align:center;float:right;'>
-                                                    	<p class='gen'>child 1</p>
+                                                    	<p class='gen'>child 14</p>
                                                     </div>
-                                                    <div style='width:50%;text-align:center;float:left;'>
-                                                    	<p class='gen'>child 1</p>
-                                                    </div>
+                                                    
                                               </div> 
+                                              
                                         </div>
+                                        
+                                        
                                     <?php	
 										
 										
