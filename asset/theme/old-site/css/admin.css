@@ -1,4 +1,5 @@
 /* CSS Golden VIP*/
+body{font-family:Arial, Helvetica, sans-serif;}
 .pagination {
     text-align: center;   
 }
@@ -974,3 +975,6 @@ p .compliment{
 .judul{
     font-size:20px;
 }
+.gen-btn{ background:url(../images/gen-btn.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px;}
+div.clear-line{border-bottom:1px solid #FEC9A5;}
+#genelogy-cepat,#direct-sponsored,#info-binary{padding:10px;font-family:Arial, Helvetica, sans-serif; font-size:14px;}

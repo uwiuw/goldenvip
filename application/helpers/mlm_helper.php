@@ -343,6 +343,73 @@ if(!function_exists('getCountRequest'))
         }
 }
 
+if(!function_exists('get_downline'))
+{
+	function get_downline($uid,$placement,$pid='67')
+	{
+		$sql="select uid from tx_rwmembermlm_member where upline='".$uid."' and placement='".$placement."' and pid='".$pid."'";
+		$CI =& get_instance();
+		$result = $CI->Mix->read_rows_by_sql($sql);
+		$idownline = "";
+		if(!empty($result))
+		{
+			$idownline = $result['uid'];
+		}
+		return $idownline;
+	}
+}
+
+if(!function_exists('get_tips_info'))
+{
+	function get_tips_info($uid,$pid='67')
+	{
+		$result = array();
+		$CI =& get_instance();
+		if($uid != "")
+		{
+			$sql = "select username, point_left, point_right, sponsor from tx_rwmembermlm_member where uid = '".$uid."'";
+			$result  = $CI->Mix->read_rows_by_sql($sql); 
+		} 
+		if(!empty($result))
+		{ 
+			if($result['sponsor']!='0')
+			{
+				$sql = "select username from tx_rwmembermlm_member where uid = '".$result['sponsor']."'";
+				$data = $CI->Mix->read_rows_by_sql($sql);
+				$result['sponsor'] = $data['username'];
+			}
+			else
+			{
+				$result['sponsor'] = "GoldenVIP";
+			}
+			echo "
+			<script type='text/javascript'>
+				jQuery(document).ready(function(){jQuery('#tipsy-".$uid."').tipsy();});
+			</script>
+			<p>
+				<a id='tipsy-".$uid."' href='#' title='
+					<table>
+						<tr>
+							<td>Username</td>
+							<td>".$result['username']."</td>
+						</tr>
+						<tr>
+							<td>Sponsor By</td>
+							<td>".$result['sponsor']."</td>
+						</tr>
+						<tr>
+							<td>Left Point : ".$result['point_left'].",</td>
+							<td>Right Point : ".$result['point_right'].",</td>
+						</tr>
+					</table>
+				' class='gen-btn'>".$result['username']."</a>
+			</p>
+			<div class='clear-line'></div>
+			";
+		}
+	}
+}
+
 if(!function_exists('get_leaf_left'))
 {
 	function get_leaf_left($uid, $pid='67')

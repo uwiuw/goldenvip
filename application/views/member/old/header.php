@@ -4,8 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title><?php echo $title; ?></title>
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/admin.css" type="text/css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/tipsy.css" type="text/css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/blue_style.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/style-nav.css" type="text/css">
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery-1.4.3.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery.tipsy.js"></script>
   <script type="text/javascript">
     var jQuery = $.noConflict();    
 	jQuery(document).ready(function(){
