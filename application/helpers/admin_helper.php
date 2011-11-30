@@ -30,7 +30,7 @@ if(!function_exists("is_login"))
 		$CI =& get_instance();
 		if($CI->session->userdata('name'))
 		{
-			redirect('member');
+			redirect('member','refresh');
 		}
 		else
 		{

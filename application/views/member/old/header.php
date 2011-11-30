@@ -51,14 +51,14 @@
 						<li id="nav-report"><a href="<?php echo site_url('member/report/genealogy/'); ?>" >REPORT</a>
 							<ul>
 								<li style="margin-top: 12px;"><a href="<?php echo site_url('member/report/genealogy'); ?>" >Genealogy</a></li>
-								<li class="tengah"><a href=<?php echo site_url('member/report/commision'); ?>" >Commision</a></li>
-								<li class="bawah"><a href=<?php echo site_url('member/report/direct-sponsored'); ?>" >Direct Sponsored</a></li>
+								<li class="tengah"><a href="<?php echo site_url('member/report/commision'); ?>" >Commision</a></li>
+								<li class="bawah"><a href="<?php echo site_url('member/report/direct-sponsored'); ?>" >Direct Sponsored</a></li>
 
 							</ul>
 						</li>
-						<li id="nav-opportunity"><a href=<?php echo site_url('member/opportunity'); ?>" >OPPORTUNITY</a></li>
-						<li id="nav-reservation"><a href=<?php echo site_url('member/reservation'); ?>" >RESERVATION</a></li>
-						<li id="nav-news" class="bawah"><a href=<?php echo site_url('member/news'); ?>" >NEWS</a></li>                   
+						<li id="nav-opportunity"><a href="<?php echo site_url('member/opportunity'); ?>" >OPPORTUNITY</a></li>
+						<li id="nav-reservation"><a href="<?php echo site_url('member/reservation'); ?>" >RESERVATION</a></li>
+						<li id="nav-news" class="bawah"><a href="<?php echo site_url('member/news'); ?>" >NEWS</a></li>                   
 				</ul>
 			</div>
 		</div>

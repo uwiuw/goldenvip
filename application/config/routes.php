@@ -71,13 +71,16 @@ $route['member'] = 'member';
 	#navigasi
 	$route['member/home-page'] = 'member';
 	$route['member/profile'] = 'member/profile'; 
-	$route['member/report'] = 'member/report';
+	$route['member/report/genealogy'] = 'member/report';
 	$route['member/opportunity'] = 'member/opportunity';
 	$route['member/reservation'] = 'member/reservation';
 	$route['member/news'] = 'member/news';
 	
 	# member back office
 	$route['member/back-office'] = 'member/back_office';
+	
+	
+	
 	# member chcek login
 	$route['member/check-login'] = 'member/check_login';
 	# member logout

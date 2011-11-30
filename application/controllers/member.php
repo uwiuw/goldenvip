@@ -19,6 +19,18 @@ class Member extends CI_Controller
 		$this->load->view('member/old/template');
 	}
 	
+	function report() # report page
+	{
+		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$data['title']="Member | Home Page";
+		$data['page'] = "report_genealogy";
+		$data['nav'] = "report";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$this->load->vars($data);
+		$this->load->view('member/old/template');
+	}
+	
 	function join_now() # join now
 	{
 		is_login();

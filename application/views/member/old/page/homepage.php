@@ -162,7 +162,9 @@
                                     	<tr valign="middle" align="right">
                                         	<td colspan="2" height="30px"></td>
                                           	<td rowspan="4">
-                                            	<img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/bronze.png" />
+                                            	<?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','grade',$this->session->userdata('member'),'uid'); ?>
+                                                <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_grade','simbol',$d['grade'],'uid'); ?>
+                                            	<img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/<?php echo $d['simbol'] ?>" />
                                              </td>
                                         </tr>
                                     	<tr>

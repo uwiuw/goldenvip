@@ -17,7 +17,6 @@ class Main extends CI_Controller {
 		$uri = $this->uri->segment('2');
 		if($uri=='post_data')
 		{
-			is_login(); # check valid user {member or admin} 
 			$url = $this->uri->segment('3');
 			$this->post_data($url);
 		}
@@ -119,6 +118,9 @@ class Main extends CI_Controller {
 				break;	
 			case "get_pck3":
 				$this->get_pck3();
+				break;
+			case "get_genealogy":
+				$this->get_genealogy();
 				break;
 			
 		}
@@ -247,5 +249,19 @@ class Main extends CI_Controller {
 		$package3 = $this->Mix->dropdown_menu('uid','package','tx_rwmembermlm_package','0',$url);
 		$id = "id='package3'";
 		echo form_dropdown('package3',$package3,'1',$id);
+	}
+	
+	function get_genealogy()
+	{
+		
+		$url = $this->uri->segment('4');
+		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$data['title']="Member | Home Page";
+		$data['page'] = "report_genealogy";
+		$data['nav'] = "report";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$this->load->vars($data);
+		$this->load->view('member/old/template');
 	}
 }

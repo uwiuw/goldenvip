@@ -387,7 +387,7 @@ if(!function_exists('get_tips_info'))
 				jQuery(document).ready(function(){jQuery('#tipsy-".$uid."').tipsy();});
 			</script>
 			<p>
-				<a id='tipsy-".$uid."' href='#' title='
+				<a id='tipsy-".$uid."' href='".site_url("member/post_data/get_genealogy/$uid")."' title='
 					<table>
 						<tr>
 							<td>Username</td>
