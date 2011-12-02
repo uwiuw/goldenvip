@@ -92,6 +92,9 @@ class Main extends CI_Controller {
 			case "get_member";
 				$this->get_member();
 				break;
+			case "get_detail_member":
+				$this->get_detail_member();
+				break;
 			case "get_phone_code":
 				$this->get_phone_code();
 				break;
@@ -122,6 +125,7 @@ class Main extends CI_Controller {
 			case "get_genealogy":
 				$this->get_genealogy();
 				break;
+				
 			
 		}
 	}
@@ -146,6 +150,21 @@ class Main extends CI_Controller {
 		
 		$this->load->vars($data);
 		$this->load->view('panel/page/distributor/get_member');
+	}
+	function get_detail_member()
+	{
+		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$data['title']="Member | Home Page";
+		$data['page'] = "get_detail_member";
+		$data['nav'] = "report";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$uid = $this->uri->segment('4');
+		$pid = $this->uri->segment('5');
+		$data['member'] = getMemberByUid($uid,$pid);; 
+		
+		$this->load->vars($data);
+		$this->load->view('member/old/template');
 	}
 	function get_phone_code()
 	{

@@ -53,14 +53,13 @@
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">bali</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">hongkong</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
     </ul>
+    <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
 </div>
 
 
@@ -69,14 +68,13 @@
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">bali</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">hongkong</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
     </ul>
+    <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
 </div>
 
 <div id="product">
@@ -84,14 +82,13 @@
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">bali</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
         <li>
             <img src="<?php echo $template; ?>upload/picture.png" />
             <div id="container-text-on-slider"><span class="text-on-slider">hongkong</span></div>
-            <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
         </li>
     </ul>
+    <div id="container-btn-products"><a href="#"class="btn-product">business</a></div>
 </div>
 
 <div id="partners" class="elips alignleft">

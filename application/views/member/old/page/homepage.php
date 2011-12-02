@@ -193,7 +193,6 @@
                         	<?php 
 								$sql = "select uid from tx_rwmembermlm_member where sponsor = '".$this->session->userdata('member')."' order by uid limit 0,10";
 								$direct_sponsor = $this->Mix->read_more_rows_by_sql($sql);
-								
 							?>
                         	       <table id="myTable2" class="tablesorter">
 											<thead>

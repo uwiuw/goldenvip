@@ -14,7 +14,6 @@
     var jQuery = $.noConflict();    
 	jQuery(document).ready(function(){
 			jQuery("li#nav-<?php echo $nav; ?> a").addClass('active');
-			
 	});
   </script>
 </head>

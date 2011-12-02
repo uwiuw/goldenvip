@@ -7,12 +7,18 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/tipsy.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/blue_style.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/style-nav.css" type="text/css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>asset/style/facebox/facebox.css" type="text/css" media="screen"> 
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery-1.4.3.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery.tipsy.js"></script>
+  <script src="<?php echo base_url(); ?>asset/js/plugin/facebox.js"></script>
   <script type="text/javascript">
     var jQuery = $.noConflict();    
 	jQuery(document).ready(function(){
 			jQuery("li#nav-<?php echo $nav; ?> a").addClass('active');
+			jQuery('a[rel*=facebox]').facebox({
+        	loadingImage : '<?php echo base_url(); ?>asset/images/loading.gif',
+        	closeImage   : '<?php echo base_url(); ?>asset/images/closelabel.png'
+      	})
 	});
   </script>
 </head>
@@ -47,7 +53,7 @@
 				<ul id="nav">
                 	<li id="nav-homepage"><a href="<?php echo site_url('member/home-page'); ?>">HOME</a></li>
 
-						<li id="nav-profile"><a href="<?php echo site_url('member/profile');?>" >PROFILE</a></li>
+						<li id="nav-profile"><a href="#info<?php #echo site_url('member/profile');?>" rel="facebox" >PROFILE</a></li>
 						<li id="nav-report"><a href="<?php echo site_url('member/report/genealogy/'); ?>" >REPORT</a>
 							<ul>
 								<li style="margin-top: 12px;"><a href="<?php echo site_url('member/report/genealogy'); ?>" >Genealogy</a></li>
