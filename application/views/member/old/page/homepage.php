@@ -13,6 +13,13 @@
                         </p>
                         <p>
                         	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to LOGOUT  when it's done.
+                            <pre>
+                        	<?php 
+								
+								 setGradeMember($this->session->userdata('member'), '67');
+							 
+							?>
+                            </pre>
                         </p>
 					</div>
 				</div> 
@@ -173,8 +180,8 @@
                                    	  </tr>
                                     	<tr>
                                           <?php $d = getDirectSponsored($this->session->userdata('member'),'67'); ?>
-                                    	  <td>Direct Sponsored - Left : <b><?php echo count($d['kiri']); ?></b></td>
-                                    	  <td>Direct Sponsored - Right : <b><?php echo count($d['kanan']); ?></b></td>
+                                    	  <td>Direct Sponsored - Left : <b><?php if(isset($d['kiri'])) {echo count($d['kiri']);} ?></b></td>
+                                    	  <td>Direct Sponsored - Right : <b><?php if(isset($d['kanan'])){echo count($d['kanan']); } ?></b></td>
                                    	  </tr>
                                     	<tr>
                                     	  <td>Commision: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$this->session->userdata('member'),'uid'); echo "<b>$".$d['commission']."</b>"; ?></td>

@@ -177,7 +177,7 @@ class Member extends CI_Controller
 			{
 				$check  = $this->Mix->update_record('voucher_code',$this->input->post('vc'),$vc,'tx_rwmembermlm_vouchercode');
 				$this->Mix->add_with_array($data,'tx_rwmembermlm_member');
-				$this->Mix->update_record('uid',$this->input->post('distributor'),$dist,'tx_rwmembermlm_member');
+				#$this->Mix->update_record('uid',$this->input->post('distributor'),$dist,'tx_rwmembermlm_member');
 				
 				
 				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$data['package'],'uid');
@@ -189,7 +189,7 @@ class Member extends CI_Controller
 				$fast['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 				$fast['pid']='67';
 				$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus');
-				update_point($d['uid']);
+				update_point($d['uid'],$data['package']);
 				
 				
 				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$data['sponsor'],'uid');
@@ -198,17 +198,26 @@ class Member extends CI_Controller
 				$com['commission'] = $d['commission']+$dx['fee_dollar'];
 				
 				$this->Mix->update_record('uid',$data['sponsor'],$com,'tx_rwmembermlm_member');
-				
-				
-				echo "ada";
-				echo $this->input->post('vc');
+				redirect('member/thank-you-registering','refresh');
 			} 
-			
-			echo "<pre>";
-			print_r($data);
-			print_r($dist);
-			echo "</pre>";
+			else
+			{
+				redirect('member/join-now','refresh');
+			}
+			 
 		}
+	}
+	
+	function thankyou() # thank you page
+	{
+		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$data['title']="Thank you for join us";
+		$data['page'] = "thankyou";
+		$data['nav'] = "thank you";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$this->load->vars($data);
+		$this->load->view('public/old/template');
 	}
 	
 	function check_login() # validasi login
@@ -231,7 +240,14 @@ class Member extends CI_Controller
 				$data['regional'] = $d['city'];
 				$this->session->set_userdata($data);
 				
-				redirect('member','refresh');
+				if($this->input->post('id_auto'))
+				{
+					redirect('member/profile','refresh');
+				}
+				else
+				{
+					redirect('member','refresh');
+				}
 			}
 			else
 			{

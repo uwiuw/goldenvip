@@ -26,7 +26,12 @@ if(!function_exists('setGradeMember'))
 						b. dan ke-16 anak tersebut sudah lengkap memiliki anak kiri 1 dan kanan 1                 
 		*/
 			  
-		$m = getMemberByUid($uid, $pid); # ok sukses           
+		$m = getMemberByUid($uid, $pid); # ok sukses   
+		/***
+		hasildebug
+		*/
+		       
+				
 		$direct = countDirectSponsored($m["uid"], $pid);
 		if($m["grade"]==1)
 		{                
@@ -65,13 +70,16 @@ if(!function_exists('setGradeMember'))
 		}
 		elseif($m["grade"]==4 && $m["permanent_grade"]==2)
 		{
-			if(($direct["left"] >= 6 && $direct["right"] >= 10) || ($direct["left"] >= 8 && $direct["right"] >= 8) || ($direct["left"] >= 10 && $direct["right"] >= 6))
+			if(($direct["left"] >= 6 && $direct["right"] >= 10) 
+				|| ($direct["left"] >= 8 && $direct["right"] >= 8) 
+				|| ($direct["left"] >= 10 && $direct["right"] >= 6))
 			{
 				$rec = getDirectSponsored($m["uid"], $pid);
 				$a = true;
 				foreach($b as $rec)
 				{
 					$c = countDirectSponsored($d["uid"], $pid);
+					print_r($c);
 					if($c["left"] <= 0 && $c["right"] <= 0)
 					{
 						$a=false;
@@ -156,7 +164,7 @@ if(!function_exists('setGradeMember'))
 				}
 			}
 		}
-		echo "sukses";
+		 
 	}
 }
 
@@ -442,32 +450,34 @@ if(!function_exists('getUsernameMLM'))
 
 if(!function_exists('update_point'))
 {
-	function update_point($uid_down)
+	function update_point($uid_down,$pack)
 	{
 		$CI =& get_instance();
+		#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid_down,'uid');
 		do
 		{
-			$uid = get_upline($uid_down);
+			$uid = get_upline($uid_down,$pack);
 			$b = get_point($uid['upline'],$uid['placement']);
+			#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid[],'uid');
 			$ins_point = $b+$uid['point'];
 			set_point($uid['upline'],$ins_point,$uid['placement']);
 			update_cyclebonus($uid['upline']);
 			setGradeMember($uid['upline'],'67');
 			$uid_down = $uid['upline'];
-			$check = get_upline($uid_down);
+			$check = get_upline($uid_down,$pack);
 		}while($check['upline'] > 0);
 	}
 }
 
 if(!function_exists('get_upline'))
 {
-	function get_upline($uid)
+	function get_upline($uid,$pack)
 	{
 		$CI =& get_instance();
 		$up = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','upline',$uid,'uid');
 		$place = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','placement',$uid,'uid');
-		$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid,'uid');
-		$point = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','point',$pack['package'],'uid');
+		#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid,'uid');
+		$point = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','point',$pack,'uid');
 		if(empty($point))
 		{
 			$point['point']='0';
@@ -517,6 +527,37 @@ if(!function_exists('update_cyclebonus'))
 		$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 		$data['uid_member'] = $uid;
 		$data['paid'] = '0';
+		
+		if($left['point_left'] >= 400)
+		{
+			if($right['point_right'] >=200)
+			{
+				$l = $left['point_left']-400;
+				$r = $right['point_right']-200;
+				set_point($uid,$l,'1');
+				set_point($uid,$r,'2');
+				$data['bonus'] = '25';
+				$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+			}
+		}
+		else
+		{
+			if($left['point_left'] >= 200)
+			{
+				if($right['point_right'] >=400)
+				{
+					#echo $right['point_right'];
+					$l = $left['point_left']-200;
+					$r = $right['point_right']-400;
+					set_point($uid,$l,'1');
+					set_point($uid,$r,'2');
+					$data['bonus'] = '25';
+					$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+				}
+			}
+		}
+		
+		/*
 		if(($left['point_left'] >= 200) && ($right['point_right'] >=400))
 		{
 			$l = $left['point_left']-200;
@@ -526,7 +567,7 @@ if(!function_exists('update_cyclebonus'))
 			$data['bonus'] = '25';
 			$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
 		}
-		else if(($left['point_left'] >= 400) && ($right['point_right'] >=200))
+		elseif(($left['point_left'] >= 400) && ($right['point_right'] >=200))
 		{
 			$l = $left['point_left']-400;
 			$r = $right['point_right']-200;
@@ -537,8 +578,10 @@ if(!function_exists('update_cyclebonus'))
 		}
 		else
 		{
+			echo '123234';
 			# nothing
 		}
+		*/
 		
 	}
 }

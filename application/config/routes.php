@@ -91,6 +91,8 @@ $route['member'] = 'member';
 	$route['member/join-now'] = 'member/join_now';
 	# member join-now/saving
 	$route['member/join-now/saving'] = 'member/join_now_saving';
+	
+	$route['member/thank-you-registering'] = 'member/thankyou';
 
 # test area
 $route['test'] = 'test';
