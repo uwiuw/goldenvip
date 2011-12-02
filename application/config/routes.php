@@ -66,18 +66,20 @@ $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 
 # member area
 $route['member'] = 'member';
+
 $route['member/home-page'] = 'member';
 $route['member/profile'] = 'member/profile';
-$route['member/report'] = 'member/report';
+	$route['member/report/genealogy'] = 'member/report';
+	$route['member/report/commision'] = 'member/commision';
+	$route['member/report/direct-sponsored'] = 'member/direct_sponsored';
 $route['member/opportunity'] = 'member/opportunity';
 $route['member/reservation'] = 'member/reservation';
 $route['member/news'] = 'member/news';
 
-$route['member/back-office'] = 'member/back_office'; # member back office
-$route['member/check-login'] = 'member/check_login'; # member chcek login
-$route['member/logout'] = 'member/member_logout'; # member logout
-$route['member/join-now'] = 'member/join_now'; # member join-now
-$route['member/join-now/saving'] = 'member/join_now_saving'; # member join-now/saving
+
+
+	$route['member/thank-you-registering'] = 'member/thankyou';
+
 # test area
 $route['test'] = 'test';
 $route['engine'] = 'engine/mlmmanagement';
@@ -91,7 +93,6 @@ $route['admin-hotel/logout'] = 'admin_hotel/member_logout';
 $route['admin-hotel/login/sub-menu-admin/profile'] = 'admin_hotel/profile';
 $route['admin-hotel/login/sub-menu-admin/room-management'] = 'admin_hotel/room_management';
 $route['admin-hotel/login/sub-menu-admin/rooms-pics-updating'] = 'admin_hotel/rooms_pics_updating';
-
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */ 

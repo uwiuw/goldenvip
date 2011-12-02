@@ -2,7 +2,8 @@
 
 if(!function_exists('setGradeMember'))
 {
-	function setGradeMember($uid, $pid){
+	function setGradeMember($uid, $pid)
+	{
 		$CI =& get_instance();
 		/*
 		0. PREMIUM
@@ -13,7 +14,7 @@ if(!function_exists('setGradeMember'))
 						b. sudah pernah sekali cycle bonus                 
 		
 		2. SILVER
-			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2
+			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2l
 						b. silver permanent                 
 		
 		3. GOLD
@@ -25,10 +26,17 @@ if(!function_exists('setGradeMember'))
 						b. dan ke-16 anak tersebut sudah lengkap memiliki anak kiri 1 dan kanan 1                 
 		*/
 			  
-		$m = getMemberByUid($uid, $pid); # ok sukses           
+		$m = getMemberByUid($uid, $pid); # ok sukses   
+		/***
+		hasildebug
+		*/
+		       
+				
 		$direct = countDirectSponsored($m["uid"], $pid);
-		if($m["grade"]==1){                
-			if($direct["left"] > 0 && $direct["right"] > 0){                    
+		if($m["grade"]==1)
+		{                
+			if($direct["left"] > 0 && $direct["right"] > 0)
+			{                    
 				$sql = "SELECT count(uid) as c_history  
 						FROM tx_rwmembermlm_historycycle
 						WHERE deleted = 0 and hidden = 0 and uid_member=$uid and pid=$pid                  
@@ -37,33 +45,49 @@ if(!function_exists('setGradeMember'))
 				#$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($q);
 				$result = $CI->Mix->read_rows_by_sql($sql);
 				
-				if($result["c_history"] > 0){
+				if($result["c_history"] > 0)
+				{
 					$update = array("grade"=>2, "tstamp"=>time());
 					updateMember($update, $m["uid"]);
 				}   
 			}
-		}elseif($m["grade"]==2){
-			if(($direct["left"] >= 2 && $direct["right"] >= 6) || ($direct["left"] >= 4 && $direct["right"] >= 4) || ($direct["left"] >= 6 && $direct["right"] >= 2)){
+		}
+		elseif($m["grade"]==2)
+		{
+			if(($direct["left"] >= 2 && $direct["right"] >= 6) || ($direct["left"] >= 4 && $direct["right"] >= 4) || ($direct["left"] >= 6 && $direct["right"] >= 2))
+			{
 				$update = array("grade"=>3, "permanent_grade"=>2, "tstamp"=>time());
 				updateMember($update, $m["uid"]);                                                               
 			}
-		}elseif($m["grade"]==3 && $m["permanent_grade"]==2){
-			if(($direct["left"] >= 6 && $direct["right"] >= 10) || ($direct["left"] >= 8 && $direct["right"] >= 8) || ($direct["left"] >= 10 && $direct["right"] >= 6)){
+		}
+		elseif($m["grade"]==3 && $m["permanent_grade"]==2)
+		{
+			if(($direct["left"] >= 6 && $direct["right"] >= 10) || ($direct["left"] >= 8 && $direct["right"] >= 8) || ($direct["left"] >= 10 && $direct["right"] >= 6))
+			{
 				$update = array("grade"=>4, "permanent_grade"=>2, "tstamp"=>time());
 				updateMember($update, $m["uid"]);                                                               
 			}
-		}elseif($m["grade"]==4 && $m["permanent_grade"]==2){
-			if(($direct["left"] >= 6 && $direct["right"] >= 10) || ($direct["left"] >= 8 && $direct["right"] >= 8) || ($direct["left"] >= 10 && $direct["right"] >= 6)){
+		}
+		elseif($m["grade"]==4 && $m["permanent_grade"]==2)
+		{
+			if(($direct["left"] >= 6 && $direct["right"] >= 10) 
+				|| ($direct["left"] >= 8 && $direct["right"] >= 8) 
+				|| ($direct["left"] >= 10 && $direct["right"] >= 6))
+			{
 				$rec = getDirectSponsored($m["uid"], $pid);
 				$a = true;
-				foreach($b as $rec){
+				foreach($b as $rec)
+				{
 					$c = countDirectSponsored($d["uid"], $pid);
-					if($c["left"] <= 0 && $c["right"] <= 0){
+					print_r($c);
+					if($c["left"] <= 0 && $c["right"] <= 0)
+					{
 						$a=false;
 						break;
 					}
 				}
-				if($a){
+				if($a)
+				{
 					$update = array("grade"=>5,"permanent_grade"=>2, "tstamp"=>time());
 					updateMember($update, $m["uid"]); 
 				}
@@ -82,48 +106,65 @@ if(!function_exists('setGradeMember'))
 			syarat :    a. didapat dengan membeli paket VIP
 						b. jika dalam satu bulan(60 hari) tidak mencapai downline (2-6, 4,4, 6-2) -> harus turun grade                            
 		*/
-		if($m["grade"]==3 && $m["permanent_grade"]==1){                
+		if($m["grade"]==3 && $m["permanent_grade"]==1)
+		{                
 			$date1 = date("d-m-Y",$m["crdate"]);
 			$date2 = date("d-m-Y",time());
 			$numdays = diffDay($date1, $date2);
-			if($numdays > 30){
-				if($direct["left"] < 2 && $direct["right"] < 6 || $direct["left"] < 4 && $direct["right"] < 4 || $direct["left"] < 6 && $direct["right"] < 2){
-					if($direct["a"] > 0 && $direct["b"] > 0){
+			if($numdays > 30)
+			{
+				if($direct["left"] < 2 && $direct["right"] < 6 || $direct["left"] < 4 && $direct["right"] < 4 || $direct["left"] < 6 && $direct["right"] < 2)
+				{
+					if($direct["a"] > 0 && $direct["b"] > 0)
+					{
 						$update = array("grade"=>2);                            
-					}else{
+					}
+					else
+					{
 						$update = array("grade"=>1);                        
 					}
 					updateMember($update, $m["uid"]);                                                               
 				}
 			}
-			if($numdays <= 30){
-				if($direct["left"] >= 2 && $direct["right"] >= 6 || $direct["left"] >= 4 && $direct["right"] >= 4 || $direct["left"] >= 6 && $direct["right"] >= 2){
+			if($numdays <= 30)
+			{
+				if($direct["left"] >= 2 && $direct["right"] >= 6 || $direct["left"] >= 4 && $direct["right"] >= 4 || $direct["left"] >= 6 && $direct["right"] >= 2)
+				{
 					$update = array("grade"=>3, "permanent_grade"=>2, "tstamp"=>time());
 					updateMember($update, $m["uid"]);                                                               
 				}    
 			}
-		}elseif($m["grade"]==4 && $m["permanent_grade"]==1){                
+		}
+		elseif($m["grade"]==4 && $m["permanent_grade"]==1)
+		{                
 			$date1 = date("d-m-Y",$m["crdate"]);
 			$date2 = date("d-m-Y",time());
 			$numdays = diffDay($date1, $date2);
-			if($numdays > 60){
-				if($direct["left"] < 6 && $direct["right"] < 10 || $direct["left"] < 8 && $direct["right"] < 8 || $direct["left"] < 10 && $direct["right"] < 6){
-					if($direct["a"] > 0 && $direct["b"] > 0){
+			if($numdays > 60)
+			{
+				if($direct["left"] < 6 && $direct["right"] < 10 || $direct["left"] < 8 && $direct["right"] < 8 || $direct["left"] < 10 && $direct["right"] < 6)
+				{
+					if($direct["a"] > 0 && $direct["b"] > 0)
+					{
 						$update = array("grade"=>2);                            
-					}else{
+					}
+					else
+					{
 						$update = array("grade"=>1);                        
 					}
-					updateMember($update, $m["uid"]);                                                                                                               
+					updateMember($update, $m["uid"]);                                                       
 				}
 			}
-			if($numdays <= 60){
-				if($direct["left"] >= 6 && $direct["right"] >= 10 || $direct["left"] >= 8 && $direct["right"] >= 8 || $direct["left"] >= 10 && $direct["right"] >= 6){
+			if($numdays <= 60)
+			{
+				if($direct["left"] >= 6 && $direct["right"] >= 10 || $direct["left"] >= 8 && $direct["right"] >= 8 || $direct["left"] >= 10 && $direct["right"] >= 6)
+				{
 					$update = array("grade"=>4, "permanent_grade"=>2, "tstamp"=>time());
 					updateMember($update, $m["uid"]);                                                               
 				}
 			}
 		}
-		echo "sukses";
+		 
 	}
 }
 
@@ -258,70 +299,7 @@ if(!function_exists('getMinCV'))
 		return $result;
 	}
 }
-#$CI =& get_instance();
-#$result = $CI->Mix->read_rows_by_sql($sql);
-if(!function_exists('binarytree'))
-{
-	function binarytree($uid = 1, $pid, $float = "left", $level =1, $supermember = false, $cepat=0, $page=""){
-		$CI =& get_instance();
-		$level++;
-		if($level>3) return false;
-		
-		$width = 100;
-		$res_count = 1;
-		if($supermember) $res_count = 2;  	
-													
-		$sql1 = "SELECT a.*, b.country as country_name, c.province as province_name, d.city as city_name, 
-					  e.category, e.code, f.city as regional_name  
-				FROM tx_rwmembermlm_member a, tx_rwmembermlm_phonecountrycode b, tx_rwmembermlm_province c,
-					 tx_rwmembermlm_city d, tx_rwmembermlm_usercategory e, tx_rwmembermlm_city f
-				WHERE a.valid=1 and a.deleted = 0 and a.hidden = 0 and a.uid=$uid and a.pid=$pid and 
-					  a.country = b.uid and a.province = c.uid and a.city = d.uid and a.regional=f.uid and
-					  a.usercategory = e.uid                 
-				"; 
-		
-		$div_witdh =  $width/$res_count;            
-		while($res1 = $CI->Mix->read_rows_by_sql($sql1)){
-				if($cepat){
-					$href = $page."?tx_rwmembermlm_pi1[uid]=".$res1["uid"]."";
-					$link = "<a href='$href'>".$res1["username"]."</a>";
-				}else{
-					$link = $res1["username"];
-				}			         
-				$this->html .= "<div style='width:$div_witdh%;text-align:center;float:$float;'>".
-								"<p class='gen' name='tips[".$res1["uid"]."]' id='tips_".$res1["uid"]."' >".$link."</p>".
-								"<br>";
-				$res1["city_name"] = str_replace("Administrasi","",$res1["city_name"]);
-				
-				//$upline = $this->getUplineByUid($res1["upline"], $pid);
-				$sponsor = $this->getUplineByUid($res1["sponsor"], $pid);                    
-				if(!$sponsor){
-					$y = "Golden VIP";
-				}else{
-					//$x = $upline["firstname"] . " " . $upline["lastname"] . " (". $upline["username"] .")";
-					$y = $sponsor["firstname"] . " " . $sponsor["lastname"] . " (". $sponsor["username"] .")";
-				}
-				$this->html .= "
-								<div id='ctn_".$res1["uid"]."' style='display:none'>
-									<p>Username : ".$res1["username"]."</p>
-									<p>Sponsored by : ". $y ."</p>
-									<p>Left Point : ".$res1["point_left"].", &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right Point : ".$res1["point_right"]."</p>
-								</div>
-								";
-				$sql2 = "SELECT *  
-						FROM tx_rwmembermlm_member
-						WHERE valid = 1 and deleted = 0 and hidden = 0 and upline='".$res1["uid"]."' and pid=$pid                  
-						";                               
-				$q2=$GLOBALS['TYPO3_DB']->sql_query($sql2);
-				while($res2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($q2)){
-					($res2["placement"]==1 ? $float="left" : $float="right");
-					$this->binarytree($res2["uid"],$pid, $float, $level, true, $cepat, $page);
-					$float = ($float=='left')?'right': 'left';
-				}                    
-				$this->html .= "</div>";                                       
-		}            
-	}
-}
+
 
 if(!function_exists('getCountRequest'))
 {
@@ -341,6 +319,73 @@ if(!function_exists('getCountRequest'))
            $result = $CI->Mix->read_rows_by_sql($sql);
            return $result;            
         }
+}
+
+if(!function_exists('get_downline'))
+{
+	function get_downline($uid,$placement,$pid='67')
+	{
+		$sql="select uid from tx_rwmembermlm_member where upline='".$uid."' and placement='".$placement."' and pid='".$pid."'";
+		$CI =& get_instance();
+		$result = $CI->Mix->read_rows_by_sql($sql);
+		$idownline = "";
+		if(!empty($result))
+		{
+			$idownline = $result['uid'];
+		}
+		return $idownline;
+	}
+}
+
+if(!function_exists('get_tips_info'))
+{
+	function get_tips_info($uid,$pid='67')
+	{
+		$result = array();
+		$CI =& get_instance();
+		if($uid != "")
+		{
+			$sql = "select username, point_left, point_right, sponsor from tx_rwmembermlm_member where uid = '".$uid."'";
+			$result  = $CI->Mix->read_rows_by_sql($sql); 
+		} 
+		if(!empty($result))
+		{ 
+			if($result['sponsor']!='0')
+			{
+				$sql = "select username from tx_rwmembermlm_member where uid = '".$result['sponsor']."'";
+				$data = $CI->Mix->read_rows_by_sql($sql);
+				$result['sponsor'] = $data['username'];
+			}
+			else
+			{
+				$result['sponsor'] = "GoldenVIP";
+			}
+			echo "
+			<script type='text/javascript'>
+				jQuery(document).ready(function(){jQuery('#tipsy-".$uid."').tipsy();});
+			</script>
+			<p>
+				<a id='tipsy-".$uid."' href='".site_url("member/post_data/get_genealogy/$uid")."' title='
+					<table>
+						<tr>
+							<td>Username</td>
+							<td>".$result['username']."</td>
+						</tr>
+						<tr>
+							<td>Sponsor By</td>
+							<td>".$result['sponsor']."</td>
+						</tr>
+						<tr>
+							<td>Left Point : ".$result['point_left'].",</td>
+							<td>Right Point : ".$result['point_right'].",</td>
+						</tr>
+					</table>
+				' class='gen-btn'>".$result['username']."</a>
+			</p>
+			<div class='clear-line'></div>
+			";
+		}
+	}
 }
 
 if(!function_exists('get_leaf_left'))
@@ -373,11 +418,11 @@ if(!function_exists('get_leaf_right'))
 		while(!empty($result))
 		{
 			$uid = $result['uid'];
-			$sql="select uid from tx_rwmembermlm_member where upline='".$uid."' and placement='1' and pid='".$pid."'";
+			$sql="select uid from tx_rwmembermlm_member where upline='".$uid."' and placement='2' and pid='".$pid."'";
 			$result = $CI->Mix->read_rows_by_sql($sql);
 			
 		}
-		echo $uid;
+		return $uid;
 	}
 }
 
@@ -402,6 +447,142 @@ if(!function_exists('getUsernameMLM'))
 		return $result;
 	}
 }
-#
-#
+
+if(!function_exists('update_point'))
+{
+	function update_point($uid_down,$pack)
+	{
+		$CI =& get_instance();
+		#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid_down,'uid');
+		do
+		{
+			$uid = get_upline($uid_down,$pack);
+			$b = get_point($uid['upline'],$uid['placement']);
+			#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid[],'uid');
+			$ins_point = $b+$uid['point'];
+			set_point($uid['upline'],$ins_point,$uid['placement']);
+			update_cyclebonus($uid['upline']);
+			setGradeMember($uid['upline'],'67');
+			$uid_down = $uid['upline'];
+			$check = get_upline($uid_down,$pack);
+		}while($check['upline'] > 0);
+	}
+}
+
+if(!function_exists('get_upline'))
+{
+	function get_upline($uid,$pack)
+	{
+		$CI =& get_instance();
+		$up = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','upline',$uid,'uid');
+		$place = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','placement',$uid,'uid');
+		#$pack = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid,'uid');
+		$point = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','point',$pack,'uid');
+		if(empty($point))
+		{
+			$point['point']='0';
+		}
+		$result = array('upline'=>$up['upline'],'placement'=>$place['placement'],'point'=>$point['point']);
+		return $result;
+	}
+}
+if(!function_exists('get_point'))
+{
+	function get_point($uid,$p)
+	{
+		$CI =& get_instance();
+		$w = 'point_right';
+		if($p=='1')
+		{
+			$w = 'point_left';
+		}
+		$b = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member',$w,$uid,'uid');
+		
+		return $b[$w];
+	}
+}
+if(!function_exists('set_point'))
+{
+	function set_point($uid,$point,$p)
+	{
+		$CI =& get_instance();
+		$w = 'point_right';
+		if($p=='1')
+		{
+			$w = 'point_left';
+		}
+		$data[$w]= $point;
+		$b = $CI->Mix->update_record('uid',$uid,$data,'tx_rwmembermlm_member');
+	}
+}
+
+if(!function_exists('update_cyclebonus'))
+{
+	function update_cyclebonus($uid)
+	{
+		$CI =& get_instance();
+		$left = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_left',$uid,'uid');
+		$right = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_right',$uid,'uid');
+		$data['pid'] = '67';
+		$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
+		$data['uid_member'] = $uid;
+		$data['paid'] = '0';
+		
+		if($left['point_left'] >= 400)
+		{
+			if($right['point_right'] >=200)
+			{
+				$l = $left['point_left']-400;
+				$r = $right['point_right']-200;
+				set_point($uid,$l,'1');
+				set_point($uid,$r,'2');
+				$data['bonus'] = '25';
+				$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+			}
+		}
+		else
+		{
+			if($left['point_left'] >= 200)
+			{
+				if($right['point_right'] >=400)
+				{
+					#echo $right['point_right'];
+					$l = $left['point_left']-200;
+					$r = $right['point_right']-400;
+					set_point($uid,$l,'1');
+					set_point($uid,$r,'2');
+					$data['bonus'] = '25';
+					$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+				}
+			}
+		}
+		
+		/*
+		if(($left['point_left'] >= 200) && ($right['point_right'] >=400))
+		{
+			$l = $left['point_left']-200;
+			$r = $right['point_right']-400;
+			set_point($uid,$l,'1');
+			set_point($uid,$r,'2');
+			$data['bonus'] = '25';
+			$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+		}
+		elseif(($left['point_left'] >= 400) && ($right['point_right'] >=200))
+		{
+			$l = $left['point_left']-400;
+			$r = $right['point_right']-200;
+			set_point($uid,$l,'1');
+			set_point($uid,$r,'2');
+			$data['bonus'] = '25';
+			$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+		}
+		else
+		{
+			echo '123234';
+			# nothing
+		}
+		*/
+		
+	}
+}
 ?>

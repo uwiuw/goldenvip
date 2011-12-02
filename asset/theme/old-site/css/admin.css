@@ -1,4 +1,5 @@
 /* CSS Golden VIP*/
+body{font-family:Arial, Helvetica, sans-serif;}
 .pagination {
     text-align: center;   
 }
@@ -87,7 +88,7 @@ span.join-now{ margin-left:15px; }
 */
 /*** BANNER ***/
 
-.content{ background:url(../images/bg_banner.png) repeat-x; margin-bottom:7px; padding-top:20px; padding-bottom: 10px; }
+.content{ background:url(../images/bg_banner.png) repeat-x; margin-bottom:7px; padding-top:20px; padding-bottom: 10px; min-height:340px; }
 
 
 /*** FOOTER ***/
@@ -967,6 +968,7 @@ p .compliment{
 #page-backoffice #home-office #home-bottom .csc-textpic-text{
     padding-top: 10px;
 }
+#home-bottom {font-size:13px;}
 .cycle_bonus{
     text-align: center;
     padding-top: 5px;
@@ -974,3 +976,19 @@ p .compliment{
 .judul{
     font-size:20px;
 }
+.gen-btn{ background:url(../images/gen-btn.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px;}
+div.clear-line{border-bottom:1px solid #FEC9A5;}
+#genelogy-cepat,#direct-sponsored,#info-binary{padding:10px;font-family:Arial, Helvetica, sans-serif; font-size:14px;}
+strong{font-size:12px;}
+.button{text-decoration:none;font-size:11px!important;line-height:13px;padding:3px 8px;cursor:pointer;border-width:1px;border-style:solid;-moz-border-radius:11px;-khtml-border-radius:11px;-webkit-border-radius:11px;border-radius:11px;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;-khtml-box-sizing:content-box;box-sizing:content-box;background:#f2f2f2 url(images/white-grad.png) repeat-x scroll left top;text-shadow:rgba(255,255,255,1) 0 1px 0;}
+a.button, a.button:hover{text-decoration:none;}
+.error{
+    width: 99%;
+    background: #815401;
+    color: white;
+    padding: 5px;
+    margin: 10px 10px 10px 0px;
+    text-align: center;
+    font-weight: bold;
+}
+.browse-data{background:url(../images/browse-icon.png) center no-repeat; width:16px; height:16px; display:block;}

@@ -21,22 +21,33 @@
 						container: "#navigation"
 					},
 			items:1,
-			infinite: false
+			scroll : {
+				fx : "fade"
+			}
 		});
 		$("#slider-business").carouFredSel({
 			auto : 5000,
 			items:1,
-			infinite: false
+			infinite: false,
+			scroll : {
+				fx : "fade"
+			}
 		});
 		$("#slider-travel").carouFredSel({
 			auto : 5000,
 			items:1,
-			infinite: false
+			infinite: false,
+			scroll : {
+				fx : "fade"
+			}
 		});
 		$("#slider-vip").carouFredSel({
 			auto : 5000,
 			items:1,
-			infinite: false
+			infinite: false,
+			scroll : {
+				fx : "fade"
+			}
 		});
 	});
 </script>

@@ -56,13 +56,15 @@ class Main extends CI_Controller {
 		
 		$this->load->view('panel/page/distributor/list_voucher',$data); 
 	}
-		# voucher code generate
+	
+	# voucher code generate
 	function generate_vc()
 	{
 		$data['data'] = getAccountMLM(); 
 		$this->load->view('panel/page/distributor/generate_vc',$data); 
 	}
-		# take_post_and_generate_vc
+	
+	# take_post_and_generate_vc
 	function take_post_and_generate_vc()
 	{
 		if($this->input->post("distributor") and $this->input->post("number_vc"))
