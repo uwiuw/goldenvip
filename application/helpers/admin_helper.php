@@ -42,7 +42,7 @@ if (!function_exists("is_login")) {
 if (!function_exists("check_user")) {
 
     function check_user($u='x', $p='x')
-    { return TRUE;
+    {
         $CI = & get_instance();
         $p = md5($p);
         $data = array();

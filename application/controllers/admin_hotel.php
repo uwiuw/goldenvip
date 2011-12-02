@@ -106,6 +106,7 @@ class Admin_hotel extends CI_Controller
     function check_login()
     {
         if ($this->input->post('user') and $this->input->post('pass')) {
+             
             $tablename = 'fe_users';
             $name = $this->input->post('user');
             $pwd = $this->input->post('pass');

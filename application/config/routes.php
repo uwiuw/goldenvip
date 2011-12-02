@@ -75,10 +75,7 @@ $route['member/profile'] = 'member/profile';
 $route['member/opportunity'] = 'member/opportunity';
 $route['member/reservation'] = 'member/reservation';
 $route['member/news'] = 'member/news';
-
-
-
-	$route['member/thank-you-registering'] = 'member/thankyou';
+$route['member/thank-you-registering'] = 'member/thankyou';
 
 # test area
 $route['test'] = 'test';
