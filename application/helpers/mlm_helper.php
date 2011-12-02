@@ -76,20 +76,23 @@ if(!function_exists('setGradeMember'))
 			{
 				$rec = getDirectSponsored($m["uid"], $pid);
 				$a = true;
-				foreach($b as $rec)
+				$test = 'a';
+				foreach($rec as $b)
 				{
-					$c = countDirectSponsored($d["uid"], $pid);
+					$c = countDirectSponsored($m["uid"], $pid);
 					print_r($c);
 					if($c["left"] <= 0 && $c["right"] <= 0)
 					{
 						$a=false;
+						$test='b';
 						break;
 					}
 				}
+				echo $test;
 				if($a)
 				{
-					$update = array("grade"=>5,"permanent_grade"=>2, "tstamp"=>time());
-					updateMember($update, $m["uid"]); 
+					#$update = array("grade"=>5,"permanent_grade"=>2, "tstamp"=>time());
+					#updateMember($update, $m["uid"]); 
 				}
 			}
 		}

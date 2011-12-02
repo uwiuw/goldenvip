@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-/*
+	/*
   | -------------------------------------------------------------------------
   | URI ROUTING
   | -------------------------------------------------------------------------
@@ -56,6 +56,7 @@ $route['contact-us'] = "main/contact";
 # admin gvip area
 $route['_admin'] = 'panel/main';
 $route['_admin/home_page'] = 'panel/main/home_page';
+
 $route['_admin/distributor'] = 'panel/main/list_distributor'; # admin area for distributor
 $route['_admin/del_distributor'] = 'panel/main/del_distributor'; # delete distributor
 $route['_admin/member'] = 'panel/main/list_member'; # admin area for member GVIP
@@ -66,16 +67,15 @@ $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 
 # member area
 $route['member'] = 'member';
-
 $route['member/home-page'] = 'member';
 $route['member/profile'] = 'member/profile';
 	$route['member/report/genealogy'] = 'member/report';
 	$route['member/report/commision'] = 'member/commision';
 	$route['member/report/direct-sponsored'] = 'member/direct_sponsored';
-$route['member/opportunity'] = 'member/opportunity';
-$route['member/reservation'] = 'member/reservation';
-$route['member/news'] = 'member/news';
-$route['member/thank-you-registering'] = 'member/thankyou';
+	$route['member/back-office'] = 'member/back_office';
+	$route['member/thank-you-registering'] = 'member/thankyou';
+	$route['member/logout']='member/member_logout';
+	$route['member/check-login'] = 'member/check_login';
 
 # test area
 $route['test'] = 'test';

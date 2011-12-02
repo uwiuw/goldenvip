@@ -251,7 +251,7 @@ class Member extends CI_Controller
 			}
 			else
 			{
-				redirect('member/back-office','refresh');
+//				redirect('member/back-office','refresh');
 			}
 		}
 		else
