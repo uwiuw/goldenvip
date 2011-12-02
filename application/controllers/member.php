@@ -85,7 +85,7 @@ class Member extends CI_Controller
 	
 	function join_now() # join now
 	{
-		is_login();
+		#is_login();
 		$data['title']="Member | Home Page";
 		$data['page'] = "join-now";
 		$data['nav'] = "homepage";
@@ -100,7 +100,7 @@ class Member extends CI_Controller
 	
 	function join_now_saving() # simpan data member baru
 	{
-		is_login();
+		#is_login();
 		$u = $this->input->post('username'); 
 		$ac = getUsernameMLM($u);
 		if(!empty($ac))
@@ -112,13 +112,11 @@ class Member extends CI_Controller
 			$data['pid']='67';
 			$data['firstname']=$this->input->post('firstname');
 			$data['lastname']=$this->input->post('lastname');
-			$d =$this->input->post('d');
-			$y =$this->input->post('y');
-			$m =$this->input->post('m');
-			$data['crdate'] = $d."-".$m."-".$y;
+			
+			$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 			$data['email']=$this->input->post('email');
 			$data['username']=$this->input->post('username');
-			$data['password']=$this->input->post('password1');
+			$data['password']=md5($this->input->post('password1'));
 			$data['country']=$this->input->post('country');
 			$data['mobilephone']=$this->input->post('countrycode2')."-".$this->input->post('mobilephone');
 			$data['homephone']=$this->input->post('countrycode1')."-".$this->input->post('homephone');
@@ -127,58 +125,89 @@ class Member extends CI_Controller
 			$data['address']=$this->input->post('address');
 			$data['regional']=$this->input->post('regional');
 			$data['sponsor']=$this->input->post('distributor');
+			$data['usercategory']=$this->input->post('usercategory');
+			$data['valid']='1';
 			
-			$data['upline']=get_leaf_left($data['sponsor']);
+			$d =$this->input->post('d');
+			$y =$this->input->post('y');
+			$m =$this->input->post('m');
 			
+			$data['dob']= "$y-$m-$d";
 			
-			 
-			$vc['voucher_code']=$this->input->post('vc');
+			$vc['status']='1';
 			$data['voucher_code']=$this->input->post('vc');
 			$data['bank_name']=$this->input->post('bank');
 			$data['bank_account_number']=$this->input->post('bank_account_number');
 			$data['name_on_bank_account']=$this->input->post('name_on_bank_account');
 			$dist = array();
+			if($this->input->post('placement') == '1')
+			{
+				$data['upline']=get_leaf_left($data['sponsor']);
+				$data['placement'] = '1';
+				# ambil point dari package yang bersangkutan untuk posisi kiri
+				$lastpoint = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_left',$this->input->post('distributor'),'uid');
+				# update point_left distributor or sponsor
+				$pluspoint = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','point',$this->input->post('package'),'uid');
+				$dist['point_left'] = $pluspoint['point']+$lastpoint['point_left'];
+			}
+			else
+			{
+				$data['upline']=get_leaf_right($data['sponsor']);
+				$data['placement'] = '2';
+				# ambil point dari package yang bersangkutan untuk posisi kanan
+				$lastpoint = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_right',$this->input->post('distributor'),'uid');
+				# update point_right distributor or sponsor
+				$pluspoint = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','point',$this->input->post('package'),'uid');
+				$dist['point_right'] = $pluspoint['point']+$lastpoint['point_right'];
+			}
+			
 			if($this->input->post('package')=='1' or $this->input->post('package') =='2')
 			{
 				$data['package']=$this->input->post('package');
-				# kiri
-				$data['placement'] = '1';
-				# ambil point dari package yang bersangkutan
-				$sql = "select point_left from tx_rwmembermlm_member where uid='".$this->input->post('distributor')."'";
-				$lastpoint = $this->Mix->read_rows_by_sql($sql);
-				
-				$sql = "select point from tx_rwmembermlm_package where uid='".$this->input->post('package')."'";
-				$pluspoint = $this->Mix->read_rows_by_sql($sql);
-				$dist['point_left'] = $pluspoint['point'];
 			}
 			else
 			{ 
 				$data['package']=$this->input->post('package3');
-				# kiri
-				$data['placement'] = '1';
-				# ambil point dari package yang bersangkutan
-				$sql = "select point_left from tx_rwmembermlm_member where uid='".$this->input->post('distributor')."'";
-				$lastpoint = $this->Mix->read_rows_by_sql($sql);
-				
-				$sql = "select point from tx_rwmembermlm_package where uid='".$this->input->post('package')."'";
-				$pluspoint = $this->Mix->read_rows_by_sql($sql);
-				$dist['point_left'] = $pluspoint['point'] + $lastpoint['point_left'] ;
-				echo $lastpoint['point_left']." ".$pluspoint['point'];
 			}
 			
-			$sql = "select uid from tx_rwmembermlm_vouchercode where voucher_code='".$this->input->post('vc')."' and distributor='".$data['sponsor']."' and status='0' ";
+				 
+			$sql = "select * from tx_rwmembermlm_vouchercode where voucher_code='".$this->input->post('vc')."' and distributor='".$data['sponsor']."' and status='0' ";
 			$check = $this->Mix->read_rows_by_sql($sql);
-			if(empty($check))
+			if(!empty($check))
 			{
-				$check  = $this->Mix->update_record('distributor',$data['sponsor'],$vc,'tx_rwmembermlm_vouchercode');
+				$check  = $this->Mix->update_record('voucher_code',$this->input->post('vc'),$vc,'tx_rwmembermlm_vouchercode');
 				$this->Mix->add_with_array($data,'tx_rwmembermlm_member');
 				$this->Mix->update_record('uid',$this->input->post('distributor'),$dist,'tx_rwmembermlm_member');
-				$fast['uid_member'] = $this->input->post('distributor');
-				$fast['uid_downline'] = $data['upline']+1;
-				$fast['bonus'] = '100';
-				$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus');
 				
+				
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$data['package'],'uid');
+				$fast['bonus'] = $d['fee_dollar'];
+				$fast['uid_member'] = $this->input->post('distributor');
+				#$fast['uid_downline'] = $data['upline']+1;
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$data['username'],'username');
+				$fast['uid_downline'] = $d['uid'];
+				$fast['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
+				$fast['pid']='67';
+				$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus');
+				update_point($d['uid']);
+				
+				
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$data['sponsor'],'uid');
+				
+				$dx = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$data['package'],'uid');
+				$com['commission'] = $d['commission']+$dx['fee_dollar'];
+				
+				$this->Mix->update_record('uid',$data['sponsor'],$com,'tx_rwmembermlm_member');
+				
+				
+				echo "ada";
+				echo $this->input->post('vc');
 			} 
+			
+			echo "<pre>";
+			print_r($data);
+			print_r($dist);
+			echo "</pre>";
 		}
 	}
 	

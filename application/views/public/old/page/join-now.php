@@ -89,7 +89,7 @@
 						<div class="tx-rwmembermlm-pi1">
  
 						 
-								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now/saving');?>"><input type="hidden" name="pid" id="pid" value="67" />
+								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now/saving');?>"><input type="hidden" name="usercategory" id="usercategory" value="4" />
 									<div>
                                     	<label class="desc">First Name * : </label><input class="text" value="" type="text" name="firstname" id="firstname" size="50" maxlength="100"/><label id="error_firstname" class="errdisp"></label>
 										<div class="clr"></div>
@@ -276,6 +276,15 @@
                                     <div id="display_sel_pck3">
                                     	<label class="desc">Select Type Package * : </label>
                                         <label id="block_pck3"></label>
+										<div class="clr"></div>
+									</div>
+                                     
+                                    <div id="display_sel_pck3">
+                                    	<label class="desc">Placement * : </label>
+                                        <select name="placement">
+                                        	<option value="1">Left</option>
+                                            <option value="2">Right</option>
+                                        </select>
 										<div class="clr"></div>
 									</div>
                                      
