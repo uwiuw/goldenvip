@@ -81,8 +81,6 @@ $route['member'] = 'member';
 	# member back office
 	$route['member/back-office'] = 'member/back_office';
 	
-	
-	
 	# member chcek login
 	$route['member/check-login'] = 'member/check_login';
 	# member logout
