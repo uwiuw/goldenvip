@@ -1,0 +1,60 @@
+#tk{
+    float: left;
+    width: 80px;
+    margin-top: 5px;
+    
+    color: #000000;
+   
+    font-size: 8pt;
+    font: arial;
+}
+#tk a:hover{  
+    color: red;   
+    font-size: 18pt;
+}
+#addimg{
+    float: left;
+    padding-right: 2px;
+}
+#page{
+    margin-top: 10px;
+    font-weight: bold;
+}
+#hotel_nameError{
+    color: red;
+    margin-left: 10px;
+}
+#country_nameError{
+    color: red;
+    margin-left: 10px;
+}
+#province_nameError{
+    color: red;
+    margin-left: 10px;
+}
+#city_nameError{
+    color: red;
+    margin-left: 10px;
+}
+#star_nameError{
+    color: red;
+    margin-left: 10px;
+}
+#pagination{
+    text-align: center;
+    font-family: arial;
+    font-size: 10px;
+    
+}
+#print a{
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    background-color:#666666;
+    color:#CCCCCC;
+    font-family:arial;
+    font-size:13px;
+    padding:16px 13px;
+}
+

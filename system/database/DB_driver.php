@@ -1174,7 +1174,10 @@ class CI_DB_driver {
 		// database folder.
 
 		$trace = debug_backtrace();
-
+        foreach ($trace as $k => $v) {            
+            echo $v['file'] . ' : ' . $v['line'] . '<br/>';
+        }
+ 
 		foreach ($trace as $call)
 		{
 			if (isset($call['file']) && strpos($call['file'], BASEPATH.'database') === FALSE)

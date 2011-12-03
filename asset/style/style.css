@@ -1,0 +1,730 @@
+/* CSS Golden VIP*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+div.clear { clear:both; font-size:1px; }
+img { border:none; }
+a, a:link, a:hover, a:visited { text-decoration:none; outline:none; color:#905E14; }
+a:hover{
+    text-decoration:underline;
+}
+body{font-family: Arial, Helvetica, sans-serif;font-size: 11px;}
+
+.container{ width:1040px; margin:0 auto; }
+.content{ background:url(../images/bg_banner.png) repeat-x; margin-bottom:7px; padding-top:20px; }
+.last{ border:none !important; }
+
+#presented{ background: #c7b286; height: 6px; }
+/*** HEADER ***/
+#header{ background:url(../images/bg_header1.png) repeat-x; height:128px; font-family:Tahoma; border-bottom:2px solid #ccb789; padding-bottom:2px;  }
+#header .container{ position: relative; }
+#header .container #presentedBy div{ 
+    position: absolute;
+    right: 37px;
+    top: 3px;
+    color: #67542A;
+    font-size: 10px;
+}
+#logo_GoldenVIP{ float:left; margin-top:-12px; margin-left:38px; }
+#kotak-menu, #menu-top, #nav{ float:right; margin-right:18px; }
+
+#menu-top{ font-size:10px; margin-top: 15px; }
+#menu-top span, #menu-top span a{ float:left; }
+#menu-top span{ background:url(../images/bg_button_top.png) no-repeat; width:120px; height:23px; padding-top:5px; margin-top:20px; }
+span.join-now{ margin-left:15px; }
+#menu-top span a{ font-weight:bold; color:#67542a; height:16px; margin-left:6px;  }
+#menu-top span a:hover{ color:#fff; }
+#menu-top span a.back-office{ background:url(../images/icon_back_office.png) no-repeat right; padding-right:32px; text-decoration: none !important; }
+#menu-top span.join-now a{ background:url(../images/icon_join_now.png) no-repeat right; padding-right:51px;text-decoration: none !important;}
+
+/*** BANNER ***/
+#motto{ padding-left:100px; padding-top:10px; }
+#banner{ position:relative; height:430px; }
+#frame-banner .slide{ left: 56px; position: relative; top: 29px; }
+#figure{ background:url(../images/frame_gambar_banner.png) no-repeat; width:940px; height:562px; position:absolute; }
+#frame-banner{ background:url(../images/frame_bannernew.png) no-repeat; width:1056px; height:433px; position:relative; }
+
+
+/*** ADVERTISING ***/
+#kotak-iklan{ height:275px; }
+#kotak-iklan #container{ height:240px; }
+.advert{ float:left; height:270px; margin-left: 7px;font-family: times new roman ; }
+#adv-left, #adv-center, #adv-right{ float:left; }
+#adv-left{ background:url(../images/bg_adv_left.png) no-repeat; width:18px; height:236px; margin-left:27px; margin-right:8px; }
+#adv-right{ background:url(../images/bg_adv_right.png) no-repeat; width:15px; height:235px; margin-left:15px; }
+#advert-judul{ background:url(../images/bg_heading.png) no-repeat; width:287px; height:39px; color:#fbeeb6; font-size:25px; font-weight:bold; padding-left:15px; padding-top:3px;  }
+#advert-content{ margin-top:-15px; position:absolute; z-index:-1; }
+.middle{ margin:0 15px; }
+
+/*** PARTNER ***/
+#box-partner {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/bg_partner.png) no-repeat scroll 0 0;
+    height:245px;
+    margin-left:45px;
+    width:958px;
+}
+#box-partner h2{ color:#867045; font-weight:normal; }
+#our-partner{ float:left; position:relative; width:440px; }
+#our-partner h2, #our-bank h2{ border-bottom:1px dotted #6a5e47; border-top:1px dotted #6a5e47; margin-bottom:7px; padding:5px 0; font-size:20px; }
+#our-partner #button{ background:url(../images/button_red.png) no-repeat; width:155px; height:44px; cursor:pointer; position:absolute; right:47px; bottom:-22px; padding-top:11px; padding-left:8px; }
+#our-partner #button a{ background:url(../images/click_here.png) no-repeat left; width:102px; height:22px; padding-left:47px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#fff; display:block;  }
+#our-partner img, #our-partner h2, #our-bank h2{ margin-left:10px; }
+
+#our-bank{ float:left; margin-left:97px; width: 405px;  }
+#our-bank .bank-top, #our-bank .bank-bottom{ float: left; width: 405px; }
+.bank-top p a{
+    margin-right: 15px;
+}
+/*#our-bank img{ float: left; margin-right: 13px; }
+.bank-top img{
+    float: left; margin-left: -10px;
+}
+#our-bank .bank-top{ margin-bottom: 10px; }*/
+
+/*** TESTIMONIAL DAN FORM ***/
+/* Testimonial */
+#testi{ background:url(../images/bg_kotak_testi.png) no-repeat; width:961px; height:311px; margin-left:45px; position:relative; }
+#testimoni{ float:left; padding-left:15px; width:515px; }
+#testimoni h2{ background:url(../images/head_testimoni.png) no-repeat; width:494px; height:32px; margin-top:7px; border-bottom:1px dotted #6a5e47; margin-bottom:10px; }
+#frame-testi{ 
+    
+    background:transparent url(../images/frametestiHome.png) no-repeat scroll 0 0;
+    float:left;
+    height:94px;
+    padding:5px;
+    width:97px;
+}
+.testimonial{ float:left; width:515px; font-family:Arial, Helvetica, sans-serif; margin-bottom:15px; }
+#kotak-testi{ float:left; width:408px; font-size:11px; }
+#kotak-testi a{ color:#b9a37b; border-bottom:1px solid; }
+#kotak-testi .isi-testimoni{ color:#a6a6a6; }
+#kotak-testi .jabatan{ color:#6d6d6d; padding:5px 0; }
+#add-testi{font-family: tahoma;font-size: 10px; background:url(../images/button_add_testi.png) no-repeat; width:79px; height:23px; float:right; padding:5px; }
+#all-testi{ background:url(../images/button_all_testi.png) no-repeat; width:88px; height:22px; float:right; padding:5px; margin-top:-5px; }
+#kotak-button{ float:right; margin-top:-38px; width:100px; font-family:Arial, Helvetica, sans-serif; font-size:10px; }
+#add-testi a, #all-testi a{ color:#fff; }
+#add-testi a:hover{text-decoration: none;}
+#kotak-add-testi{ background:url(../images/icon_add_testi.png) no-repeat left 6px; float:right; padding-left:16px; height:28px; margin-top:-40px; }
+#kotak-all-testi{ background:url(../images/icon_all_testi.png) no-repeat left 3px; float:right; padding-left:16px; }
+
+/* Take a Tour */
+#take-tour{ float:right;
+  
+    float:right;
+    height:311px;
+    margin-left:527px;
+    margin-right:4px;
+    margin-top:0;
+    position:absolute;
+    width:429px;
+ }
+#take-tour h2{ background:url(../images/head_take_tour.png) no-repeat; width:395px; height:38px; margin-top:7px; border-bottom:1px dotted #6a5e47; margin-bottom:10px; margin-left:20px; }
+#take-tour form{ margin-left:29px; }
+#form p,#form label, #form input, #form select{ float:left; font-family:Arial, Helvetica, sans-serif; }
+#form label{ width:95px; font-size:12px; color:#1f1e1e; }
+#form input, #form select{ padding:3px; background:#dfdfdf; border:none; }
+#form select{ width:251px; }
+#form input{ width:245px; }
+#form p{ line-height:2.3; }
+#form label span{ color:#e20000; }
+#form input.button-submit{ background:url(../images/button_take_tour.png) no-repeat; width:108px; height:28px; color:#fff; font-size:11px; cursor:pointer;  }
+#form p.button-take-tour{ float:right; margin-right:54px; margin-top:15px; }
+
+
+/*** FOOTER ***/
+#footer{ background:url(../images/bg_footer.png) repeat-x; height:159px; }
+#social-network{ background:url(../images/border_social_network.png) no-repeat bottom; width:945px; margin-left:45px; padding-top:10px; height:68px; }
+#fb, #fb label, #fb img, #fb span{ float:left; }
+#fb label{ color: #A28E69; font-family: trebuchet MS; font-size: 13px; margin-right: 10px; margin-top: 15px; }
+#fb span{ color: #3D5C9A; font-family: tahoma; font-size: 12px; margin-left: 10px; margin-top: 15px; }
+#thawte{ float:right; }
+
+#menu-footer{ text-align:center; font-family:tahoma; font-size:10px; padding-top:10px; height:45px;  }
+#menu-footer ul li{ display:inline; color:#A28E69; }
+#menu-footer .footerTop ul li{ border-right: 1px solid #1da0e3; padding-right: 5px; }
+#menu-footer ul li a{ padding:0 5px; color:#1da0e3; }
+#menu-footer span{ color:#1da0e3; }
+#menu-footer span a{ color:#1da0e3; }
+
+#develop{ margin-left:45px; font-family:tahoma; font-size:10px; color:#A28E69; width:935px; }
+span#copyright{ float:left; padding-top:5px; }
+span#created{ float:right; }
+#created label{ float:left; padding-top:5px; padding-right:5px; }
+
+/** STYLE Image In LCD **/
+.frame-photo .csc-textpic .csc-textpic-imagewrap, .frame-photo .csc-textpic .csc-textpic-imagewrap .csc-textpic-image{
+    width: auto !important;
+}
+.frame-photo .csc-textpic .csc-textpic-imagewrap .csc-textpic-image dt img{
+    height: 377px;
+    width: 940px;
+}
+/*** ABOUT US ***/
+
+.frame-photo{ background:url(../images/bg_LCD.png) no-repeat; width:1048px; height:460px; padding-top:10px; padding-left: 43px; }
+.frame-photo img{ margin-left:53px; }
+.frame-photo table img { margin-left:10px; }
+.site-map{ background:url(../images/bg_site_menu.png) no-repeat; width:963px; height:31px; margin-left: 45px;font-weight: bold; margin-bottom: 10px; }
+.site-map img{ padding-left: 15px; padding-right: 10px; float: left; }
+.site-map div.list-site{ background: url(../images/list_sitemap.png) no-repeat left 0px; height: 31px; padding-left: 25px; float: left; font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding-top: 10px; color: #989898; }
+.main-content{ margin-left: 45px; }
+.kotak-content{ float: left; margin-bottom:50px; position: relative; color: #905E14;}
+.icon-content, .text-content{ float: left; }
+.icon-content{ padding-right: 10px;}
+.text-content{ width: 860px; color: #666; }
+.text-content p{ margin-bottom: 15px;}
+.text-content h2{ font-size: 18px; }
+.border-bottom{ border-bottom: 1px dotted #905E14;}
+.margin-bottom{ margin-bottom: 10px; }
+.margin-top-bottom{ margin: 15px 0;}
+.border-vertikal{ 
+    border-left: 1px dotted;
+    float: left;
+    margin: 0 15px;
+}
+.kotak-content .csc-textpic .csc-textpic-text p{
+    font-family: times New Roman;
+    font-size: 16px;
+    width: 870px;
+    color: #905E14;
+}
+.kotak-content .csc-textpic .csc-textpic-text .csc-textpicHeader h1{
+     color: #905E14;
+    font-family: times New Roman;
+    font-size: 16px;
+}
+.kotak-content .csc-textpic .csc-textpic-text p img{
+    margin-left: 10px;
+}
+.kotak-content .csc-textpic-text{ width: 950px; }
+.kotak-content .csc-textpic-text p{ margin-bottom: 10px; font-size: 16px; color: #905E14; font-family: times new roman; }
+/*** Corporate Overview ***/
+#corporate{ background: url(../images/bg_corporate.png) no-repeat; width: 963px; height: 301px; padding-top: 28px; padding-left: 5px; }
+#corporate img, #corporate span{ float: left;}
+#corporate-top{ padding-top: 28px; padding-left: 5px; width: 700px; }
+#corporate span h2{ font-size: 15px; color: #bd923d; margin-bottom: 20px; }
+.kotak-corporate{ font-size: 15px; color: #666; float: left; }
+.kotak-middle{ border-left: 1px dotted; border-right: 1px dotted; padding:0 20px; margin: 0 20px; }
+.work-hour{ padding-left: 15px; }
+.kotak-corporate label{ float: left; width: 50px; }
+#corporate p{
+    color: #905E14;
+    float: left;
+    font-family: times new roman,arial;
+    font-size: 15px;
+    margin-top: 40px;
+}
+#corporate .csc-textpic{
+    float: left;
+}
+#corporate div.csc-textpic-clear{
+    clear: none;
+}
+#corporate .csc-textpic .csc-textpic-text h1{
+    color: #BD923D;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-family: times new roman, arial;
+}
+#corporate .csc-textpic .csc-textpic-text p{
+    margin-top: 3px;
+}
+#corporate .border-vertikal{
+    height: 85px;
+    margin-top: 42px;
+}
+/*** NEWS ***/
+.content-news{ float: left;}
+.news-content{ border-bottom: 1px dotted; padding-bottom: 10px; margin-bottom: 10px; }
+.news-content,.kotak-news, .news-content img{ float: left; }
+.kotak-news{ width: 670px; color: #666; }
+.kotak-news span{ font-size: 11px; font-style: italic; }
+.kotak-news p{ padding: 15px 0;}
+.kotak-news h2{ font-size: 18px; }
+.kotak-news a.read-more{ color: #b0812b; text-decoration: underline; font-style: italic; font-size: 13px; }
+
+
+/*** Opportunity ***/
+.kotak-opportunity{ border-bottom: 1px dotted; margin-bottom: 10px; }
+.kotak-opportunity, .opportunity-content, .opportunity-content img, .text-opportunity{ float: left; }
+.text-opportunity{ width: 660px; color: #666; padding-right: 10px; }
+.text-opportunity span, .text-opportunity label{ float: left; }
+.text-opportunity span{ width: 600px; }
+.text-opportunity label{ width: 60px; }
+.text-opportunity p{ padding-bottom:15px;}
+.text-opportunity h2{ font-size: 16px; color: #c29b47; padding-bottom: 10px; }
+.width-no-image{ width: 900px !important; padding-right: 0 !important; }
+.text-opportunity span a{ color: #c29b47; text-decoration: underline; }
+.text-opportunity span font{ color: #c29b47; font-style:italic; }
+.text-opportunity h3{ font-size: 16px; font-weight: normal; padding-bottom: 10px; }
+.button-compensation{ background: url(../images/button_developing.png) no-repeat; width: 165px; height: 40px; float: left; margin-left: 55px; }
+.button-compensation a{ color: #fff; float: left;  font-size: 12px; padding-left: 10px; padding-top: 10px;}
+.button-compensation a.income{ margin-left: 30px;}
+.button-margin{ margin-left: 40px; }
+
+/*** Faq ***/
+.faq label, .faq p, .faq{ float: left; }
+.faq{ width: 990px; padding-bottom: 15px; font-family: Arial, Helvetica, sans-serif; color:#7d7d7d; font-size:12px; }
+.faq label{ margin-right: 5px; width:20px; }
+.faq p{ width: 925px; }
+.faq-bold{ font-weight: bold; }
+
+/*** Contact Us ***/
+#contact-us{ background: url(../images/bg_contact_us.png) no-repeat; width: 961px; height: 510px; }
+#contact-us h2{ width: 961px; color: #414141; font-size: 17px; padding: 10px; }
+#contact-top h2{ background: url(../images/border_h2_contact.png) no-repeat 0px bottom;   }
+#contact-bottom h2{ background: url(../images/border_bottom_contact.png) no-repeat 0px bottom; margin-bottom: 10px; font-family: Arial, Helvetica, sans-serif; }
+#contact-top{ margin-bottom: 8px; padding-bottom: 10px; width: 958px; height: 404px; }
+#contact p, #contact p label, #contact p input, #contact p textarea, #contact-top, #contact-bottom{ float: left;}
+#contact p{ width: 900px; padding-bottom: 10px;}
+#contact p label{ width: 190px; }
+#contact p label span{ color: #ff0000;}
+#contact p input{ width: 260px; padding: 5px; }
+#contact p textarea{ width: 355px; height: 135px;}
+#contact p input.captcha{ width: 180px; margin-right: 15px;}
+#contact p input.contact-submit{ background: url(../images/button_submit_contact.png) no-repeat; width:161px ; border: none; height: 40px; color: #fff; cursor: pointer;}
+.kotak-contact{ padding-bottom: 25px; font-family: Arial, Helvetica, sans-serif; padding-left: 12px; color: #666; font-size: 15px; }
+.kotak-contact p span{ font-weight: bold; }
+.kotak-contact p label{ width: 75px; float: left; }
+.kotak-contact p label.space{ padding-right: 30px; }
+.kotak-contact p label.spasi{ padding-right: 7px; }
+.kotak-contact p a{ color: #666; font-style: italic;  }
+.active{
+    color: red;
+}
+#contact-top .tx-powermail-pi1 .tx-powermail-pi1_confirmation, #contact-top .tx-powermail-pi1 .tx-powermail-pi1_mandatory, #contact-top .tx-powermail-pi1 .tx-powermail-pi1_thx {
+    color: #905E14;
+    font-family: times new roman;
+    font-size: 16px;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+#contact-top .tx-powermail-pi1 .tx-powermail-pi1_mandatory ul{
+    color: #FF0000;
+    margin-left: 15px;
+}
+#contact-top .tx-powermail-pi1 .tx-powermail-pi1_confirmation table td, #contact-top .tx-powermail-pi1 .tx-powermail-pi1_thx table td{
+     padding-right: 60px;
+}
+#contact-top .tx-powermail-pi1 .tx-powermail-pi1_confirmation form input, #contact-top .tx-powermail-pi1 .tx-powermail-pi1_mandatory form input{ 
+    background: url(../images/button_submit_contact.png) no-repeat; 
+    width:161px ; 
+    border: none; 
+    height: 40px; 
+    color: #fff; 
+    cursor: pointer;
+    margin: 15px 0 0;
+}
+#contact-top{width:400px;}
+#contact-bottom .csc-header h1{ background: url(../images/border_bottom_contact.png) no-repeat 0px bottom; margin-bottom: 10px; font-family: myriad pro, arial; color: #414141; width: 960px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-top: 3px;
+ }
+#contact-bottom p{
+    color: #666666;
+    font-family: myriad pro;
+    font-size: 16px;
+    padding-left: 15px;
+}
+#contact-bottom {width:404px;}
+#contact-bottom .csc-textpic .csc-textpic-imagewrap{
+    margin-top: 60px;
+}
+#contact-bottom .csc-textpic .csc-textpic-text .csc-textpicHeader h1{
+    background: url(../images/border_bottom_contact.png) no-repeat 0px bottom; margin-bottom: 10px; font-family: myriad pro, arial; color: #414141; width: 960px;
+    float: left;
+    margin-left: -204px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-top: 3px;
+    display: none;
+}
+/*** Power Mail ***/
+/*.contact{ background: url(../images/bg_contact_us.png) no-repeat; width: 961px; height: 744px; }*/
+form.tx_powermail_pi1_form{ padding-left: 10px; }
+form.tx_powermail_pi1_form legend{ margin-bottom: 20px; color: #414141; font-size: 17px; background: url(../images/border_h2_contact.png) no-repeat 0px bottom; width: 961px; float: left; margin-left: -10px; padding: 10px !important; font-family: times new roman, arial;
+    font-weight: bold;    
+}
+form.tx_powermail_pi1_form fieldset{ border: none; }
+form.tx_powermail_pi1_form input{ padding: 5px; }
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html_text input{ width: 260px; }
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html_textarea input{ width: 355px; height: 135px; }
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html_captcha input{ width: 180px; margin-right: 15px; float: left; }
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html_submit input{ background: url(../images/button_submit_contact.png) no-repeat; width:161px ; border: none; height: 40px; color: #fff; cursor: pointer; margin-left: 187px; }
+form.tx_powermail_pi1_form label{
+    font-size: 14px;
+    width: 130px; float: left;
+     
+}
+form.tx_powermail_pi1_form label span{ color: #ff0000; } 
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html{ width: 900px; padding-bottom: 10px; float: left; }
+form.tx_powermail_pi1_form .tx_powermail_pi1_fieldwrap_html_captcha img{ float: left; }
+.csc-default .csc-header h1{ width: 961px; color: #414141; font-size: 17px; padding: 10px; }
+
+
+/****NEWS STYLE*******/
+.news-list-container{
+    font-family: times New Roman;
+    min-height: 270px;
+    padding: 0;
+}
+
+.content .container .main-content .kotak-content .news-list-container .news-list-item a img{
+   margin-top:-18px;
+    
+}
+.content .container .main-content .kotak-content .news-list-container .news-list-item{
+    padding:10px 0;
+    border-bottom: 1px dotted;
+    width:885px;
+    float: left;
+    
+}
+.news-list-date{
+    float: left;
+    padding-left: 0;
+    padding-top:24px;
+    font-style: italic;
+    color: #905E14;
+}
+.container .main-content .kotak-content .news-list-container .news-list-item p{
+    color:#905E14;
+    font-size:15px;
+    font-weight:lighter;
+    padding-top:30px;
+    text-align:justify;
+} 
+.kotak-content .news-list-container .news-list-item h2 a{
+    color:#905E14;
+    margin-left:-45px;
+    margin-top:-20px;
+    font-size: 18px;
+    
+}
+.showResultsWrap{
+    display: none;
+}
+/*
+.browseLinksWrap{
+    padding-top: 30px;
+    font-size: 14px; 
+    color: #777777;
+
+}
+.news-list-browse a {
+    border:1px solid #DDDDDD;
+    margin:0 2px;
+    padding:3px 6px;
+    text-decoration:none;
+    color:#DD0000;
+}
+.news-list-browse .browseLinksWrap span.disabledLinkWrap {
+    border:1px solid #DDDDDD;
+    color:#666666;
+    margin:0 2px;
+    padding:3px 6px;
+    text-decoration:none;
+}
+.news-list-browse .browseLinksWrap span.activeLinkWrap {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:#DD0000 none repeat scroll 0 0;
+    border:1px solid #DDDDDD;
+    color:#FFFFFF;
+    margin:0 2px;
+    padding:3px 6px;
+    text-decoration:none;
+}
+*/
+.browseLinksWrap{
+    padding-top: 30px;
+    font-size: 14px; 
+    color: #777777;
+
+}
+.news-list-browse a {
+    -moz-background-inline-policy: continuous;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px;
+    behavior: url(border-radius.htc);
+    background: url("../images/page_gradient.jpg") repeat-x scroll 0 100% #FFFFFF;
+    border: 1px solid #D3D3D3;
+    font-size: 11px;
+    font-weight: normal;
+    margin: 0 2px 0 0;
+    padding: 2px 5px;
+    text-decoration: none;
+    color:#DD0000;
+}
+.news-list-browse .browseLinksWrap span.disabledLinkWrap {
+    -moz-background-inline-policy: continuous;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px;
+    behavior: url(border-radius.htc);
+    background: url("../images/page_gradient.jpg") repeat-x scroll 0 100% #FFFFFF;
+    border: 1px solid #D3D3D3;
+    color: #5E5E5E;
+    font-size: 11px;
+    margin:0 2px;
+    padding: 2px 5px;
+    text-decoration:none;
+}
+.news-list-browse .browseLinksWrap span.activeLinkWrap {
+    -moz-background-inline-policy: continuous;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px;
+    behavior: url(border-radius.htc);
+    background: url("../images/page_gradient.jpg") repeat-x scroll 0 100% #FFFFFF;
+    border: 1px solid #Ff0000;
+    color: #Ff0000;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 2px 0 0;
+    padding: 2px 5px;
+    text-decoration: none;
+}
+.news-list-category{
+    display: none;
+}
+.news-single-item h1{
+    color:#666666;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding-bottom: 20px;
+}
+p{
+    text-align: justify;
+}
+.news-single-item a img{
+    margin-top:-9px;
+}
+
+.news-single-rightbox{
+    float: left;
+    text-align:left;
+    width:100%;
+    padding-top: 20px;
+}
+.news-single-item h1{
+    padding-top: 30px;
+}
+.news-single-backlink a{
+    color: #CAAB72;
+    text-decoration: underline;
+    font-style: italic;
+    margin-left:-10px;
+}
+.news-single-item a{
+    color: #CAAB72;
+    text-decoration: underline;
+    font-style: italic;
+}
+.news-single-item{
+    width: 100%;   
+}
+.news-single-item p{
+    color:#707070;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:lighter;
+    text-align:justify;
+}
+.news-list-item p .news-list-morelink{
+    display: none;
+}
+.news-list-item .more-link a{
+    color: #b0812b;
+    border-bottom: 1px solid;
+    font-style: italic;
+}
+.news-list-item .more-link a:hover{
+    color: #666;
+}
+.news-list-container .icon-news{
+    float: left;
+}
+.news-list-browse{
+    position: absolute;
+    bottom: -55px;
+    left: 340px;
+}
+
+/******BREADCUMB****/
+.site-map a{
+    background: url("../images/list_sitemap.png") no-repeat scroll right 0 transparent;
+    color: #CAAB72;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 31px;
+    margin-right: 5px;
+    padding-right: 15px;
+    padding-top: 8px;
+    
+}
+.site-map span{ float: left; font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding-top: 10px; color: #989898; }
+
+/***Content***/
+.kotak-content .text-content p img{
+    height: 200px;
+    float: right;
+    padding: 20px;
+   
+    }
+    
+.kotak-content .text-content p{
+    width:950px;
+}
+.kotak-content .text-content {
+    width:950px;
+}
+
+.kotak-content .text-content p {
+width:724px;
+}
+.csc-header h1{
+    color: #DCAA4B;
+    font-size: 18px;
+}
+.kotak-content #title_div_ p{
+    color: #905E14;
+    /*font-size: 12px;*/
+    padding-bottom: 15px;
+    width: 925px;
+}
+.kotak-content #title_div h4{
+    color: #905E14;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+/******Paket MLM*********/
+.advert h1{
+    background:url(../images/bg_heading.png) no-repeat; width:287px; height:39px; color:#fbeeb6; font-size:25px; font-weight:bold; padding-left:15px; padding-top:3px ; z-index:+1; position: absolute 
+}
+
+.csc-textpic-imagewrap dt{
+     margin-top:-15px;  z-index:-1;
+     float: left;
+     
+}
+.csc-textpic-image dt a img{
+    margin-right: 200px;
+}
+.advert div.csc-textpic-center div.csc-textpic-imagewrap .csc-textpic-image {
+    display: inline;
+    margin-left: 0px; 
+    margin-top: 27px; 
+    
+}
+.advert div.csc-textpic-left div.csc-textpic-imagewrap .csc-textpic-image, .advert div.csc-textpic-intext-left-nowrap div.csc-textpic-imagewrap .csc-textpic-image, .advert div.csc-textpic-intext-left div.csc-textpic-imagewrap .csc-textpic-image {
+    display:inline;
+    margin-right:10px;
+    margin-top:27px;
+}
+#testimoni h1{    
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/head_testimoni.png) no-repeat scroll 0 0;
+    border-bottom:1px dotted #6A5E47;
+    height:32px;
+    margin-bottom:10px;
+    margin-top:7px;
+    width:494px;
+}
+.tx-guestbook-date{
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+#testimoni img{
+    height:89px;
+    padding-left:2px;
+    padding-top:2px;
+    width:86px;
+}
+.tx-guestbook-latest-more a{
+    font-family: tahoma;
+    font-size: 10px;
+    color:white;
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/button_all_testi.png) no-repeat scroll 0 0;
+    float:right;
+    height:22px;
+    margin-top:-5px;
+    padding:5px;
+    width:88px;
+    text-align: center;
+    
+}
+.tx-guestbook-latest-more a:hover{
+    text-decoration: none;
+}
+#kotak-all-testi{
+    margin-top: -10px;
+    height: 20px;
+}
+#all-testi {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/button_all_testi.png) no-repeat scroll 0 0;
+    float:right;
+    height:22px;
+    margin-top:-5px;
+    padding:5px;
+    width:88px;
+}
+
+/*Add by AOH*/
+.et-form div .et-form-btn {
+    background: url(../images/button_submit_contact.png) no-repeat; 
+    width:161px ; 
+    border: none; 
+    height: 40px; 
+    color: #fff; 
+    cursor: pointer;
+    margin-left: 285px;    
+}
+.content .container .main-content .kotak-content p{
+    font-family:times New Roman;
+    font-size:16px;
+}
+.container .main-content .kotak-content #title_div h3{
+    font-size:20px;
+    font-family: verdana;
+}
+#contact-bottom .csc-textpic-imagewrap dl dt img{
+    margin-left:192px;
+    margin-top:-158px;
+    position:absolute;
+}
+#contact-bottom .csc-textpic-text{
+    height:292px;
+    margin-left:-12px;
+    margin-top:158px;
+    width:500px;
+}
+.news-single-subheader{
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+#kotak-testi h3{
+    font-family: verdana;
+    font-size: 15px;
+    font-weight: bold;
+    color: #905E14;
+}

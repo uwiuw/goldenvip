@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Debug function 
+ * Temporer
+ * by @uwiuw
+ */
+
+function htmlentities2($myHTML) {
+	$translation_table = get_html_translation_table( HTML_ENTITIES, ENT_QUOTES );
+	$translation_table[chr(38)] = '&';
+	return preg_replace( "/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/", "&amp;", strtr($myHTML, $translation_table) );
+}
+
 /*
  * ---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -27,17 +39,17 @@ define('ENVIRONMENT', 'development');
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
-error_reporting(E_ALL);
+//error_reporting(E_STRICT);
 if (defined('ENVIRONMENT')) {
     switch (ENVIRONMENT)
     {
         case 'development':
-            error_reporting(E_ALL);
+           error_reporting(0);
             break;
 
         case 'testing':
         case 'production':
-            error_reporting(0);
+//            error_reporting(0);
             break;
 
         default:
