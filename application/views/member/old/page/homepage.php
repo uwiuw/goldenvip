@@ -13,12 +13,8 @@
                         </p>
                         <p>
                         	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to LOGOUT  when it's done.
-                            <pre>
-                        	<?php 
-								
-								 setGradeMember($this->session->userdata('member'), '67');
-							 
-							?>
+                            <pre style="display:none;">
+                        	  Conratulation on achieving your 6000 poin point rewards, you've entitle to have your 1 (one) complimentary of VIP Package.
                             </pre>
                         </p>
 					</div>
