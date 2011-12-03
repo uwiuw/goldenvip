@@ -2,6 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+	/*
   | -------------------------------------------------------------------------
   | URI ROUTING
   | -------------------------------------------------------------------------
@@ -73,6 +74,8 @@ $route['member/profile'] = 'member/profile';
 	$route['member/report/direct-sponsored'] = 'member/direct_sponsored';
 	$route['member/back-office'] = 'member/back_office';
 	$route['member/thank-you-registering'] = 'member/thankyou';
+	$route['member/logout']='member/member_logout';
+	$route['member/check-login'] = 'member/check_login';
 
 # test area
 $route['test'] = 'test';
