@@ -587,5 +587,14 @@ if(!function_exists('update_cyclebonus'))
 		*/
 		
 	}
+	if(!function_exists('debug_data'))
+	{
+		function debug_data($data = array())
+		{
+				echo "<pre>";
+				print_r($data);
+				echo "</pre>";
+		}
+	}
 }
 ?>

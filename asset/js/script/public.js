@@ -3,7 +3,7 @@
 			url: site+"/"+page,
 			beforeSend: function(){
 				//jQuery(div).html(image_load);
-				jQuery(div).html('<img src="'+image+'" class="left" width="18px" align="middle" > Loading ...');
+				jQuery(div).html('<img src="'+image+'" class="left" width="18px" style="vertical-align:middle" > Loading ...');
 			},
 			success: function(response){
 				jQuery(div).html(response);

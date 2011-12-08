@@ -124,8 +124,12 @@ class Main extends CI_Controller {
 			case "get_genealogy":
 				$this->get_genealogy();
 				break;
-				
-			
+			case "get_destnation_detail":
+				$this->get_destnation_detail();
+				break;
+			case "list-hotel":
+				$this->get_detail_hotel();
+				break;
 		}
 	}
 	
@@ -154,7 +158,7 @@ class Main extends CI_Controller {
 	{
 		is_member(); # Hanya member yang boleh memasuki halaman ini
 		$data['title']="Member | Home Page";
-		$data['page'] = "get_detail_member";
+		$data['page'] = "public/get_detail_member";
 		$data['nav'] = "report";
 		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
 		
@@ -163,7 +167,7 @@ class Main extends CI_Controller {
 		$data['member'] = getMemberByUid($uid,$pid);; 
 		
 		$this->load->vars($data);
-		$this->load->view('member/old/template');
+		$this->load->view('member/template');
 	}
 	function get_phone_code()
 	{
@@ -275,11 +279,42 @@ class Main extends CI_Controller {
 		$url = $this->uri->segment('4');
 		is_member(); # Hanya member yang boleh memasuki halaman ini
 		$data['title']="Member | Home Page";
-		$data['page'] = "report_genealogy";
+		$data['page'] = "public/report_genealogy";
 		$data['nav'] = "report";
 		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
 		
 		$this->load->vars($data);
-		$this->load->view('member/old/template');
+		$this->load->view('member/template');
+	}
+	function get_destnation_detail()
+	{
+		$uid =  $this->uri->segment('4');
+		$destination = $this->Mix->get_destination_detail($uid);
+		if(!empty($destination))
+		{
+			
+			echo "
+				<label class=\"desc\">Area in detail :
+				</label>
+				";
+				echo form_dropdown('destination',$destination,'0');
+			echo "
+				<div class=\"clr\"></div>
+				";
+		}
+	}
+	function get_detail_hotel()
+	{
+		$url = $this->uri->segment('4');
+		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$data['title']="Member | Reservation | List Hotel | Hotel";
+		$data['page'] = "business/hotel";
+		$data['nav'] = "reservation";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		$data['hotel']= $this->Mix->read_row_by_one('uid',$url,'tx_rwadminhotel_hotel');
+		$data['room_types'] = $this->Mix->read_rows_by_one('uid_hotel',$url,'tx_rwadminhotel_cat_room');
+		$data['hotel_facilities'] = $this->Mix->read_row_by_one('uid_hotel',$url,'tx_rwadminhotel_facilities_hotel');
+		$this->load->vars($data);
+		$this->load->view('member/template');
 	}
 }

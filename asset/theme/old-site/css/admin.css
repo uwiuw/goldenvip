@@ -992,3 +992,123 @@ a.button, a.button:hover{text-decoration:none;}
     font-weight: bold;
 }
 .browse-data{background:url(../images/browse-icon.png) center no-repeat; width:16px; height:16px; display:block;}
+#find {
+    background-color: #FFFFFF;
+    border-color: #CCCCCC;
+    border-radius: 15px 15px 15px 15px;
+    border-style: solid;
+    float: left;
+    margin-top: 10px;
+    padding-top: 30px;
+    width: 410px;
+}
+.et-form div {
+    margin-bottom: 5px;
+}
+.et-form div {
+    padding-bottom: 2px;
+}
+.et-form .desc {
+    display: block;
+    float: left;
+    font-size: 12px;
+    margin: 0 20px 0 0;
+    padding-top: 8px;
+    text-align: right;
+    width: 128px;
+}
+.et-form div p {
+    color: #888888;
+    display: block;
+    float: left;
+    font-size: 11px;
+    padding: 8px 5px;
+}
+.et-form div .errdisp {
+    color: red;
+    display: block;
+    float: left;
+    font-size: 12px;
+    padding: 8px 5px;
+}
+.et-form div input[type="radio"] {
+    margin: 15px 5px 0 0;
+}
+.et-form div textarea, .et-form div select, .et-form div input[type="file"], .et-form div input[type="password"], .et-form div input[type="text"] {
+    border: 2px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    color: #888888;
+    display: block;
+    float: left;
+    font-size: 14px;
+    margin-right: 5px;
+    padding: 8px 5px;
+    width: 240px;
+}
+.et-form div .et-form-btn {
+    background-color: #666666;
+    border: 2px solid #CCCCCC;
+    border-radius: 15px 15px 15px 15px;
+    color: #CCCCCC;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 10px 20px 144px;
+    padding: 10px 30px;
+}
+.et-form div #button1 .et-form-btn {
+    background-color: #666666;
+    border: 2px solid #CCCCCC;
+    border-radius: 15px 15px 15px 15px;
+    color: #CCCCCC;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 10px 20px 236px;
+    padding: 10px 30px;
+}
+.clr {
+    clear: both;
+}
+#lipo {
+    margin-left: 60px;
+	font-size:0.6em;
+}
+#lipo a {
+    color: red;
+}
+
+#next {
+    background: url("../images/reservation/next_res.png") no-repeat scroll 2px 50px transparent;
+	width:40px;
+	height:100%;
+	display:block;
+	cursor:pointer;
+}
+#prev {
+    background: url("../images/reservation/prev_res.png") no-repeat scroll 2px 50px transparent;
+    width:40px;
+	height:100%;
+	display:block;
+	cursor:pointer;
+}
+.shadow-right {
+    background: url("../images/reservation/shadow_right.png") no-repeat scroll 0 0 transparent;
+    height: 128px; 
+    right: -8px;
+    top: -5px;
+    width: 15px;
+	display:block;
+	float:left;
+}
+.shadow-left {
+    background: url("../images/reservation/shadow_left.png") no-repeat scroll 0 0 transparent;
+    height: 128px;
+    left: -17px; 
+    top: -5px;
+    width: 15px;
+	display:block;
+	float:left;
+}

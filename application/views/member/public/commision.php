@@ -211,7 +211,11 @@
 										$d = $this->Mix->read_row_ret_field_by_value('fe_users','uid',$u['username'],'username');
 										if(isset($d['uid']))
 										{
-										$sql = "select a.*,b.category_name,b.retail_rate,b.rate as golden_rate,c.hotel_name from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid where a.deleted=0 and a.PA=1 and a.uid_member='".$d['uid']."' order by a.uid desc";
+										$sql = "select a.*,b.category_name,b.retail_rate,b.rate as golden_rate,c.hotel_name 
+												from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b 
+												ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c 
+												ON b.uid_hotel=c.uid 
+												where a.deleted=0 and a.PA=1 and a.uid_member='".$d['uid']."' order by a.uid desc";
 										}
 										else
 										{
@@ -250,7 +254,8 @@
 													<td><?php echo $row['category_name']; ?></td>
 													<td><?php echo $row['qty']; ?></td>
 													<td><?php $night = diffDay($row['check_in'],$row['check_out']); echo $night; ?></td>
-													<td><?php $profit = $night * $row['rate']; echo "IDR ".number_format($profit); ?></td>
+													<td><?php echo "IDR ".number_format($row['rate']);
+													?></td>
 													<td><strong><?php if($row['payed']=='1'){echo "paid";}else{echo "unpaid";} ?></strong></td>
 												</tr> 
                                                 <?php $i++;}?>
