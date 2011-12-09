@@ -1,0 +1,2 @@
+<INCLUDE_TYPOSCRIPT: source="FILE: fileadmin/templates/currTheme/ts/extension_configuration/plugin.ttnews.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE: fileadmin/templates/currTheme/ts/extension_configuration/plugin.felogin.ts">
