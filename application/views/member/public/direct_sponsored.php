@@ -1,8 +1,8 @@
 <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 	jQuery(function(){
-		jQuery("#myTable").tablesorter();
-		jQuery('#myTable tbody tr:odd').addClass('odd');
+			jQuery("#myTable").tablesorter();
+			jQuery('#myTable tbody tr:odd').addClass('odd');
 		});
 </script>
 <div class="container">

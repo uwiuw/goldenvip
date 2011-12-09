@@ -3,7 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title><?php echo $title; ?></title>
+  <?php if($this->uri->segment('3')=='join-now') { ?>
+  <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/style.css" type="text/css">
+  <?php }else { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/admin.css" type="text/css">
+  <?php } ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/tipsy.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/blue_style.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/style-nav.css" type="text/css">

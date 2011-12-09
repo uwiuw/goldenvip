@@ -1,4 +1,5 @@
 <div class="container">
+			
 			<div id="page-backoffice">             
 				<div id="home-office">
 					<div id="home-top">
@@ -8,11 +9,22 @@
 					</div>
 					<div id="home-bottom">
 						<p>
-                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); ?> By clicking HERE You can register and fill in your new member's profile completely 
+                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> <br/>
+                            <?php if($this->session->userdata('ucat')!='4') { ?>
+                            Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); } ?> By clicking 
+                            <a target="_blank" href="<?php echo site_url("member/post_data/join-now/".$this->session->userdata('member')); ?>">
+								<strong style="color: red; font-size: 16px;">HERE</strong>
+							</a> 
+							You can register and fill in your new member's profile completely.
                             </b>
                         </p>
+                        <br />
                         <p>
-                        	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to LOGOUT  when it's done.
+                        	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to 
+                            <a class="internal-link" title="Logout" href="<?php echo site_url('member/logout'); ?>">
+                            	<b style="color: red; font-size: 16px;">LOGOUT</b>
+                            </a>
+                              when it's done.
                             <pre style="display:none;">
                         	  Conratulation on achieving your 6000 poin point rewards, you've entitle to have your 1 (one) complimentary of VIP Package.
                             </pre>

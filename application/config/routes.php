@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-	/*
+/*
   | -------------------------------------------------------------------------
   | URI ROUTING
   | -------------------------------------------------------------------------
@@ -69,17 +69,17 @@ $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 $route['member'] = 'member/main';
 $route['member/home-page'] = 'member/main';
 $route['member/profile'] = 'member/main/profile';
-	$route['member/report/genealogy'] = 'member/main/report';
-	$route['member/report/commision'] = 'member/main/commision';
-	$route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';        
-	$route['member/back-office'] = 'member/main/back_office';
-	$route['member/thank-you-registering'] = 'member/main/thankyou';
-	$route['member/logout']='member/main/member_logout';
-	$route['member/check-login'] = 'member/main/check_login';
-	$route['member/join-now'] = 'member/main/join_now';
+$route['member/report/genealogy'] = 'member/main/report';
+$route['member/report/commision'] = 'member/main/commision';
+$route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';
+$route['member/back-office'] = 'member/main/back_office';
+$route['member/thank-you-registering'] = 'member/main/thankyou';
+$route['member/logout'] = 'member/main/member_logout';
+$route['member/check-login'] = 'member/main/check_login';
+$route['member/join-now'] = 'member/main/join_now';
 # member package business
 $route['member/1/reservation'] = 'member/business';
-$route['member/1/use-this-reservation-for']='member/business/set_reservation';
+$route['member/1/use-this-reservation-for'] = 'member/business/set_reservation';
 $route['member/1/save-reservation'] = 'member/business/save_reservation';
 $route['member/2/reservation'] = 'member/travel';
 $route['member/3/reservation'] = 'member/vip';
@@ -93,7 +93,7 @@ $route['engine'] = 'engine/mlmmanagement';
 
 
 # hotel and reservation
-$route['admin-hotel'] = 'admin_hotel'; 
+$route['admin-hotel'] = 'admin_hotel';
 $route['admin-hotel/check-login'] = 'admin_hotel/check_login';
 $route['admin-hotel/login'] = 'admin_hotel/member_login';
 $route['admin-hotel/logout'] = 'admin_hotel/member_logout';
