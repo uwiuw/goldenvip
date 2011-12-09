@@ -207,6 +207,8 @@ class Mix extends CI_Model
 	}
 	
 	// custom
+	
+	
 	function read_province($uid,$hidden='0')
 	{
 		$data = array(); 
@@ -256,6 +258,24 @@ class Mix extends CI_Model
 			foreach($q->result_array() as $row)
 			{
 				$data[$row['uid']] = $row['firstname']." ".$row['lastname'];
+			}
+		}
+		$q->free_result();
+		return $data;
+	}
+	
+	function get_destination_detail($val='0')
+	{
+		$data = array();
+		$this->db->where('hidden','0');
+		$this->db->where('uid_destination',$val);
+		$q = $this->db->get('tx_rwmembermlm_destination_detail');
+		if($q->num_rows()>0)
+		{
+			$data['0']= '-- select --';
+			foreach($q->result_array() as $row)
+			{
+				$data[$row['uid']] = $row['destination_detail'];
 			}
 		}
 		$q->free_result();

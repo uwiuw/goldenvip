@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session');
+$autoload['libraries'] = array('database','session','mlm_member');
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','rdata','mlm','voucher','admin', 'admin_hotel');
+$autoload['helper'] = array('url','form','mlm','voucher','admin', 'admin_hotel');
 
 
 /*

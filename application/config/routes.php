@@ -66,16 +66,26 @@ $route['_admin/generate_vc'] = 'panel/main/generate_vc';
 $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 
 # member area
-$route['member'] = 'member';
-$route['member/home-page'] = 'member';
-$route['member/profile'] = 'member/profile';
-	$route['member/report/genealogy'] = 'member/report';
-	$route['member/report/commision'] = 'member/commision';
-	$route['member/report/direct-sponsored'] = 'member/direct_sponsored';
-	$route['member/back-office'] = 'member/back_office';
-	$route['member/thank-you-registering'] = 'member/thankyou';
-	$route['member/logout']='member/member_logout';
-	$route['member/check-login'] = 'member/check_login';
+$route['member'] = 'member/main';
+$route['member/home-page'] = 'member/main';
+$route['member/profile'] = 'member/main/profile';
+	$route['member/report/genealogy'] = 'member/main/report';
+	$route['member/report/commision'] = 'member/main/commision';
+	$route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';        
+	$route['member/back-office'] = 'member/main/back_office';
+	$route['member/thank-you-registering'] = 'member/main/thankyou';
+	$route['member/logout']='member/main/member_logout';
+	$route['member/check-login'] = 'member/main/check_login';
+	$route['member/join-now'] = 'member/main/join_now';
+# member package business
+$route['member/1/reservation'] = 'member/business';
+$route['member/1/use-this-reservation-for']='member/business/set_reservation';
+$route['member/1/save-reservation'] = 'member/business/save_reservation';
+$route['member/2/reservation'] = 'member/travel';
+$route['member/3/reservation'] = 'member/vip';
+
+# member business saving reservation
+$route['member/reservation/list-hotel'] = 'member/business/list_hotel';
 
 # test area
 $route['test'] = 'test';
