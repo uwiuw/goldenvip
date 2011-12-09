@@ -102,5 +102,4 @@ class Main extends CI_Controller {
 			echo "invalid input";
 		}
 	}
-	
 }

@@ -13,12 +13,16 @@
 	{
 		send_form(document.search_form,'_admin/post_data/search_distributor','#result-show-finding');
 	}
+	jQuery(function(){
+		jQuery("#myTable").tablesorter();
+		jQuery('#myTable tbody tr:odd').addClass('odd');
+	});
 </script>
 <h2><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
 <form name="search_form" onsubmit="searching_data();">
 	<table width="100%">
     	<tr align="right">
-        	<td class="no-color" align="left"> The table only displays data less than 50 records</td>
+        	<td class="no-color" align="left"> The table only displays data less than 50x records</td>
         	<td class="no-color">Search Distributor Here : </td>
         	<td width="10%" class="no-color"><input type="text" name="reg"  /></td>
             <td width="5%" class="no-color"><a class="button" href="javascript:void();" onclick="searching_data();">Find</a></td>
@@ -27,7 +31,7 @@
 </form>
 
 <form name="form_data">
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table id="myTable" class="tablesorter" cellspacing="0">
     <thead>
         <tr>
             <th width="4%">

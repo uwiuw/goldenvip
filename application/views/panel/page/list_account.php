@@ -12,6 +12,10 @@
 	{
 		send_form(document.search_form,'_admin/post_data/search_distributor','#result-show-finding');
 	}
+	jQuery(function(){
+			jQuery("#myTable").tablesorter();
+			jQuery('#myTable tbody tr:odd').addClass('odd');
+		});
 </script>
 
 <h2><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
@@ -27,7 +31,7 @@
 </form>
 
 <form name="form_data">
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
     <thead>
         <tr>
             <th width="4%">

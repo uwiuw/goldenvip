@@ -21,11 +21,10 @@
 <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.ui.core.js"></script>
 <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.ui.widget.js"></script>
 <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/style/tablesorter/blue.css" type="text/css">
+<script src="<?php echo base_url(); ?>asset/js/plugin/jquery.tablesorter.min.js"></script>
 
-
-
-
-<script>
+<script type="text/javascript">
 	var site = '<?php echo site_url(); ?>';
 	var image = "<?php echo base_url();?>asset/images/loading.gif";
 </script>

@@ -130,10 +130,27 @@ class Main extends CI_Controller {
 			case "list-hotel":
 				$this->get_detail_hotel();
 				break;
+			case "join-now":
+				is_member();
+				$this->join_now_by_member();
+				break;
 		}
 	}
 	
 	# call action function from site_url/segment_2/segment_3/uri
+	function join_now_by_member()
+	{
+		$data['title']="Member | Home Page";
+		$data['page'] = "join_now_by_member";
+		$data['nav'] = "homepage";
+		$data['country'] = $this->Mix->dropdown_menu('uid','country','tx_rwmembermlm_phonecountrycode');
+		$data['bank'] = $this->Mix->dropdown_menu('uid','bank','tx_rwmembermlm_bank');
+		$data['package'] = $this->Mix->dropdown_menu('uid','package','tx_rwmembermlm_package');
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$this->load->vars($data);
+		$this->load->view('member/template');
+	}
 	
 	function del_dist()
 	{

@@ -1,5 +1,5 @@
 <?php
-/*
+/* 
 	* class ini digunakan untuk memberikan kemudahan dalam menangani fungsi-fungsi dalam manajamen member mygoldenvip.com
 	* 
 */

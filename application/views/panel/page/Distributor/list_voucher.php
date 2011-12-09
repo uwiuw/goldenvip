@@ -14,6 +14,10 @@
 		v = jQuery('#distributor').val();
 		load_no_image('_admin/post_data/get_vc_by_dist/'+v,'#list_voucher');
 	}
+	jQuery(function(){
+		jQuery("#myTable").tablesorter();
+		jQuery('#myTable tbody tr:odd').addClass('odd');
+	});
 </script>
 
 <!-- style -->
@@ -51,27 +55,27 @@
 <br />
 <h2><a class="button add-new-h2" href="javascript:void();" onclick="load('_admin/generate_vc','#site-content');">Generate Voucher Code</a></h2>
 <br />
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
     <thead>
         <tr>
             <th width="4%">
-                <a href="#"><span>No</span></a>
+                <span>No</span>
             </th>
             <th width="20%">
-                <a href="#">Voucher Code</a>
+                Voucher Code
             </th>
             <th width="10%">
-                <a href="#">Status</a>
+                Status
             </th> 
             <th width="12%">
-                <a href="#">Issued Date</a>
+                Issued Date
             </th> 
             <th width="25%">
-                <a href="#">Distributor</a>
+                Distributor
             </th>
             
             <th width="8%">
-                <a href="#">Action</a>
+                Action
             </th>
         </tr>
     </thead>

@@ -15,7 +15,7 @@
                 
                 	<li class="wp-first-item"><a href="javascript:void(load('_admin/member','#site-content'));" class="wp-first-item" onclick="clear_txt();" tabindex="1">Member</a></li>
                     <li class="wp-first-item"><a href="javascript:void(load('_admin/voucher_code','#site-content'));" class="wp-first-item" onclick="clear_txt();" tabindex="1">Voucher Code</a></li>
-                    <li class="wp-first-item"><a href="javascript:void();" class="wp-first-item" onclick="clear_txt();" tabindex="1">Commision Payments</a></li>
+                    <li class="wp-first-item"><a href="javascript:void(load('_admin/comision_payment','#site-content'));" class="wp-first-item" onclick="clear_txt();" tabindex="1">Commision Payments</a></li>
                 </ul>
         </div>
    </li>

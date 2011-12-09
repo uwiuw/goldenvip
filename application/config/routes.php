@@ -65,6 +65,9 @@ $route['_admin/voucher_code'] = 'panel/main/list_voucher'; # admin area for mana
 $route['_admin/generate_vc'] = 'panel/main/generate_vc';
 $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 
+$route['_admin/comision_payment'] = 'panel/commission'; 
+$route['_admin/comision_payed'] = 'panel/commission/comision_payed';
+
 # member area
 $route['member'] = 'member/main';
 $route['member/home-page'] = 'member/main';
@@ -77,6 +80,7 @@ $route['member/profile'] = 'member/main/profile';
 	$route['member/logout']='member/main/member_logout';
 	$route['member/check-login'] = 'member/main/check_login';
 	$route['member/join-now'] = 'member/main/join_now';
+	$route['member/join-now/saving'] = 'member/main/join_now_saving';
 # member package business
 $route['member/1/reservation'] = 'member/business';
 $route['member/1/use-this-reservation-for']='member/business/set_reservation';

@@ -541,6 +541,10 @@ if(!function_exists('update_cyclebonus'))
 				set_point($uid,$r,'2');
 				$data['bonus'] = '25';
 				$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+				
+				$d = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$uid,'uid'); 
+				$com['commission'] = $d['commission']+$data['bonus'];
+				$CI->Mix->update_record('uid',$uid,$com,'tx_rwmembermlm_member');
 			}
 		}
 		else
@@ -556,6 +560,10 @@ if(!function_exists('update_cyclebonus'))
 					set_point($uid,$r,'2');
 					$data['bonus'] = '25';
 					$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+					
+					$d = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$uid,'uid'); 
+					$com['commission'] = $d['commission']+$data['bonus'];
+					$CI->Mix->update_record('uid',$uid,$com,'tx_rwmembermlm_member');
 				}
 			}
 		}
