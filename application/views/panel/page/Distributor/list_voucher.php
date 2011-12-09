@@ -6,7 +6,6 @@
 		$distributor[$row['uid']]=$row['firstname']." ".$row['lastname']." (".$row['username'].")";
 	}
 ?>
-
 <!-- script -->
 <script type="text/javascript">
 	function select_distributor()
@@ -14,6 +13,10 @@
 		v = jQuery('#distributor').val();
 		load_no_image('_admin/post_data/get_vc_by_dist/'+v,'#list_voucher');
 	}
+	jQuery(function(){
+		jQuery("#myTable").tablesorter();
+		jQuery('#myTable tbody tr:odd').addClass('odd');
+	});
 </script>
 
 <!-- style -->
@@ -41,37 +44,37 @@
     </tr>    
     <tr>
         <td>Hasn't been used</td>
-        <td>: <?php echo $data_unused['c_uid']; ?></td>
+        <td>: <?php echo $data_unused['data_unused']; ?></td>
     </tr>
     <tr>    
         <td>used</td>
-        <td>: <?php echo $data_used['c_uid']; ?></td>
+        <td>: <?php echo $data_used['data_used']; ?></td>
     </tr>
 </table>
 <br />
 <h2><a class="button add-new-h2" href="javascript:void();" onclick="load('_admin/generate_vc','#site-content');">Generate Voucher Code</a></h2>
 <br />
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
     <thead>
         <tr>
             <th width="4%">
-                <a href="#"><span>No</span></a>
+                <span>No</span>
             </th>
             <th width="20%">
-                <a href="#">Voucher Code</a>
+                Voucher Code
             </th>
             <th width="10%">
-                <a href="#">Status</a>
+                Status
             </th> 
             <th width="12%">
-                <a href="#">Issued Date</a>
+                Issued Date
             </th> 
             <th width="25%">
-                <a href="#">Distributor</a>
+                Distributor
             </th>
             
             <th width="8%">
-                <a href="#">Action</a>
+                Action
             </th>
         </tr>
     </thead>
@@ -81,11 +84,10 @@
 		$i=1;
 		foreach($total_data as $row) 
 		{
-			if(array_key_exists($row['distributor'],$distributor))
-			{ 
+			
 				
 	?>
-        <tr valign="top"> 
+        <tr valign="top" id="hidevc<?php echo $row['uid']; ?>"> 
             <td width="7%">
                 <?php echo $i; ?>.
             </td>
@@ -111,23 +113,25 @@
                 <?php echo $distributor[$row['distributor']]; ?>
             </td>
             <td>
-            	<a href="javascript:void();" onclick="dialog_box_delete('<?php echo $row['uid']; ?>','<?php echo $row['voucher_code']; ?>');" class="del-data"></a>
+            <?php 
+					if($row['status']=='0')
+					{
+						?>
+                        <a href="javascript:void()" onclick="load('_admin/post_data/del-vc/<?php echo $row['uid']; ?>/<?php echo $row['pid']; ?>','#info-saving');" class="del-data" ></a>
+                        <?php
+					}
+				?>
+                
+               
             </td>
         </tr>  
     <?php 
 			$i++;
-			}
+			
 		
 		} 
 	?>
     </tbody>
     
 </table>
-
-<div id="dialog-confirm" title="Delete Voucher Code?"> 
-	<p>
-    	<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-    	VC <b>"<span class="data-want-to-delete"></span>"</b> will be permanently deleted and cannot be recovered. Are you sure? 
-    </p>
-</div>   
  

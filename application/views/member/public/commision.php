@@ -222,6 +222,7 @@
 											$sql = "select uid from fe_users where username = '".$u['username']."'";
 										}
 										$retail_bonus = $this->Mix->read_more_rows_by_sql($sql);
+										
 										if(!empty($retail_bonus))
 										{ 
 									?>
@@ -254,7 +255,7 @@
 													<td><?php echo $row['category_name']; ?></td>
 													<td><?php echo $row['qty']; ?></td>
 													<td><?php $night = diffDay($row['check_in'],$row['check_out']); echo $night; ?></td>
-													<td><?php echo "IDR ".number_format($row['rate']);
+													<td><?php $rate = $row['rate']-$row['retail_rate']; echo "IDR ".number_format($rate);
 													?></td>
 													<td><strong><?php if($row['payed']=='1'){echo "paid";}else{echo "unpaid";} ?></strong></td>
 												</tr> 

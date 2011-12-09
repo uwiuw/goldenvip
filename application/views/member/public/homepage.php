@@ -1,18 +1,35 @@
 <div class="container">
+			
 			<div id="page-backoffice">             
 				<div id="home-office">
 					<div id="home-top">
 						<h2>Home Office</h2>
                         <div id="show-message">
+                            <div class="tx-rwmembermlm-pi1">
+                                <div class="not_null">
+                                    <a href="<?php echo site_url('member/list-member-request'); ?>"><?php echo $mreq['req']; ?> Members Request</a>
+                                </div>
+                            </div>
                         </div>						
 					</div>
 					<div id="home-bottom">
 						<p>
-                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); ?> By clicking HERE You can register and fill in your new member's profile completely 
+                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> <br/>
+                            <?php if($this->session->userdata('ucat')!='4') { ?>
+                            Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); } ?> By clicking 
+                            <a target="_blank" href="<?php echo site_url("member/post_data/join-now/".$this->session->userdata('member')); ?>">
+								<strong style="color: red; font-size: 16px;">HERE</strong>
+							</a> 
+							You can register and fill in your new member's profile completely.
                             </b>
                         </p>
+                        <br />
                         <p>
-                        	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to LOGOUT  when it's done.
+                        	This page facilitates you to edit your existing profile, updating your genealogy, confirming your simply reservations, mastering your compensation plans and updating your direct members and Cycle Bonuses achievements. Kindly remind to 
+                            <a class="internal-link" title="Logout" href="<?php echo site_url('member/logout'); ?>">
+                            	<b style="color: red; font-size: 16px;">LOGOUT</b>
+                            </a>
+                              when it's done.
                             <pre style="display:none;">
                         	  Conratulation on achieving your 6000 poin point rewards, you've entitle to have your 1 (one) complimentary of VIP Package.
                             </pre>
@@ -95,6 +112,17 @@
                                     	  <td>Commision: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$this->session->userdata('member'),'uid'); echo "<b>$".$d['commission']."</b>"; ?></td>
                                     	  <td>CV Point: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','cv',$this->session->userdata('member'),'uid'); echo "<b>".$d['cv']."</b>"; ?></td>
                                    	  </tr>
+                                      <?php 
+									  	$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$this->session->userdata('member'),'uid'); 
+										if($d['package'] > 2)
+										{
+											$sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '".$this->session->userdata('member')."' and hidden = '0'";
+											$point = $this->Mix->read_rows_by_sql($sql);
+										?>
+                                      <tr>
+                                      	<td colspan="2" align="right">Point Rewards : <?php echo $point['point_rewards']; ?></td>
+                                      </tr>
+                                      <?php } ?>
                                     </table>
                                 </p>
                       	</div>
@@ -106,7 +134,7 @@
                         </div>
                         <div class="section-cont" id="direct-sponsored">  
                         	<?php 
-								$sql = "select uid from tx_rwmembermlm_member where sponsor = '".$this->session->userdata('member')."' order by uid limit 0,10";
+								$sql = "select uid from tx_rwmembermlm_member where sponsor = '".$this->session->userdata('member')."' and hidden = '0' and valid ='1' order by uid limit 0,10";
 								$direct_sponsor = $this->Mix->read_more_rows_by_sql($sql);
 							?>
                         	       <table id="myTable2" class="tablesorter">

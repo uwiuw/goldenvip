@@ -10,7 +10,7 @@
 			buttonImageOnly: true,
 			changeMonth: true,
 			changeYear: true,
-			dateFormat:"d MM, yy",
+			dateFormat:"yy-m-d",
 			numberOfMonths: 3,
 			showButtonPanel: false
 		});
@@ -32,16 +32,21 @@
 	function reset_password(){
 		jQuery('#password').fadeIn();
 	}
+	function update_data_member()
+	{
+		send_form(document.update_member,'_admin/update_data_member','#info-saving');
+	}
 </script>
 <br /><br />
 <table width="550px;">
 	<tr>
     	<td><strong>*) Field is required.</strong></td>
-        <td align="right" width="120"><a class="button" href="javascript:void();" onclick="reset_password();">Save all change</a></td>
+        <td align="right" width="120"><a class="button" href="javascript:void();" onclick="update_data_member();">Save all change</a></td>
         <td align="right" width="120"><a class="button" href="javascript:void();" onclick="reset_password();">Reset Password</a></td>
     </tr>
 </table>
 <br />
+<form name="update_member">
 <table class="wp-list-table widefat" cellspacing="0">
     <thead>
         <tr>
@@ -57,10 +62,13 @@
         	<td>Create Date</td>
             <td><?php echo date('d M, Y H:i:s',$page['crdate']); ?></td>
         </tr>
-        
+       
         <tr>
         	<td>Username *</td>
-            <td><input type="text" readonly value="<?php echo $page['username']; ?>"></td>
+            <td>
+            	<input type="text" readonly value="<?php echo $page['username']; ?>">
+                <input type="hidden" name="uid" value="<?php echo $page['uid']; ?>" />
+            </td>
         </tr>
  		
         <tr id="password">
@@ -136,7 +144,7 @@
         <tr>
         	<td>Street Address*</td>
             <td>
-            	<textarea rows="5"><?php echo $page['address']; ?></textarea>
+            	<textarea rows="5" name="address"><?php echo $page['address']; ?></textarea>
             </td>
         </tr>
         
@@ -168,15 +176,6 @@
             <td><input type="text" value="<?php echo $page['name_on_bank_account']; ?>" name="name_on_bank_account" /></td>
         </tr>
         
-        <tr>
-        	<td>Verification *</td>
-            <td>
-            	<?php
-					$validitas = array('0'=>'not-valid','1'=>'valid');
-					echo form_dropdown('valid',$validitas,$page['valid']);
-				?>
-            </td>
-        </tr>
-        
     </tbody>
 </table>
+</form>

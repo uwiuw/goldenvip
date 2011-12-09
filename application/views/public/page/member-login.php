@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/admin.css" type="text/css">
 <!-- form -->
 <div id="contact-form">
     <div id="text-on-form">Member Login</div>

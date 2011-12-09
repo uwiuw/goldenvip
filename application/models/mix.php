@@ -245,6 +245,23 @@ class Mix extends CI_Model
 		return $data;
 	}
 	
+	function read_package_by_pid($pid='0')
+	{
+		$data = array(); 
+		$this->db->where('pid',$pid);
+		$q = $this->db->get('tx_rwmembermlm_destination');
+		$data['']= '-- select --';
+		if($q->num_rows()>0)
+		{
+			foreach($q->result_array() as $row)
+			{
+				$data[$row['uid']] = $row['destination'];
+			}
+		}
+		$q->free_result();
+		return $data;
+	}
+	
 	function read_disrtibutor($regional,$pid='67',$cat='3')
 	{
 		$data = array(); 

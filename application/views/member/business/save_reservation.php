@@ -44,7 +44,6 @@
 						<h1></h1>
 						<div class="box-detail-hotel"><a id="c122"></a>
 							<div class="tx-rwadminhotelmlm-pi1">
-								<div id="quest"><?php echo $tulisan; ?></div>
 								Terimakasih.
 							</div>
 						</div>

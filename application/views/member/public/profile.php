@@ -67,6 +67,18 @@
 			jQuery('.info').text('Password Not Same');
 		}
 	}
+	
+	function check()
+	{
+		if(jQuery('input#password2').val() != jQuery('input#password').val())
+		{
+			jQuery('.info').text('Password Not Same');
+		}
+		else
+		{
+			document.forms["update_data"].submit();
+		}
+	}
 </script>
 <div class="container">
 <div id="show-ctn-member"> 
@@ -79,9 +91,11 @@
 				<p><strong>* ) Field should be completed and not empty</strong></p>
 				<div align="right">
                     <input type="button" value="Change Password" id="change-pwd" />
+                    <?php if($this->session->flashdata('info')) { ?><div class="error"><?php echo $this->session->flashdata('info'); ?></div><?php } ?>
                 </div>
 				
 <br />
+<form name="update_data" action="<?php echo site_url('member/profile/update-profile'); ?>" method="post">
 <table class="tablesorter" id="tablesorter" cellspacing="1" cellpadding="0">
     <thead>
         <tr>
@@ -106,7 +120,9 @@
         
         <tr>
         	<td>Username *</td>
-            <td><input type="text" readonly value="<?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$this->session->userdata('member'),'uid'); echo $d['username'];  ?>"></td>
+            <td>
+            <input type="text" readonly value="<?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$this->session->userdata('member'),'uid'); echo $d['username'];  ?>">
+            </td>
         </tr>
  		
         <tr class="password">
@@ -187,7 +203,7 @@
         <tr>
         	<td>Street Address*</td>
             <td>
-            	<textarea rows="5"><?php echo $member['address']; ?></textarea>
+            	<textarea rows="5" name="address" ><?php echo $member['address']; ?></textarea>
             </td>
         </tr>
         
@@ -198,6 +214,7 @@
 					$ex = "disabled='1'";
 					echo form_dropdown('regional',$city,$member['regional'],$ex); 
 				?>
+                <input type="hidden" name="regional" value="<?php echo $member['regional']; ?>" />
             </td>
         </tr>
         
@@ -237,7 +254,7 @@ Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
         
     </tbody>
 </table>
-<input type="button" value="Update" /> <input type="button" onclick="history.go(-1)" value="Back" />
+<input type="button" value="Update" onclick="check();" /> <input type="button" onclick="history.go(-1)" value="Back" />
         <br />    <br />  
                <!-- barbar area -->
                	<?php 
@@ -278,6 +295,7 @@ Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
 											<?php $i ++;} ?>	
 										</tbody>
 									</table>
+                                    </form>
 								</div>
                
                <!-- end of barbar area -->

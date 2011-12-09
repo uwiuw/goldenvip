@@ -45,13 +45,16 @@ class Main extends CI_Controller {
 	function list_voucher()
 	{
 		$data['data'] = getAccountMLM(); 
-		$sql = "select * from tx_rwmembermlm_vouchercode";
+		$sql = "select a.* from tx_rwmembermlm_vouchercode a, tx_rwmembermlm_member b 
+where a.distributor = b.uid ";
 		$data['total_data'] = $this->Mix->read_more_rows_by_sql($sql);
 		
-		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='1'";
+		$sql = "select count(a.uid) as data_used from tx_rwmembermlm_vouchercode a, tx_rwmembermlm_member b 
+where a.distributor = b.uid and status='1' ";
 		$data['data_used'] = $this->Mix->read_rows_by_sql($sql);
 		
-		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='0'";
+		$sql = "select count(a.uid) as data_unused from tx_rwmembermlm_vouchercode a, tx_rwmembermlm_member b 
+where a.distributor = b.uid and status='0'";
 		$data['data_unused'] = $this->Mix->read_rows_by_sql($sql);
 		
 		$this->load->view('panel/page/distributor/list_voucher',$data); 
@@ -81,7 +84,7 @@ class Main extends CI_Controller {
 				}
 				else
 				{
-					$data['crdate'] = date('Y-m-d');
+					$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 					$data['distributor'] = $this->input->post("distributor");
 					$vc = get_voucher_code($int_vc);
 					foreach($vc as $row)
@@ -103,4 +106,39 @@ class Main extends CI_Controller {
 		}
 	}
 	
+	function update_data_member()
+	{
+		$data = array();
+		$uid = $this->input->post('uid');
+		if($this->input->post('password'))
+		{
+			$data['password'] = md5($this->input->post('password'));
+		}
+		$data['firstname'] =  $this->input->post('firstname');
+		$data['lastname'] = $this->input->post('lastname');
+		$data['dob'] = $this->input->post('dob');
+		$data['email'] = $this->input->post('email');
+		$data['country'] = $this->input->post('country');
+		$this->input->post('contrycode');
+		$data['homephone'] = $this->input->post('contrycode')." ".$this->input->post('homephone');
+		$data['mobilephone'] = $this->input->post('contrycode')." ".$this->input->post('mobilephone');
+		$data['province'] = $this->input->post('province');
+		$data['city'] = $this->input->post('city');
+		$data['address'] = $this->input->post('address');
+		$data['regional'] = $this->input->post('regional');
+		$data['bank_account_number'] = $this->input->post('bank_account_number');
+		$data['bank_name'] = $this->input->post('bank_name');
+		$data['name_on_bank_account'] = $this->input->post('name_on_bank_account');
+		$this->Mix->update_record('uid',$uid,$data,'tx_rwmembermlm_member');
+		echo "
+				<script type=\"text/javascript\">
+					jQuery(function(){
+						jQuery('#info-saving').addClass('update-nag');
+					});
+				</script>
+			";
+		echo "Data has been update";
+		
+		
+	}
 }

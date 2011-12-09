@@ -12,9 +12,13 @@
 	{
 		send_form(document.search_form,'_admin/post_data/search_distributor','#result-show-finding');
 	}
+	jQuery(function(){
+			jQuery("#myTable").tablesorter();
+			jQuery('#myTable tbody tr:odd').addClass('odd');
+		});
 </script>
 
-<h2><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
+<h2 style="display:none;"><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
 <form name="search_form" onsubmit="searching_data();">
 	<table width="100%">
     	<tr align="right">
@@ -27,7 +31,7 @@
 </form>
 
 <form name="form_data">
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
     <thead>
         <tr>
             <th width="4%">
@@ -76,17 +80,24 @@
                 <?php echo $row['city']; ?>
             </td>
             <td>
-            <a href="javascript:void();" onclick="load('_admin/post_data/get_member/<?php echo $row['uid']; ?>/<?php echo $row['pid']; ?>','#site-content')" class="browse"></a><a href="javascript:void();" onclick="dialog_box_delete('<?php echo $row['uid']; ?>','<?php echo $row['firstname']." ".$row['lastname']; ?>');" class="del-data"></a>
+            <a href="javascript:void();" onclick="load('_admin/post_data/get_member/<?php echo $row['uid']; ?>/<?php echo $row['pid']; ?>','#site-content')" class="browse"></a>
+            <?php 
+				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','valid',$row['uid'],'uid'); 
+				if($d['valid']=='1')
+				{
+			?>
+            <a href="javascript:void()" onclick="load('_admin/post_data/hide_member/<?php echo $row['uid']; ?>/<?php echo $row['pid']; ?>','#info-saving');" class="lampunyala" id="hide<?php echo $row['uid']; ?>"></a>
+            <?php 
+				}
+				else
+				{
+			?>
+            <a href="javascript:void()" onclick="load('_admin/post_data/hide_member/<?php echo $row['uid']; ?>/<?php echo $row['pid']; ?>','#info-saving');" class="lampumati"  id="hide<?php echo $row['uid']; ?>"></a>
+            <?php } ?>
             </td>
         </tr>  
     <?php $i++;} ?>
     </tbody>
 </table>    
   
-<div id="dialog-confirm" title="Delete item?"> 
-	<p>
-    	<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-    	These data : <b>"<span class="data-want-to-delete"></span>"</b> will be permanently deleted and cannot be recovered. Are you sure? 
-    </p>
-</div>    
 

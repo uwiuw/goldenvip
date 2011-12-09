@@ -1,6 +1,7 @@
 <script type="text/javascript">
 	jQuery(function(){
 		jQuery('.button-price').hide();
+		jQuery('.qtyhide').hide();
 	});
 	function cek_book(el,f){
 		if(document.getElementById(el).value=="null"){
@@ -9,10 +10,11 @@
 			document.forms[f].submit();
 		}
 	}
-	function select_to_booking(sel,compl)
+	function select_to_booking(sel,compl,qty)
 	{
 		jQuery(sel).hide();
 		jQuery(compl).fadeIn();
+		jQuery(qty).fadeIn();
 	}
 </script>
 <link rel="stylesheet" href="http://wpver.com/typo3conf/ext/rw_admin_hotel_mlm/css/reservation.css" type="text/css">
@@ -48,7 +50,7 @@
 											foreach($room_types as $row)
 											{
 										?>
-                                        	<form id="book<?php echo $row['uid']; ?>" method="POST" action="<?php echo site_url(); ?>member/1/use-this-reservation-for">
+                                        	<form id="book<?php echo $row['uid']; ?>" method="POST" action="<?php echo site_url(); ?>member/reservation/business/use-this-reservation-for">
                                             <input type="hidden" name="uid_room" value="<?php echo $row['uid']; ?>" />
 											<table cellspacing="0" style="width: 100%;" class="featureRooms">
 												<thead>
@@ -66,7 +68,7 @@
 															<div>Available</div>
 														</th>
 														<th class="roomPrice">
-															<div>Qty</div>
+															<div class="qty<?php echo $row['uid']; ?> qtyhide">Qty</div>
 														</th>
 														<th class="roomPrice">
 															<div>Reservation</div>
@@ -80,7 +82,7 @@
 															<td style="color: red; font-size: 16px; font-weight: bold;" class="maxPeople"><?php echo $row['published_rate']; ?></td>
 															<td class="maxPeople"><?php echo $row['stok']; ?></td>
 															<td class="maxPeople">
-                                                            	<select id="jumlah_book<?php echo $row['uid']; ?>" name="jumlah">
+                                                            	<select id="jumlah_book<?php echo $row['uid']; ?>" name="jumlah" class="qty<?php echo $row['uid']; ?> qtyhide">
                                                                 	<option value="null" selected="selected">0</option>
                                                                     <?php for($i=1;$i<=$row['stok'];$i++) { ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
@@ -89,7 +91,7 @@
                                                             </td>
 															<input type="hidden" value="1" name="compliment_type">
 															<td align="center" id="buttonRes" class="maxPeopleReservation" rowspan="3">
-                                                            <a href="javascript:void(select_to_booking('#select<?php echo $row['uid']; ?>','#compliment_button<?php echo $row['uid']; ?>'));" id="select<?php echo $row['uid']; ?>">Select</a>
+                                                            <a href="javascript:void(select_to_booking('#select<?php echo $row['uid']; ?>','#compliment_button<?php echo $row['uid']; ?>','.qty<?php echo $row['uid']; ?>'));" id="select<?php echo $row['uid']; ?>">Select</a>
                                                             <input type="button" onclick="cek_book('jumlah_book<?php echo $row['uid']; ?>','book<?php echo $row['uid']; ?>')" value="Book now" id="compliment_button<?php echo $row['uid']; ?>" name="compliment_button" class="button-price">
                                                             <input type="hidden" value="<?php 
 																			$profit = $row['rate']-$row['retail_rate'];
