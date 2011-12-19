@@ -1,0 +1,416 @@
+#find{
+    width: 410px;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    margin-top: 10px;
+    padding-top: 30px;
+    background-color: #FFFFFF;
+    float: left;
+    
+}
+#kwitansi{
+    width: 425px;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    margin-top: 10px;
+    padding-top: 30px;
+    background-color: #FFFFFF;
+    float: left;
+    margin-left: 265px;
+    
+}
+#pack{
+    width: 500px;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    margin-top: 10px;
+    padding-top: 30px;
+    background-color: #FFFFFF;
+    float: left;
+    height: 346px;
+    
+}
+#pack-list-hotel{
+    width:994px;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    margin-top: 10px;
+    padding-top: 15px;
+    background-color: #FFFFFF;
+    float: left;
+    height: 350px;
+    
+}
+.clr { clear: both; }
+.et-form div{
+    margin-bottom: 5px;    	
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.et-form div{
+    padding-bottom: 2px;    	
+}
+}
+.et-form .desc{
+   
+    width: 128px;
+	margin: 0 20px 0 0;
+	padding-top: 8px;
+	font-size: 12px;
+	text-align: right;
+	display: block;
+	float: left;
+}
+.et-form div p{
+    padding: 8px 5px;	
+	font-size: 11px;
+	color: #888;
+	display: block;
+	float: left;	
+}
+.et-form div .errdisp{
+    padding: 8px 5px;	
+	font-size: 12px;
+	color: red;
+	display: block;
+	float: left;	
+}
+.et-form div input[type="radio"]{
+    margin: 15px 5px 0 0;
+}
+.et-form div textarea,
+.et-form div select,
+.et-form div input[type="file"],
+.et-form div input[type="password"],
+.et-form div input[type="text"] {
+    margin-right: 5px;
+	padding: 8px 5px;
+	border: 2px solid #ccc;
+	font-size: 14px;
+	color: #888;
+	display: block;
+	float: left;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+    width : 240px;
+}
+.et-form div .et-form-btn {
+	margin: 20px 10px 20px 144px;
+	padding: 10px 30px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ccc;
+	background-color: #666666;
+	border: 2px solid #ccc;
+	display: block;
+	cursor: pointer;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+.et-form div #button1 .et-form-btn {
+	margin: 20px 10px 20px 236px;
+	padding: 10px 30px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ccc;
+	background-color: #666666;
+	border: 2px solid #ccc;
+	display: block;
+	cursor: pointer;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+.tx-adminhotel-pi1 p{
+    margin-left: 200px;
+    color: red;
+    
+}
+#pagination{
+    margin-top: 300px;
+    text-align: center;
+}
+#box-list-hotel-percity{
+    float:left;
+    font-size:13px;
+    height:50px;
+    padding-bottom:131px;
+    padding-left:10px;
+    width:100%;
+}
+.tx-rwadminhotelmlm-pi1 #pack-list-hotel #box-list-hotel-percity h3{
+    padding-bottom: 5px;
+    font-size: 16px;
+    color: #6A5E47;
+    font-family: Arial;
+}
+ .tx-rwadminhotelmlm-pi1 #pack-list-hotel #box-list-hotel-percity li{
+    padding-left:  20px;
+}
+#box-list-hotel-percity #List{
+    margin-left:173px;
+margin-right:31px;
+margin-top:-124px;
+}
+.headerTable{
+    background-color: red;
+}
+.featuredRooms th div {
+    font-weight:bold;
+}
+
+.firstThFeatRms{
+    text-align:left;
+    width:20em;
+    background-color: #ECE098;
+}
+.maxPersons{
+    text-align:center;
+    width:15em;
+    background-color: #ECE098;
+}
+.conditions{
+    text-align:center;
+    width:15em;
+    background-color: #ECE098;
+}
+.roomAvailability{
+    text-align:center;
+    width:14em;
+    background-color: #ECE098;
+}
+.maxPeople{
+    text-align: center;
+}
+#pack-list-hotel #box-list-hotel-percity #List td {
+    border-top-color:#FFF0C4;
+    border-top-style:solid;
+    border-top-width:1px;
+    padding-bottom:0.15em;
+    padding-left:0;
+    padding-right:0;
+    padding-top:0.15em;
+}
+.roomPrice{
+    text-align:center;
+    width:15em;
+    background-color: #ECE098;
+}
+#pack-list-room{
+    width: 100%;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    margin-top: 10px;
+    padding-top: 15px;
+    background-color: #FFFFFF;
+    float: left;
+    height: 350px;
+    
+}
+#detail-hotel .box-detail-hotel .tx-rwadminhotelmlm-pi1 h2{
+    color:#003580;
+    font-family:Arial,Helvetica,sans-serif;
+}
+.nowrap img{
+    padding-left:15px;
+    padding-top:10px;
+    position:absolute;
+}
+.location{
+    font-size: 13px;
+    font-style: italic;
+    color:#003580;
+    font-family:Arial,Helvetica,sans-serif;
+}
+.overview .listImage{
+    float:left;
+    margin-left:262px;
+    margin-top:-263px;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    width:72%;
+}
+.overview .listImage img{
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom:10px;
+}
+#availability_target{
+    float: left;
+    width: 100%;
+}
+#maxotelRoomArea{
+    float: left;
+    width: 100%;
+}
+#summary{
+    float: left;
+    width: 100%;
+    line-height:1.2em;
+    color:#484848;
+    float:left;
+    font-family:arial,tahoma;
+    font-size:13px;
+    padding-left:6px;
+    padding-top:6px;
+    text-align: justify;
+}
+.firstThFeatRms{
+    width:130px;
+    font-family: arial;
+}
+.featureRooms {
+    font-family: arial;
+    font-size: 12px;
+}
+.containh2{
+    background-color:#E6EDF6;
+    border-bottom-color:#779BCA;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    clear:both;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    margin-top:20px;
+    padding-bottom:0;
+    padding-left:0;
+    padding-right:0;
+    padding-top:0.5em;
+}
+.overview{
+    padding-top: 30px;
+}
+#availability{
+    color:#003580;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:small;
+    background-color:#E6EDF6;
+    border-bottom-color:#779BCA;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    clear:both;
+    margin-top:20px;
+}
+.banner img{
+    margin-right: 5px;
+}
+#rooms{
+    background-color: #779BCA;
+}
+#List .overview #rooms{
+    color: #FFFFFF;
+    font-size: 16px;
+}
+.roomtype,.maxPeople{
+    background-color:#E6EDF6;
+    border-bottom-color:#779BCA;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    clear:both;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    margin-top:20px;
+    padding-bottom:0;
+    padding-left:0;
+    padding-right:0;
+    padding-top:0.5em;
+}
+.featureRooms{
+    padding-top:20px;
+}
+.fotoPerRooms{
+    background-color: #FFF9E7; padding: 20px;
+    
+    border-right-color:#779BCA;
+    border-right-style:solid;
+    border-right-width:1px;
+}
+.fotoPerRooms img{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.maxPeopleReservation{
+    background-color:#E6EDF6;
+    
+    clear:both;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    margin-top:20px;
+    padding-bottom:0;
+    padding-left:0;
+    padding-right:0;
+    padding-top:0.5em;
+}
+.fasilitas{
+    background-color: #FFF9E7; padding: 20px;
+    border-bottom-color:#779BCA;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-right-color:#779BCA;
+    border-right-style:solid;
+    border-right-width:1px;
+}
+#facilities_hotel #isi h4{
+    font-family: arial;
+    font-size: 12px;
+    font-weight: bold;
+}
+#facilities_hotel #isi{
+    border-bottom: 1px solid #FEBA02;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+.isinya{
+    color: #484848;
+    font-family: arial,tahoma;
+    font-size: 12px;
+    text-align: justify;
+}
+#info{
+    color: red;
+    padding-left: 30px;
+}
+#button1{
+    float: left;
+    width: 120px;
+    margin-left: -75px;
+}
+#button2{
+    float: left;
+    width: 50px;
+}
+#month, #year{
+    width: 124px;
+}
+#lipo{
+    margin-left:60px;
+}
+#lipo a{
+    color: red;
+}
+#cash{
+    color: red;
+    text-align: center;
+    font-size: 12px;
+    padding-left:10px;
+    padding-right:10px;
+}

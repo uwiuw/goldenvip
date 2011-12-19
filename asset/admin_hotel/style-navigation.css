@@ -1,0 +1,109 @@
+#nav{ margin-top:32px; }
+#nav, #nav * { padding:0; list-style:none; }
+#nav { position:relative; }
+
+#nav li { float:left; zoom:1; }
+#nav li.list-home{ background:url(../images/separator_menu.png) no-repeat; }
+#nav li a { padding-left: 10px; padding-right: 15px; color:#887b5f; font-weight:bold; line-height:35px; margin:0px; text-align:center; font-size:14px; background: url(../images/separator_menu.png) no-repeat right; display:block; }
+#nav li:hover { position:relative; }
+#nav li:hover a, #nav li a.active{ color:#fff; text-decoration: none !important;}
+
+#nav ul li{ float:none; margin-left: 0px; background: #fff7e6; width: 142px; margin-left: 2px;  }
+#nav ul li a { width:118px; height:22px; line-height:18px; padding-right: 0px; display:block; text-align: left; padding-left: 15px; padding-top: 1px; margin-left: 5px;
+     border-bottom: 1px dotted; margin-right: 15px; }
+#nav li:hover ul li a { color:#95876a; background:url(../images/list_panah.png) no-repeat left 8px; }
+
+#nav li:hover ul { visibility:visible; } 
+
+
+#nav ul{ 
+    background: url(../images/bg_menu_top.png) no-repeat; 
+    width: 145px;  
+    position: absolute; 
+    top:auto; 
+    left:0; 
+    z-index:10; 
+    margin-top: -8px; 
+    visibility: hidden;
+} 
+#nav li ul li.atas{ 
+    margin-top: 12px;
+ }
+ #nav ul li.bawah{
+    -moz-border-radius: 0px 0px 11px 11px;
+	-webkit-border-radius: 0px 0px 11px 11px;
+	border-radius: 0px 0px 11px 11px;
+	behavior: url(border-radius.htc);
+    
+ }
+ #nav ul li.bawah a{ border-bottom: none; }      
+
+@font-face {
+    font-family: "bauhaus";
+    src: url(BAUHAUS0.eot);
+    src: local("bauhaus"), url(Bauhausm.ttf) format("truetype");
+}
+#nav ul li a{ font-family: bauhaus; font-size: 11px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#navigation{ margin-top:32px; }
+#navigation, #navigation * { padding:0; list-style:none; }
+#navigation { position:relative; }
+
+#navigation li { float:left; zoom:1; }
+#navigation li.list-home{ background:url(../images/separator_menu.png) no-repeat; }
+#navigation li a { padding-left: 10px; padding-right: 15px; color:#887b5f; font-weight:bold; line-height:35px; margin:0px; text-align:center; font-size:14px; background: url(../images/separator_menu.png) no-repeat right; display:block; }
+#navigation li:hover { position:relative; }
+#navigation li:hover a, #navigation li a.active{ color:#fff; text-decoration: none !important;}
+
+#navigation ul li{ float:none; margin-left: 0px; background: #fff7e6; width: 142px; margin-left: 2px;  }
+#navigation ul li a { width:118px; height:22px; line-height:18px; padding-right: 0px; display:block; text-align: left; padding-left: 15px; padding-top: 1px; margin-left: 5px;
+     border-bottom: 1px dotted; margin-right: 15px; }
+#navigation li:hover ul li a { color:#95876a; background:url(../images/list_panah.png) no-repeat left 8px; }
+
+#navigation li:hover ul { visibility:visible; } 
+
+
+#navigation ul{ 
+    background: url(../images/bg_menu_top.png) no-repeat; 
+    width: 145px;  
+    position: absolute; 
+    top:auto; 
+    left:0; 
+    z-index:10; 
+    margin-top: -8px; 
+    visibility: hidden;
+} 
+#navigation li ul li.atas{ 
+    margin-top: 12px;
+ }
+ #navigation ul li.bawah{
+    -moz-border-radius: 0px 0px 11px 11px;
+	-webkit-border-radius: 0px 0px 11px 11px;
+	border-radius: 0px 0px 11px 11px;
+	behavior: url(border-radius.htc);
+    
+ }
+ #navigation ul li.bawah a{ border-bottom: none; }      
+
+@font-face {
+    font-family: "bauhaus";
+    src: url(BAUHAUS0.eot);
+    src: local("bauhaus"), url(Bauhausm.ttf) format("truetype");
+}
+#navigation ul li a{ font-family: bauhaus; font-size: 11px; }
+
+
+

@@ -98,8 +98,11 @@ $route['admin-hotel/check-login'] = 'admin_hotel/check_login';
 $route['admin-hotel/login'] = 'admin_hotel/member_login';
 $route['admin-hotel/logout'] = 'admin_hotel/member_logout';
 $route['admin-hotel/login/sub-menu-admin/profile'] = 'admin_hotel/profile';
+$route['admin-hotel/login/sub-menu-admin/bookings'] = 'admin_hotel/booking';
+$route['admin-hotel/login/sub-menu-admin/bookings/periode-print'] = 'admin_hotel/periode_print';
 $route['admin-hotel/login/sub-menu-admin/room-management'] = 'admin_hotel/room_management';
 $route['admin-hotel/login/sub-menu-admin/rooms-pics-updating'] = 'admin_hotel/rooms_pics_updating';
+$route['admin-hotel/login/sub-menu-admin/hotels-pics-updating'] = 'admin_hotel/hotels_pics_updating';
 
 /* End of file routes.php */
-/* Location: ./application/config/routes.php */ 
+/* Location: ./application/config/routes.php */
