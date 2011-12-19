@@ -45,7 +45,7 @@
 						<div class="box-detail-hotel"><a id="c122"></a>
 							<div class="tx-rwadminhotelmlm-pi1">
 								<div id="quest"><?php echo $tulisan; ?></div>
-								<form method="POST" action="<?php echo site_url(); ?>member/reservation/business/save-reservation">
+								<form method="POST" action="<?php echo site_url('member/reservation/business/save-reservation'); ?>">
 									<div id="button">
                                     	<a href="<?php echo site_url('member/reservation/business/set-for-other');?>">
 											<div class="et-form-btn">Others</div>

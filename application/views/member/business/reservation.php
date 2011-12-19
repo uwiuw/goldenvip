@@ -296,7 +296,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 								{
 									$sql = "select a.check_in, a.check_out,b.category_name,c.hotel_name 
 											from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
-											where a.deleted=0 and a.PA=1 and a.uid_member='180' order by a.uid desc";
+											where a.deleted=0 and a.PA=1 and a.uid_member='".$d['uid']."' order by a.uid desc";
 								}
 								else
 								{

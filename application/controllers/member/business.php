@@ -160,30 +160,41 @@ class Business extends CI_Controller
 		$sql = "select uid from tx_rwadminhotel_booking where hidden = '1' and uid_member = '".$uid_member['uid']."' ";
 		$uid = $this->Mix->read_rows_by_sql($sql);
 		
-		if($this->input->post('name'))
+		if(!empty($uid))
 		{
-			$data['name_reservation'] = $this->input->post('name');
-			$data['email'] = $this->input->post('email');
-			$data['insurance'] = $this->input->post('mega');
+			
+			if($this->input->post('name'))
+			{
+				$data['name_reservation'] = $this->input->post('name');
+				$data['email'] = $this->input->post('email');
+				$data['insurance'] = $this->input->post('mega');
+			}
+			
+			$data['hidden'] = '0';
+			$data['date_booking'] = date('Y-m-d H:i:s');
+			$data['pa'] = '1';
+			$data['receipt'] = '1';
+			$uid2 = $uid['uid'];
+			
+			$this->Mix->update_record('uid',$uid2,$data,'tx_rwadminhotel_booking');
+			$this->update_hotel($uid2);
+			disable_complimentary();
+			
+			$this->get_pdf($uid['uid']);
+		}
+		else
+		{
+			redirect('member/reservation/business','refresh');
 		}
 		
-		$data['hidden'] = '0';
-		$data['date_booking'] = date('Y-m-d H:i:s');
-		$data['pa'] = '1';
-		$data['receipt'] = '1';
-		$uid2 = $uid['uid'];
-		
-		$this->Mix->update_record('uid',$uid2,$data,'tx_rwadminhotel_booking');
-		$this->update_hotel($uid2);
-		disable_complimentary();
-        $post_data['title']="Member | Reservation | Use Reservation For ? ";
-        $post_data['page'] = "business/save_reservation";
-        $post_data['nav'] = "reservation";
-        $post_data['template']=base_url()."asset/theme/mygoldenvip/";
-		$post_data['destination'] = $this->Mix->dropdown_menu('uid','destination','tx_rwmembermlm_destination');
+        //$post_data['title']="Member | Reservation | Use Reservation For ? ";
+        //$post_data['page'] = "business/save_reservation";
+        //$post_data['nav'] = "reservation";
+        //$post_data['template']=base_url()."asset/theme/mygoldenvip/";
+		//$post_data['destination'] = $this->Mix->dropdown_menu('uid','destination','tx_rwmembermlm_destination');
         
-        $this->load->vars($post_data);
-        $this->load->view('member/template');
+        //$this->load->vars($post_data);
+        //$this->load->view('member/template');
 	}
 	
 	function update_hotel($uid)
@@ -233,35 +244,17 @@ class Business extends CI_Controller
 		}
 	}
 	 
-	 function get_pdf($uid = 0, $limit = 0)
+	 function get_pdf($uid = 0)
 	{
-		$sql = "select a.uid, a.uid_sch, a.payment, b.nama, b.rate as price, a.qty, c.time_sch, 
-				d.nama as package, d.deskripsi, e.name as agen, a.reservation
-				from tx_rwagen_travelbooking a,
-				tx_rwagen_travelbookingdetails b,
-				tx_rwagen_travelschedule c,
-				tx_rwagen_travelpackage d,
-				tx_rwagen_agen e
-				where a.uid='$uid' 
-				and a.uid = b.pid
-				and a.uid_sch = c.uid 
-				and c.package = d.uid 
-				and e.uid = c.agen limit 0,$limit";
-		$data = $this->Mix->read_more_rows_by_sql($sql);
-		foreach($data as $row)
-		{
-			$pdf['payment'] = $row['payment'];
-			$pdf['price'] = $row['price'];
-			$pdf['qty'] = $row['qty'];
-			$pdf['package'] = $row['package'];
-			$pdf['deskripsi'] = $row['deskripsi'];
-			$pdf['depart'] = $row['time_sch'];
-			$pdf['status'] = $row['reservation'];
-			$pdf['id_booking'] = $row['uid'];
-		}
+		$sql = "select a.uid as id_booking, a.name_reservation as name, a.reservation as status ,
+				a.check_in, a.check_out,c.hotel_name,b.category_name as room, 
+				a.qty, a.rate as price, a.payment 
+				from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid 
+				INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
+				where a.deleted=0
+				and a.uid='".$uid."'";
+		$pdf = $this->Mix->read_rows_by_sql($sql); 
 		
-		//debug_data($pdf);
-		 
 		$this->fpdf->FPDF('P','cm','LEGAL');
         $this->fpdf->SetTopMargin(2);
 		$this->fpdf->SetLeftMargin(2);
@@ -273,45 +266,41 @@ class Business extends CI_Controller
 		$this->fpdf->text(8.6,3,'Payment of Receipt ');
 		
 		$this->fpdf->text(1.6,4,'ID Booking ');
-		$this->fpdf->text(6.6,4,': ');
+		$this->fpdf->text(6.6,4,': '.$pdf['id_booking']);
 		
 		$y = 4.5;
-		$this->fpdf->text(1.6,4.5,'Name Reservation ');
-		foreach($data as $row)
-		{
-			$this->fpdf->text(6.6,$y,': '.$row['nama']);
-			$y = $y+ 0.5;
-		}
-		
+		$this->fpdf->text(1.6,4.5,'Name Reservation '); 
+		$this->fpdf->text(6.6,$y,': '.$pdf['name']);
 		
 		$this->fpdf->text(1.6,$y+0.5,'Status ');
 		$this->fpdf->text(6.6,$y+0.5,': '.$pdf['status']);
 		
-		$this->fpdf->text(1.6,$y+1,'Depart ');
-		$this->fpdf->text(6.6,$y+1,': '.$pdf['depart']);
+		//$this->fpdf->text(1.6,$y+1,'Depart ');
+		//$this->fpdf->text(6.6,$y+1,': '.$pdf['depart']);
 		
 		$this->fpdf->text(1.6,$y+1.5,'Check-In ');
-		$this->fpdf->text(6.6,$y+1.5,': ');
+		$this->fpdf->text(6.6,$y+1.5,': '.$pdf['check_in']);
 		
 		$this->fpdf->text(1.6,$y+2,'Check-Out ');
-		$this->fpdf->text(6.6,$y+2,': ');
+		$this->fpdf->text(6.6,$y+2,': '.$pdf['check_out']);
 		
 		$this->fpdf->text(1.6,$y+2.5,"Hotel's Name ");
-		$this->fpdf->text(6.6,$y+2.5,": ");
+		$this->fpdf->text(6.6,$y+2.5,": ".$pdf['hotel_name']);
 		
 		$this->fpdf->text(1.6,$y+3,'Room Type ');
-		$this->fpdf->text(6.6,$y+3,': ');
+		$this->fpdf->text(6.6,$y+3,': '.$pdf['room']);
 		
 		$this->fpdf->text(1.6,$y+3.5,'Qty ');
-		$this->fpdf->text(6.6,$y+3.5,': ');
+		$this->fpdf->text(6.6,$y+3.5,': '.$pdf['qty']);
 		
 		$this->fpdf->text(1.6,$y+4,'Price ');
-		$this->fpdf->text(6.6,$y+4,': ');
+		$this->fpdf->text(6.6,$y+4,': IDR '.$pdf['price']);
 		
 		$this->fpdf->text(1.6,$y+4.5,'Payment ');
-		$this->fpdf->text(6.6,$y+4.5,': ');
+		$this->fpdf->text(6.6,$y+4.5,': '.$pdf['payment']);
 		
 		$this->fpdf->Output();
+	
 		 
 	}
 }

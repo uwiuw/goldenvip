@@ -30,6 +30,7 @@ if(!function_exists('setGradeMember'))
 		/***
 		hasildebug
 		*/
+		if(!empty($m)){
 		       
 				
 		$direct = countDirectSponsored($m["uid"], $pid);
@@ -194,6 +195,7 @@ if(!function_exists('setGradeMember'))
 					updateMember($update, $m["uid"]);                                                               
 				}
 			}
+		}
 		}
 		 
 	}
@@ -752,22 +754,30 @@ if(!function_exists('update_cyclebonus'))
             $downline = getMemberByUid($uidDownline, $pid);
 			
             $sponsor = getMemberByUid($downline["sponsor"], $pid);
-            if($sponsor){
-                if($sponsor["grade"]==3 || $sponsor["grade"]==4 || $sponsor["grade"]==5){
-                    //if($member->checkCV($sponsor["uid"], $pid)){
-                        $update = array("commission"=> $sponsor["commission"] + $match_bonus);
-                        updateMember($update, $sponsor["uid"]);
-                        setHistoryMatchingBonus($sponsor["uid"], $match_bonus, $pid);    
-                    //}                    
-                }
-            }
+			
+			$CI =& get_instance();
+			
+			if($CI->session->userdata('member') != $downline['sponsor'])
+			{
+				if($sponsor){
+					if($sponsor["grade"]==3 || $sponsor["grade"]==4 || $sponsor["grade"]==5){
+						//if($member->checkCV($sponsor["uid"], $pid)){
+							$update = array("commission"=> $sponsor["commission"] + $match_bonus);
+							updateMember($update, $sponsor["uid"]);
+							setHistoryMatchingBonus($sponsor["uid"], $match_bonus, $pid);    
+						//}                    
+					}
+				}
+			}
             //cek kakeknya 
 			if($sponsor["sponsor"]!='0')
 			{
 				$kakek = getMemberByUid($sponsor["sponsor"], $pid);
 				
-				if($kakek){
-					if($kakek["grade"]==4 || $kakek["grade"]==5){
+				if($kakek)
+				{
+					if($kakek["grade"]==4 || $kakek["grade"]==5)
+					{
 						//if($member->checkCV($kakek["uid"], $pid)){
 							$update = array("commission"=> $kakek["commission"] + $match_bonus);
 							updateMember($update, $kakek["uid"]);
@@ -780,14 +790,38 @@ if(!function_exists('update_cyclebonus'))
 				if($kakek["sponsor"]!='0')
 				{
 					$buyut = getMemberByUid($kakek["sponsor"], $pid);
-					if($buyut){
-						if($buyut["grade"]==5){
-							//if($member->checkCV($buyut["uid"], $pid)){
-								$update = array("commission"=> $buyut["commission"] + $match_bonus);
-								updateMember($update, $buyut["uid"]);
-								setHistoryMatchingBonus($buyut["uid"], $match_bonus, $pid);  
-							//}                    
+					
+					if($buyut["sponsor"]!='0')
+					{
+						if($buyut)
+						{
+							if($buyut["grade"]==5 || $buyut["grade"]==4 )
+							{
+								//if($member->checkCV($buyut["uid"], $pid)){
+									$update = array("commission"=> $buyut["commission"] + $match_bonus);
+									updateMember($update, $buyut["uid"]);
+									setHistoryMatchingBonus($buyut["uid"], $match_bonus, $pid);  
+								//}                    
+							}
 						}
+						
+						$buyut2 = getMemberByUid($buyut["sponsor"], $pid);
+						
+						if($buyut2["sponsor"]!='0')
+						{
+							if($buyut2)
+							{
+								if($buyut2["grade"]==5)
+								{
+									//if($member->checkCV($buyut["uid"], $pid)){
+										$update = array("commission"=> $buyut2["commission"] + $match_bonus);
+										updateMember($update, $buyut2["uid"]);
+										setHistoryMatchingBonus($buyut2["uid"], $match_bonus, $pid);  
+									//}                    
+								}
+							}
+						}
+						
 					}
 				}
 			}

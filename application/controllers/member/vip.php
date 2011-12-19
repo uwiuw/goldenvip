@@ -202,18 +202,22 @@ class Vip extends CI_Controller
 				$this->set_data_final_booking_vip_click_myself();
 				disable_complimentary();
 				$this->Mix->update_record('uid',$check['uid'],$up,'tx_rwagen_vipbooking');
+				
+				$this->get_pdf($check['uid'],$check['qty']);
+				
+				//$data['title']="Member | Reservation | Thank you ";
+				//$data['page'] = "business/save_reservation";
+				//$data['nav'] = "reservation";
+			
+				//$this->load->vars($data);
+				//$this->load->view('member/template');
 			}
 			else
 			{
 				$this->set_data_final_booking_vip_click_myself();
 				$this->set_for_other($check['qty'],1, 'and Myself');
 			}
-			$data['title']="Member | Reservation | Thank you ";
-			$data['page'] = "business/save_reservation";
-			$data['nav'] = "reservation";
-        
-			$this->load->vars($data);
-			$this->load->view('member/template');
+			
 		}
 		else
 		{
@@ -260,6 +264,9 @@ class Vip extends CI_Controller
 			/* data halaman */
 			if($check['reservation']!='Compliment'){$data['compliment_only'] = '0'; $qty=$check['qty']-$myself;}
 			else{$data['compliment_only'] = '1';$data['hidden'] = '<input type="hidden" name="compliment" value="1">';}
+			
+			
+			
 			$data['me'] = $me;
 			$data['qty'] = $qty;
 			$data['sch'] = $this->Mix->read_rows_by_sql($sql);
@@ -306,16 +313,97 @@ class Vip extends CI_Controller
 			
 			$up['hidden'] = '0';
 			$this->Mix->update_record('uid',$get_data_sch['uid_booking'],$up,'tx_rwagen_vipbooking');
+			$this->get_pdf($check['uid'],$check['qty']);
+			/*
 			$page['title']="Member | Reservation | Thank you ";
 			$page['page'] = "business/save_reservation";
 			$page['nav'] = "reservation";
 		
 			$this->load->vars($page);
 			$this->load->view('member/template');
+			*/
 		}
 		else
 		{
 			redirect('member/reservation/vip','refresh');
 		}
+	}
+	
+	function get_pdf($uid = 0, $limit = 0)
+	{
+		$sql = "select a.uid, a.uid_sch, a.payment, b.nama, b.rate as price, a.qty, c.time_sch, 
+				d.nama as package, d.deskripsi, e.name as agen, a.reservation
+				from tx_rwagen_vipbooking a,
+				tx_rwagen_vipbookingdetails b,
+				tx_rwagen_vipschedule c,
+				tx_rwagen_vippackage d,
+				tx_rwagen_agen e
+				where a.uid='$uid' 
+				and a.uid = b.pid
+				and a.uid_sch = c.uid 
+				and c.package = d.uid 
+				and e.uid = c.agen limit 0,$limit";
+		$data = $this->Mix->read_more_rows_by_sql($sql);
+		foreach($data as $row)
+		{
+			$pdf['payment'] = $row['payment'];
+			$pdf['price'] = $row['price'];
+			$pdf['qty'] = $row['qty'];
+			$pdf['package'] = $row['package'];
+			$pdf['deskripsi'] = $row['deskripsi'];
+			$pdf['depart'] = $row['time_sch'];
+			$pdf['status'] = $row['reservation'];
+			$pdf['id_booking'] = $row['uid'];
+			$pdf['agen'] = $row['agen'];
+		}
+		
+		//debug_data($pdf);
+		  
+		$this->fpdf->FPDF('P','cm','A4');
+        $this->fpdf->SetTopMargin(2);
+		$this->fpdf->SetLeftMargin(2);
+		$this->fpdf->Ln();
+        $this->fpdf->AddPage();
+		$this->fpdf->Image(base_url().'upload/pics/logo.jpg',1.6,1.4,3.5);      
+        $this->fpdf->ln(0); 
+		$this->fpdf->SetFont('Arial','i',12);
+		$this->fpdf->text(8.6,3,'Payment of Receipt ');
+		
+		$this->fpdf->text(1.6,4,'ID Booking ');
+		$this->fpdf->text(6.6,4,': '.$pdf['id_booking']);
+		
+		$y = 4.5;
+		$this->fpdf->text(1.6,4.5,'Name Reservation ');
+		foreach($data as $row)
+		{
+			$this->fpdf->text(6.6,$y,': '.$row['nama']);
+			$y = $y+ 0.5;
+		}
+		
+		
+		$this->fpdf->text(1.6,$y+0.5,'Status ');
+		$this->fpdf->text(6.6,$y+0.5,': '.$pdf['status']);
+		
+		$this->fpdf->text(1.6,$y+1,'Time Schedule ');
+		$this->fpdf->text(6.6,$y+1,': '.$pdf['depart']);
+		  
+		$this->fpdf->text(1.6,$y+1.5,"Package ");
+		$this->fpdf->text(6.6,$y+1.5,": ".$pdf['package']);
+		
+		$this->fpdf->text(1.6,$y+2,'Agen ');
+		$this->fpdf->text(6.6,$y+2,': '.$pdf['agen']);
+		
+		$this->fpdf->text(1.6,$y+2.5,'Qty ');
+		$this->fpdf->text(6.6,$y+2.5,': '.$pdf['qty']);
+		
+		$this->fpdf->text(1.6,$y+3,'Price ');
+		$this->fpdf->text(6.6,$y+3,': USD '.$pdf['price']);
+		
+		$this->fpdf->text(1.6,$y+3.5,'Payment ');
+		$this->fpdf->text(6.6,$y+3.5,': '.$pdf['payment']);
+		
+		$this->fpdf->Output();
+
+		 
 	}
 }

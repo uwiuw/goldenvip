@@ -157,7 +157,7 @@
 									</div>
                                     
 									<div>
-                                    	<label class="desc">Password * : </label><input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100"/><label id="error_password1" class="errdisp"></label>
+                                    	<label class="desc">Password * : </label><input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100" /><label id="error_password1" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     

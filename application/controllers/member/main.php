@@ -267,7 +267,9 @@ class Main extends CI_Controller
 			$data['city']=$this->input->post('city');
 			$data['address']=$this->input->post('address');
 			$data['regional']=$this->input->post('regional');
-			$data['sponsor']=$this->input->post('distributor');
+			
+			$data['sponsor']=$this->session->userdata('member');
+			
 			$data['usercategory']=$this->input->post('usercategory');
 			$data['voucher_code'] = $this->input->post('vc');
 			$data['valid']='1';
@@ -325,8 +327,10 @@ class Main extends CI_Controller
 				$check = $this->Mix->read_rows_by_sql($sql);
 				if(!empty($check))
 				{
+					
 					$this->Mix->add_with_array($data,'tx_rwmembermlm_member');		
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$this->input->post('package'),'uid');
+					
 					$fast['bonus'] = $d['fee_dollar'];
 					$fast['uid_member'] = $this->session->userdata('member'); 
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$data['username'],'username');
@@ -336,6 +340,7 @@ class Main extends CI_Controller
 					$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus'); // set fast bonus
 					$vc['status'] = '1';
 					$check  = $this->Mix->update_record('voucher_code',$this->input->post('voucher_code'),$vc,'tx_rwmembermlm_vouchercode');
+					
 					update_point($d['uid'],$this->input->post('package')); # package
 					MatchingBonus($d['uid'], '67');
 					

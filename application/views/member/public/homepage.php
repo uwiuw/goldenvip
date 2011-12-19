@@ -13,15 +13,18 @@
                         </div>						
 					</div>
 					<div id="home-bottom">
+                    	
 						<p>
-                        	<b>Welcome <?php echo $this->session->userdata('name'); ?> <br/>
+                        	Welcome <b><?php echo $this->session->userdata('name'); ?></b>, 
                             <?php if($this->session->userdata('ucat')!='4') { ?>
-                            Our Main Regional Distributor of <?php echo $this->session->userdata('regional'); } ?> By clicking 
+                            Our Main Regional Distributor of <b><?php echo $this->session->userdata('regional'); } ?></b>. 
+                            <br />
+                            By clicking 
                             <a target="_blank" href="<?php echo site_url("member/post_data/join-now/".$this->session->userdata('member')); ?>">
 								<strong style="color: red; font-size: 16px;">HERE</strong>
 							</a> 
 							You can register and fill in your new member's profile completely.
-                            </b>
+                            
                         </p>
                         <br />
                         <p>
@@ -86,20 +89,31 @@
                         </div>
                         <div class="section-cont" id="info-binary">
                         		
-                                <p>
-                                	Current Level
+                                <p> Current Level :                                   
+                                    <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','grade',$this->session->userdata('member'),'uid'); ?>
+									<?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_grade','simbol',$d['grade'],'uid'); ?>
+                                    <img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/<?php echo $d['simbol'] ?>" style="vertical-align:middle; margin-left:20px;" />
+                                    
+                                     <?php 
+									  	$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$this->session->userdata('member'),'uid'); 
+										if($d['package'] > 2)
+										{
+											$sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '".$this->session->userdata('member')."' and hidden = '0'";
+											$point = $this->Mix->read_rows_by_sql($sql);
+										?>
+                                      <div style="float:right; margin-top:-55px; margin-bottom:10px; margin-right:10px;">
+                                      	<img src="<?php echo base_url(); ?>upload/pics/gift.png" style="vertical-align:middle;" />
+                                      	<b>Point Rewards : <font color="red" ><?php echo $point['point_rewards']; ?></font></b>
+                                        <br />
+                                        <a target="_blank" href="<?php echo site_url("member/post_data/join-now/".$this->session->userdata('member')); ?>">
+                                            <strong style="color: red; font-size: 12px; float:right;">click here to redeem points</strong>
+                                        </a> 
+                                      </div>
+                                      <?php } ?>
                                 </p>
                           		<p>
                                 	<table width="100%" border="0">
-                                    	<tr valign="middle" align="right">
-                                        	<td colspan="2" height="30px"></td>
-                                          	<td rowspan="4">
-                                            	<?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','grade',$this->session->userdata('member'),'uid'); ?>
-                                                <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_grade','simbol',$d['grade'],'uid'); ?>
-                                            	<img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/<?php echo $d['simbol'] ?>" />
-                                             </td>
-                                        </tr>
-                                    	<tr>
+                                    <tr>
                                     	  <td>Left Poin : <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_left',$this->session->userdata('member'),'uid'); echo "<b>".$d['point_left']."</b>"; ?></td>
                                     	  <td>Right Point: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','point_right',$this->session->userdata('member'),'uid'); echo "<b>".$d['point_right']."</b>"; ?></td>
                                    	  </tr>
@@ -112,17 +126,7 @@
                                     	  <td>Commision: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$this->session->userdata('member'),'uid'); echo "<b>$".$d['commission']."</b>"; ?></td>
                                     	  <td>CV Point: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','cv',$this->session->userdata('member'),'uid'); echo "<b>".$d['cv']."</b>"; ?></td>
                                    	  </tr>
-                                      <?php 
-									  	$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$this->session->userdata('member'),'uid'); 
-										if($d['package'] > 2)
-										{
-											$sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '".$this->session->userdata('member')."' and hidden = '0'";
-											$point = $this->Mix->read_rows_by_sql($sql);
-										?>
-                                      <tr>
-                                      	<td colspan="2" align="right">Point Rewards : <?php echo $point['point_rewards']; ?></td>
-                                      </tr>
-                                      <?php } ?>
+                                     
                                     </table>
                                 </p>
                       	</div>
