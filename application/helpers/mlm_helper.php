@@ -14,7 +14,7 @@ if(!function_exists('setGradeMember'))
 						b. sudah pernah sekali cycle bonus                 
 		
 		2. SILVER
-			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2l
+			syarat :    a. sudah mempunyai direct sponsor 2-6, 4-4, 6-2
 						b. silver permanent                 
 		
 		3. GOLD
@@ -136,7 +136,7 @@ if(!function_exists('setGradeMember'))
 		/*
 		2. GOLD
 			syarat :    a. didapat dengan membeli paket VIP
-						b. jika dalam satu bulan(60 hari) tidak mencapai downline (2-6, 4,4, 6-2) -> harus turun grade                            
+						b. jika dalam satu bulan(60 hari) tidak mencapai downline (6-10, 8-8, 10-6) -> harus turun grade                            
 		*/
 		if($m["grade"]==3 && $m["permanent_grade"]==1)
 		{                
@@ -147,13 +147,13 @@ if(!function_exists('setGradeMember'))
 			{
 				if($direct["left"] < 2 && $direct["right"] < 6 || $direct["left"] < 4 && $direct["right"] < 4 || $direct["left"] < 6 && $direct["right"] < 2)
 				{
-					if($direct["a"] > 0 && $direct["b"] > 0)
+					if($direct["left"] >= 2 && $direct["right"] >= 1 || $direct["left"] >= 1 && $direct["right"] >= 2  )
 					{
-						$update = array("grade"=>2);                            
+						$update = array("grade"=>2,"permanent_grade"=>2, "tstamp"=>time());                            
 					}
 					else
 					{
-						$update = array("grade"=>1);                        
+						$update = array("grade"=>1,"permanent_grade"=>2, "tstamp"=>time());                        
 					}
 					updateMember($update, $m["uid"]);                                                               
 				}
@@ -176,13 +176,20 @@ if(!function_exists('setGradeMember'))
 			{
 				if($direct["left"] < 6 && $direct["right"] < 10 || $direct["left"] < 8 && $direct["right"] < 8 || $direct["left"] < 10 && $direct["right"] < 6)
 				{
-					if($direct["a"] > 0 && $direct["b"] > 0)
+					if($direct["left"] < 2 && $direct["right"] < 6 || $direct["left"] < 4 && $direct["right"] < 4 || $direct["left"] < 6 && $direct["right"] < 2)
 					{
-						$update = array("grade"=>2);                            
+						if($direct["left"] >= 2 && $direct["right"] >= 1 || $direct["left"] >= 1 && $direct["right"] >= 2  )
+						{
+							$update = array("grade"=>2,"permanent_grade"=>2, "tstamp"=>time());                            
+						}
+						else
+						{
+							$update = array("grade"=>1,"permanent_grade"=>2, "tstamp"=>time());                        
+						}                                                              
 					}
 					else
 					{
-						$update = array("grade"=>1);                        
+						$update = array("grade"=>3,"permanent_grade"=>2);                        
 					}
 					updateMember($update, $m["uid"]);                                                       
 				}
@@ -769,6 +776,8 @@ if(!function_exists('update_cyclebonus'))
 					}
 				}
 			}
+			
+			// Generasi Pertama gtu
             //cek kakeknya 
 			if($sponsor["sponsor"]!='0')
 			{
@@ -776,7 +785,7 @@ if(!function_exists('update_cyclebonus'))
 				
 				if($kakek)
 				{
-					if($kakek["grade"]==4 || $kakek["grade"]==5)
+					if($kakek["grade"]==3 || $kakek["grade"]==4 || $kakek["grade"]==5)
 					{
 						//if($member->checkCV($kakek["uid"], $pid)){
 							$update = array("commission"=> $kakek["commission"] + $match_bonus);
@@ -786,7 +795,7 @@ if(!function_exists('update_cyclebonus'))
 					}
 				}
 				
-				//cek buyut
+				//cek buyut Generasi keduanya
 				if($kakek["sponsor"]!='0')
 				{
 					$buyut = getMemberByUid($kakek["sponsor"], $pid);

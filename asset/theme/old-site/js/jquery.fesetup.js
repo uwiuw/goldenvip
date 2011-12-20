@@ -71,13 +71,14 @@ jQuery(document).ready(function(){
         var city = jQuery("#city option:selected").val();
         var address = jQuery("#address").val();
         var regional = jQuery("#regional option:selected").val();
+		
 		var distributor = jQuery("#distributor option:selected").val();
         var pack =   jQuery("#pack option:selected").val();
 		
         //INFORMATION BANK        
         var bank_account_number = jQuery("#bank_account_number").val();   
-        //var bank_name = jQuery.trim(jQuery("#bank_name").val());
-        var bank_name = jQuery("#bank_name option:selected").val();
+	    var bank_name = jQuery.trim(jQuery("#bank_name").val());
+        //var bank_name = jQuery("#bank_name option:selected").val();
         var name_on_bank_account = jQuery("#name_on_bank_account").val();
                 
         //alert(!jQuery("#agree").is(':checked'));
@@ -161,6 +162,20 @@ jQuery(document).ready(function(){
             jQuery("#error_pack").text("can't be empty");
             return false;
         }
+		 
+		if(pack == 3)
+		{
+			var pck = jQuery('#package2 option:selected').val();
+			if(!pck){
+				jQuery("#error_pack2").text("can't be empty");
+				return false;
+			}
+			else
+			{
+				jQuery("#error_pack2").text("");
+			}
+		}
+		
         //INFORMATION OF BANK
 		
 		if(!bank_name){

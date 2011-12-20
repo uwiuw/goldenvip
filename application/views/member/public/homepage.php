@@ -105,9 +105,12 @@
                                       	<img src="<?php echo base_url(); ?>upload/pics/gift.png" style="vertical-align:middle;" />
                                       	<b>Point Rewards : <font color="red" ><?php echo $point['point_rewards']; ?></font></b>
                                         <br />
-                                        <a target="_blank" href="<?php echo site_url("member/post_data/join-now/".$this->session->userdata('member')); ?>">
+                                        <a href="#fitur" rel="facebox">
                                             <strong style="color: red; font-size: 12px; float:right;">click here to redeem points</strong>
                                         </a> 
+                                      </div>
+                                      <div style="display:none" id="fitur">
+                                      	Features not yet available for now.
                                       </div>
                                       <?php } ?>
                                 </p>

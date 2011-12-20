@@ -9,7 +9,6 @@
 		jQuery('#disp_province').hide();
 		jQuery('#display_dist').hide();
 		jQuery('#display_sel_pck2').hide();
-		jQuery('#display_sel_pck3').hide();
 		jQuery('#country').change(function(){
 			uid = jQuery(this).val();
 			load_to_val('member/post_data/get_phone_code/'+uid,'.countrycode'); 
@@ -35,7 +34,35 @@
 		jQuery('#display_dist').fadeIn(); 
 		load_no_image('member/post_data/get_distributor/'+uid,'#block_distributor');
 	}
-	  
+	
+	function generate_data()
+	{
+		jQuery('#firstname').val('member');
+		jQuery('#lastname').val('lastname member');
+		jQuery('#email').val('member@mail.net');
+		jQuery('#password1').val('123456');
+		jQuery('#password2').val('123456');
+		jQuery('#mobilephone').val('87654321');
+		jQuery('#bank_name').val('BCA');
+		jQuery('#bank_account_number').val('123456');
+		jQuery('#name_on_bank_account').val('member');
+		
+	}
+	 
+	function select_package()
+	{
+		e = jQuery('#package').val();
+		alert(e);
+		if(e=='3')
+		{
+			jQuery('#display_sel_pck2').fadeIn();
+			load_no_image('member/post_data/get_pck2/'+e,'#block_pck2');
+		}
+		else
+		{
+			jQuery('#display_sel_pck2').hide();
+		}
+	}
 </script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/form.css" type="text/css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/picture.css" type="text/css">  
@@ -56,8 +83,8 @@
 				</div>
 
 				<div class="site-map">
-					<div class="baseurl"><a href="http://mygoldenvip.com"><img src="<?php echo base_url(); ?>asset/theme/old-site/images/icon_home.png" alt="Icon Home" /></a></div>
-					<div class="linkQ"><a href="http://mygoldenvip.com/member/" >Member</a><span>JOIN NOW</span></div>
+					<div class="baseurl"><a href="<?php echo site_url(); ?>"><img src="<?php echo base_url(); ?>asset/theme/old-site/images/icon_home.png" alt="Icon Home" /></a></div>
+					<div class="linkQ"><a href="<?php echo site_url(); ?>/member/" >Member</a><span>JOIN NOW</span></div>
 				</div>
 				<div class="clear"></div>
 				<div class="main-content">
@@ -66,7 +93,7 @@
 								<?php if($this->session->flashdata('info')){ ?>
                                         <div><label class="errdisp" style="color:#F00; font-size:14px; width:100%; text-align:center;"><?php echo $this->session->flashdata('info'); ?></label><div class="clr"></div></div>
                                 <?php } ?>
-						 
+						 		<input type="button" onclick="generate_data()" value="generate" />
 								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now-by-member');?>"><input type="hidden" name="usercategory" id="usercategory" value="4" />
 									<div>
                                     	<label class="desc">First Name * : </label><input class="text" value="" type="text" name="firstname" id="firstname" size="50" maxlength="100"/><label id="error_firstname" class="errdisp"></label>
@@ -82,8 +109,8 @@
 									<div>
                                     	<label class="desc">Date Of Birth * : </label> 
                                         <select id="d" name="d" class="dropdown">
-                                            <option value="" selected="selected">Date &nbsp; &nbsp;</option>
-                                            <option value="01">01</option>
+                                            <option value="">Date &nbsp; &nbsp;</option>
+                                            <option value="01" selected="selected">01</option>
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                             <option value="04">04</option>
@@ -116,8 +143,8 @@
                                             <option value="31">31</option>
                                         </select>
                                         <select id="m" name="m" class="dropdown">
-                                        	<option value="" selected="selected">Month</option>
-                                            <option value="01">January</option>
+                                        	<option value="" >Month</option>
+                                            <option value="01" selected="selected">January</option>
                                             <option value="02">February</option>
                                             <option value="03">March</option>
                                             <option value="04">April</option>
@@ -241,12 +268,19 @@
 									<div>
                                     	<label class="desc">Package * : </label>
                                         <?php 
-											$id = "id='package' class='dropdown' ";
+											$id = "id='package' class='dropdown' onchange='select_package()'";
 											echo form_dropdown('package',$package,$page['package'],$id); 
 										?>
                                         <label id="error_pack" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
+                                     
+                                     <div id="display_sel_pck2">
+                                    	<label class="desc">Package VIP * : </label>
+                                        <label id="block_pck2"></label>
+                                        <label id="error_pack2" class="errdisp"></label>
+										<div class="clr"></div>
+									</div> 
                                      
                                     <div id="display_sel_pck">
                                     	<label class="desc">Placement * : </label>
@@ -261,10 +295,7 @@
                                      
 									<div>
                                     	<label class="desc">Bank Name * : </label>
-                                        <?php 
-											$id = "id='bank_name' class='dropdown'";
-											echo form_dropdown('bank_name',$bank,$page['bank'],$id); 
-										?>
+                                        <input type="text" name="bank_name" id="bank_name"  />
                                         <label id="error_bank_name" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
@@ -290,7 +321,10 @@
 
 										<div class="clr"></div>
 									</div>
-									<div><input class="et-form-btn" name="submitreg1" id="submitreg1" type="submit" value=" Submit " /></div>
+									<div>
+                                    	<input class="et-form-btn" name="submitreg1" id="submitreg1" type="submit" value=" Submit " />
+                                    	
+                                    </div>
 								</form>
 								<p align="right"><strong>* ) Field should be completed and not empty</strong></p>
 							</div>

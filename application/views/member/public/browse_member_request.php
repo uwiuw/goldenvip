@@ -10,7 +10,7 @@
 									<p><strong>This page will display the profile details of the member candidate. If the member is valid you only need to set the <span style="color: red;">Voucher Code (Optional)</span>, <span style="color: red;">Verification</span> and <span style="color: red;">Lock Placement (default value is left)</span> for this member.</strong></p>
                                     
                                     <?php if($this->session->flashdata('error')) { ?>
-									<div class="error">Please update your status member (Valid / Not Valid) soon</div>
+									<div class="error"><?php echo $this->session->flashdata('error'); ?></div>
                                     <?php } ?>
 									<form action="<?php echo site_url('member/join-now/set-active-member'); ?>" method="post" name="frmplacement" id="frmplacement">
                                     <input type="hidden" value="<?php echo $mreq['uid']; ?>" id="uid" name="uid">
@@ -23,7 +23,7 @@
 												<tr class="odd">
 													<td width="200px"><strong>Package</strong></td>
 													<td><strong><?php $p = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','package',$mreq['package'],'uid'); echo $p['package'] ; ?></strong>
-                                                    <input type="hidden" name="package" value="<?php echo $mreq['package']; ?>">
+                                                    <input type="text" name="package" value="<?php echo $mreq['package']; ?>">
                                                     </td>
 												</tr>
 												<tr class="even">

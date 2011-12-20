@@ -8,7 +8,6 @@
 		jQuery('#display_dist').hide();
 		jQuery('#display_vc').hide();
 		jQuery('#display_sel_pck2').hide();
-		jQuery('#display_sel_pck3').hide();
 		jQuery('#country').change(function(){
 			uid = jQuery(this).val();
 			load_to_val('member/post_data/get_phone_code/'+uid,'.countrycode'); 
@@ -40,7 +39,7 @@
 	}
 	function select_package()
 	{
-		e = jQuery('#package').val();
+		e = jQuery('#pack').val();
 		if(e=='3')
 		{
 			jQuery('#display_sel_pck2').fadeIn();
@@ -49,21 +48,6 @@
 		else
 		{
 			jQuery('#display_sel_pck2').hide();
-			jQuery('#display_sel_pck3').hide();
-		}
-	}
-	function select_package2()
-	{
-		e = jQuery('#package2').val();
-		if(e>'3')
-		{
-			jQuery('#display_sel_pck3').fadeIn();
-			load_no_image('member/post_data/get_pck3/'+e,'#block_pck3');
-		}
-		else
-		{
-			jQuery('#display_sel_pck2').hide();
-			jQuery('#display_sel_pck3').hide();
 		}
 	}
 </script>
@@ -281,21 +265,14 @@
                                     <div id="display_sel_pck2">
                                     	<label class="desc">Package VIP * : </label>
                                         <label id="block_pck2"></label>
+                                        <label id="error_pack2" class="errdisp"></label>
 										<div class="clr"></div>
-									</div>
-                                    
-                                    <div id="display_sel_pck3">
-                                    	<label class="desc">Select Type Package * : </label>
-                                        <label id="block_pck3"></label>
-										<div class="clr"></div>
-									</div>
+									</div> 
                                      
 									<div>
                                     	<label class="desc">Bank Name * : </label>
-                                        <?php 
-											$id = "id='bank_name' class='dropdown'";
-											echo form_dropdown('bank_name',$bank,$page['bank'],$id); 
-										?>
+                                        
+                                        <input type="text" name="bank_name" id="bank_name" />
                                         <label id="error_bank_name" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>

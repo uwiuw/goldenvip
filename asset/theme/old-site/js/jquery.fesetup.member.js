@@ -81,7 +81,7 @@ jQuery(document).ready(function(){
         //INFORMATION BANK        
         var bank_account_number = jQuery("#bank_account_number").val();   
         //var bank_name = jQuery.trim(jQuery("#bank_name").val());
-        var bank_name = jQuery("#bank_name option:selected").val();
+        var bank_name = jQuery("#bank_name").val();
         var name_on_bank_account = jQuery("#name_on_bank_account").val();
                 
         //alert(!jQuery("#agree").is(':checked'));
@@ -169,6 +169,19 @@ jQuery(document).ready(function(){
             jQuery("#error_pack").text("can't be empty");
             return false;
         }
+		
+		if(pack == 3)
+		{
+			var pck = jQuery('#package2 option:selected').val();
+			if(!pck){
+				jQuery("#error_pack2").text("can't be empty");
+				return false;
+			}
+			else
+			{
+				jQuery("#error_pack2").text("");
+			}
+		}
 		
 		 if(!placement){
             jQuery("#error_placement").text("can't be empty");

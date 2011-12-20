@@ -162,6 +162,10 @@ class Main extends CI_Controller
 			else
 			{ 
 				$data['package']=$this->input->post('package');
+				if($this->input->post('package2'))
+				{
+					$data['package']=$this->input->post('package2');
+				}
 				$data['grade'] = '4';
 				$data['permanent_grade'] = '1';
 			}
@@ -191,15 +195,15 @@ class Main extends CI_Controller
 					$data['upline']=get_leaf_right($this->session->userdata('member'));
 					$data['placement'] = '2';
 				}
-				$this->Mix->update_record('uid',$this->input->post('uid'),$data,'tx_rwmembermlm_member');
+				
 				# chekc voucher code
 				$sql = "select * from tx_rwmembermlm_vouchercode where voucher_code='".$this->input->post('voucher_code')."' and status='0' ";
 				$check = $this->Mix->read_rows_by_sql($sql);
 				if(!empty($check))
 				{
+					$this->Mix->update_record('uid',$this->input->post('uid'),$data,'tx_rwmembermlm_member');
 					$vc['status'] = '1';
-					$check  = $this->Mix->update_record('voucher_code',$this->input->post('voucher_code'),$vc,'tx_rwmembermlm_vouchercode');
-					
+					$this->Mix->update_record('uid',$check['uid'],$vc,'tx_rwmembermlm_vouchercode');
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$this->input->post('package'),'uid');
 					$fast['bonus'] = $d['fee_dollar'];
 					$fast['uid_member'] = $this->session->userdata('member'); 
@@ -216,20 +220,20 @@ class Main extends CI_Controller
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$this->session->userdata('member'),'uid');
 					$dx = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$this->input->post('package'),'uid');
 					$com['commission'] = $d['commission']+$dx['fee_dollar']+$mentor_bonus;
-					$this->Mix->update_record('uid',$data['sponsor'],$com,'tx_rwmembermlm_member'); // update commision
+					$this->Mix->update_record('uid',$this->session->userdata('member'),$com,'tx_rwmembermlm_member'); // update commision
 					
 					$this->session->set_flashdata('info','Member now has been active.');
 					redirect('member/thank-you-registering','refresh');
 				} 
 				else
 				{
-					$this->session->set_flashdata('error','Please complete form');
-					redirect('member/join-now','refresh');
+					$this->session->set_flashdata('error','Sorry voucher code is incorrect or has been used.');
+					redirect('member/post_data/browse-member-request/'.$this->input->post('uid'),'refresh');
 				}
 			}
 			else
 			{
-				$this->session->set_flashdata('error','Please complete form');
+				$this->session->set_flashdata('error',"Please complete form, update your status member (Valid / Not Valid) soon, voucher code can't blank");
 				redirect('member/post_data/browse-member-request/'.$this->input->post('uid'),'refresh');
 			}
 		}
@@ -304,6 +308,10 @@ class Main extends CI_Controller
 			else
 			{ 
 				$data['package']=$this->input->post('package');
+				if($this->input->post('package2'))
+				{
+					$data['package']=$this->input->post('package2');
+				}
 				$data['grade'] = '4';
 				$data['permanent_grade'] = '1';
 			}
@@ -338,8 +346,9 @@ class Main extends CI_Controller
 					$fast['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 					$fast['pid']='67';
 					$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus'); // set fast bonus
+					
 					$vc['status'] = '1';
-					$check  = $this->Mix->update_record('voucher_code',$this->input->post('voucher_code'),$vc,'tx_rwmembermlm_vouchercode');
+					$check  = $this->Mix->update_record('uid',$check['uid'],$vc,'tx_rwmembermlm_vouchercode');
 					
 					update_point($d['uid'],$this->input->post('package')); # package
 					MatchingBonus($d['uid'], '67');
@@ -382,7 +391,7 @@ class Main extends CI_Controller
 				$mb['uid_member'] = $uid_upline;
 				$mb['uid_downline'] = $uid_downline;
 				$mb['bonus'] = $bonus;
-				$mb['paid'] = '1';
+				$mb['paid'] = '0';
 				$mb['deleted'] = '0';
 				$mb['pid'] = '67';
 				$this->Mix->add_with_array($mb,'tx_rwmembermlm_historymentorbonus');
@@ -395,7 +404,7 @@ class Main extends CI_Controller
 				$mb['uid_member'] = $uid_upline;
 				$mb['uid_downline'] = $uid_downline;
 				$mb['bonus'] = $bonus;
-				$mb['paid'] = '1';
+				$mb['paid'] = '0';
 				$mb['deleted'] = '0';
 				$mb['pid'] = '67';
 				$this->Mix->add_with_array($mb,'tx_rwmembermlm_historymentorbonus');
@@ -459,7 +468,7 @@ class Main extends CI_Controller
 				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','usercategory',$name,'username');  # ambil lastname
 				$data['ucat'] =$d['usercategory'];
 				$this->session->set_userdata($data);
-				
+				setGradeMember($this->session->userdata('member'),'67');
 				if($this->input->post('id_auto'))
 				{
 					redirect('member/profile','refresh');
