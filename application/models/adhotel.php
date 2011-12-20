@@ -1,6 +1,7 @@
 <?php
 
-class CI_Adhotel extends CI_Model {
+class CI_Adhotel extends CI_Model
+{
 
     public $session;
 
@@ -27,7 +28,7 @@ class CI_Adhotel extends CI_Model {
                 'title' => 'Profile',
                 'url' => 'admin-hotel/login/sub-menu-admin/profile/',
             ),
-            array(
+            'booking' => array(
                 'title' => 'Bookings',
                 'url' => 'admin-hotel/login/sub-menu-admin/bookings/',
             ),
@@ -35,11 +36,11 @@ class CI_Adhotel extends CI_Model {
                 'title' => 'Room Management',
                 'url' => 'admin-hotel/login/sub-menu-admin/room-management/',
             ),
-            array(
+            'roomspicsupdating' => array(
                 'title' => 'Room\'s Pics Updating',
                 'url' => 'admin-hotel/login/sub-menu-admin/rooms-pics-updating/',
             ),
-            array(
+            'hotelspicsupdating' => array(
                 'title' => 'Hotel\'s Pics Updating',
                 'url' => 'admin-hotel/login/sub-menu-admin/hotels-pics-updating/',
             ),

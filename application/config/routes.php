@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-	/*
+/*
   | -------------------------------------------------------------------------
   | URI ROUTING
   | -------------------------------------------------------------------------
@@ -89,14 +89,14 @@ $route['member/opportunity'] = 'member/main/opportunity';
 $route['member/news'] = 'member/main/news';
 $route['member/profile'] = 'member/main/profile';
 $route['member/profile/update-profile'] = 'member/main/update_profile';
-	$route['member/report/genealogy'] = 'member/main/report';
-	$route['member/report/commision'] = 'member/main/commision';
-	$route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';        
-	$route['member/back-office'] = 'member/main/back_office';
-	$route['member/thank-you-registering'] = 'member/main/thankyou';
-	$route['member/logout']='member/main/member_logout';
-	$route['member/check-login'] = 'member/main/check_login';
-	$route['member/join-now'] = 'member/main/join_now';
+$route['member/report/genealogy'] = 'member/main/report';
+$route['member/report/commision'] = 'member/main/commision';
+$route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';
+$route['member/back-office'] = 'member/main/back_office';
+$route['member/thank-you-registering'] = 'member/main/thankyou';
+$route['member/logout'] = 'member/main/member_logout';
+$route['member/check-login'] = 'member/main/check_login';
+$route['member/join-now'] = 'member/main/join_now';
 	$route['member/join-now/saving'] = 'member/main/join_now_saving';
 	$route['member/join-now/set-active-member'] = 'member/main/set_active_member';
 	$route['member/join-now-by-member'] = 'member/main/join_by_member';
@@ -131,13 +131,16 @@ $route['engine'] = 'engine/mlmmanagement';
 
 
 # hotel and reservation
-$route['admin-hotel'] = 'admin_hotel'; 
+$route['admin-hotel'] = 'admin_hotel';
 $route['admin-hotel/check-login'] = 'admin_hotel/check_login';
 $route['admin-hotel/login'] = 'admin_hotel/member_login';
 $route['admin-hotel/logout'] = 'admin_hotel/member_logout';
 $route['admin-hotel/login/sub-menu-admin/profile'] = 'admin_hotel/profile';
+$route['admin-hotel/login/sub-menu-admin/bookings'] = 'admin_hotel/booking';
+$route['admin-hotel/login/sub-menu-admin/bookings/periode-print'] = 'admin_hotel/periode_print';
 $route['admin-hotel/login/sub-menu-admin/room-management'] = 'admin_hotel/room_management';
 $route['admin-hotel/login/sub-menu-admin/rooms-pics-updating'] = 'admin_hotel/rooms_pics_updating';
+$route['admin-hotel/login/sub-menu-admin/hotels-pics-updating'] = 'admin_hotel/hotels_pics_updating';
 
 /* End of file routes.php */
-/* Location: ./application/config/routes.php */ 
+/* Location: ./application/config/routes.php */

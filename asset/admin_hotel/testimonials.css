@@ -1,0 +1,118 @@
+/*
+    TESTIMONIALS STYLE
+*/
+
+.tx-guestbook-header{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "trebuchet ms",verdana,sans-serif;
+    color: #905E14;
+}
+#box{
+    border-bottom:1px dotted;
+    float:left;
+    padding:10px 0;
+    width:945px;
+}
+blockquote{
+    color:#905E14;
+    font-size:1.2em;
+    margin:0.5em;
+    float: left;
+    width: 760px;
+}
+#box .tx-guestbook-left p{
+    
+    display: none;
+}
+.tx-guestbook-pagination{
+    float: right;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    color: #777777;
+    margin-right: 48px;
+}
+.tx-guestbook-pagination-bottom{
+    float: right;
+    padding-bottom: 2px;
+    padding-top: 10px;
+    color: #777777;
+    margin-right: 48px;
+}
+.tx-guestbook-result{
+    font-size: 12px;
+    font-family: "trebuchet ms",verdana,sans-serif;
+    font-weight: bold;
+    color: #905E14;
+}
+.tx-guestbook-pagination a, .tx-guestbook-pagination-bottom a{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background:#FFFFFF url(../images/page_gradient.jpg) repeat-x scroll 0 100%;
+    border:1px solid #D3D3D3;
+    color:#5E5E5E;
+    font-size:11px;
+    font-weight:normal;
+    margin:0 2px 0 0;
+    padding:2px 5px;
+    text-decoration:none;
+}
+
+.tx-guestbook-pagination strong, .tx-guestbook-pagination-bottom strong{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background:#FFFFFF url(../images/page_gradient.jpg) repeat-x scroll 0 100%;
+    border:1px solid #F76B1A;
+    color:#F76B1A;
+    font-size:11px;
+    font-weight:bold;
+    margin:0 2px 0 0;
+    padding:2px 5px;
+    text-decoration:none;
+}
+/*#frame-testi {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/frame_img_testimoni.png) no-repeat scroll 0 0;
+    float:left;
+    height:97px;
+    padding:5px;
+    width:97px;
+}*/
+#frame-testi img{
+    height:160px;
+    padding-left:4px;
+    padding-top:5px;
+    width:150px;
+}
+#box .tx-guestbook-right #frame-testi {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/frametesti.png) no-repeat scroll 0 0;
+    float:left;
+    height:167px;
+    padding:5px;
+    width:159px;
+}
+#testi #testimoni .testimonial #frame-testi{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/frametestiHome.png) no-repeat scroll 0 0;
+    float:left;
+    height:97px;
+    padding:5px;
+    width:97px;
+}

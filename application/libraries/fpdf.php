@@ -540,7 +540,7 @@ function SetFont($family, $style='', $size=0)
 					$file.=strtolower($style);
 				//echo "test ".$this->_getfontpath();
 				include($this->_getfontpath().$file.'.php');
-				
+
 				if(!isset($fpdf_charwidths[$fontkey]))
 					$this->Error('Could not include font metric file');
 			}

@@ -1,0 +1,135 @@
+/* CSS Golden VIP*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+div.clear { clear:both; font-size:1px; }
+img { border:none; }
+a, a:link, a:hover, a:visited { text-decoration:none; outline:none; color:blue; }
+body{ }
+
+.container{ width:1040px; margin:0 auto; }
+.last{ border:none !important; }
+
+/*** HEADER ***/
+#header{ background:url(../images/bg_header.png) repeat-x; height:96px; font-family:Tahoma; border-bottom:2px solid #ccb789; padding-bottom:2px;  }
+#logo_GoldenVIP{ float:left; margin-top:10px; margin-left:38px; }
+#kotak-menu, #menu-top, #nav{ float:right; margin-right:18px; }
+#menu-top{ font-size:10px; }
+#menu-top span, #menu-top span a{ float:left; }
+#menu-top span{ background:url(../images/bg_button_top.png) no-repeat; width:116px; height:23px; padding-top:5px; margin-top:20px; }
+span.join-now{ margin-left:15px; }
+#menu-top span a{ font-weight:bold; color:#67542a; height:16px; margin-left:6px;  }
+#menu-top span a:hover{ color:#fff; }
+#menu-top span a.back-office{ background:url(../images/icon_back_office.png) no-repeat right; padding-right:32px;  }
+#menu-top span.join-now a{ background:url(../images/icon_join_now.png) no-repeat right; padding-right:51px;  }
+
+/*** Main Menu & Menu Drop Down ***/
+#nav{ margin-top:15px; list-style:none; }
+#nav li{ float:left; padding:0px; }
+#nav li.list-home{ background:url(../images/separator_menu.png) no-repeat; }
+#nav li a{ background: url(../images/separator_menu.png) no-repeat right; display:block; padding-left: 10px; padding-right: 15px; color:#887b5f; font-weight:bold; line-height:35px; margin:0px; text-align:center; font-size:11px; }
+#nav li a:hover, #nav li a.selected{ color:#fff; }
+#nav li ul.about{ background:url(../images/bg_menu_dropdown.png) no-repeat; display:none; height:97px; padding-top:10px; border:0px; position:absolute; width:145px; z-index:200; }
+#nav li ul.opportun{ background:url(../images/bg_menu_opportunity.png) no-repeat; display:none; height:38px; padding-top:10px; border:0px; position:absolute; width:145px; z-index:200; }
+#nav li:hover ul{ display:block; }
+#nav li li { display:block; float:none; margin:0px; padding:0px; width:auto; }
+#nav li:hover li a{ background:none; }
+#nav li ul a{ display:block; font-size:11px; font-style:normal; margin:0px; padding-left: 5px; text-align:left; line-height:2; border-bottom:1px dotted; color: #a29478; width: 120px; background: url(../images/list_panah.png) no-repeat left; }
+#nav li ul a:hover, #nav li ul li:hover a{ color:#000; text-decoration:none; }
+
+/*** BANNER ***/
+
+.content{ background:url(../images/bg_banner.png) repeat-x; margin-bottom:7px; padding-top:20px; }
+
+
+/*** FOOTER ***/
+#footer{ background:url(../images/bg_footer.png) repeat-x; height:159px; }
+#social-network{ background:url(../images/border_social_network.png) no-repeat bottom; width:945px; margin-left:45px; padding-top:10px; height:68px; }
+#fb, #fb label, #fb img, #fb span{ float:left; }
+#fb label{ color: #A28E69; font-family: trebuchet MS; font-size: 13px; margin-right: 10px; margin-top: 15px; }
+#fb span{ color: #3D5C9A; font-family: tahoma; font-size: 12px; margin-left: 10px; margin-top: 15px; }
+#thawte{ float:right; }
+
+#menu-footer{ text-align:center; font-family:tahoma; font-size:10px; padding-top:10px; height:45px;  }
+#menu-footer ul li{ display:inline; color:#A28E69; }
+#menu-footer ul li a{ padding:0 5px; color:#A28E69; }
+#menu-footer ul li a:hover, #menu-footer ul li a.selected{ color: #fff;}
+#menu-footer span{ color:#1da0e3; }
+#menu-footer span a{ color:#1da0e3; }
+
+#develop{ margin-left:45px; font-family:tahoma; font-size:10px; color:#A28E69; width:935px; }
+span#copyright{ float:left; padding-top:5px; }
+span#created{ float:right; }
+#created label{ float:left; padding-top:5px; padding-right:5px; }
+
+
+
+/*** Halaman Back office ***/
+#hotel-login{ background: url(../images/bg_admin_hotel.png) no-repeat; width:907px; height:493px; margin-left: 45px; position:relative; }
+#member-login{ position:absolute; left: 190px; top: 10px; }
+#hotel-login h2{ padding-left: 140px; width:534px; height: 51px; padding-top: 20px; margin-bottom:10px; font-family: arial; font-weight: normal; font-size: 25px;  }
+#form-member, #form-member p, #form-member p label, #form-member p input, #form-member p span, .check-login,.other-link{ float: left; }
+#form-member p label{  color: #121212; font-family: arial; font-size: 17px; font-weight: bold; width: 600px; }
+#form-member p input{ background: url(../images/input_form.png) no-repeat; width:533px; height:55px; border: none; padding-left: 10px; cursor: text; font-size: 25px; }
+#form-member span{ font-family: Trebuchet Ms; font-size: 11px; font-weight:bold; }
+#form-member p{ margin: 15px 0;}
+#form-member p font{ color:#ff0000; }
+#form-member p input.login-member, #form-member p input.cancel-login{ background: url(../images/button_login_member.png) no-repeat; width: 97px; height: 45px; color: #fff; cursor: pointer; padding: 0px; font-size: 13px; font-weight: bold; }
+#form-member p input.cancel-login{ margin-left: 20px; }
+.check-login{ margin-top: 40px; margin-left: 10px; font-family: arial; font-size: 10px; color: #646464; }
+.check-login input{ margin-right: 5px;  }
+.other-link{ width: 520px; margin-top: 20px; }
+.other-link a{ font-family: tahoma; font-size: 14px; font-weight: bold; color: #121212; }
+.other-link a:hover{ color: #666;}
+.other-link a.forgot-paswd{ float: left; }
+.other-link a.new-account{ float: right; }
+
+/*** halaman Home Hotel ***/
+#home-hotel{ background: url(../images/bg_home_hotel.png) no-repeat; width: 969px; height: 1462px; margin-left: 45px;}
+#head-hotel, #content-hotel, #hotel-left, #hotel-right, #head-hotel h2{ float: left; }
+#head-hotel a{ float: right; color: #121212; font-weight: bold; font-family: arial; background: url(../images/icon_message.png) no-repeat left 2px; padding-left: 25px; height: 16px; font-size: 11px; padding-right: 10px; }
+#head-hotel{ width: 895px; padding-left: 65px; padding-top: 22px; height: 30px; }
+#head-hotel h2{ font-family: trebuchet ms; font-weight: normal; font-size: 16px; color: #fff; }
+
+#hotel-left .box-image1{ background: url(../images/kotak_image.png) no-repeat; width: 230px; height: 215px; margin-left: 18px; margin-top: 10px; padding-left: 5px; padding-top: 4px; }
+#hotel-left{ width: 250px; }
+#search-hotel{ float: left; width: 250px; height: 350px; }
+#search-hotel p label, #search-hotel p, #search-hotel p select, #search-hotel p a, #search-hotel p span{ float: left; font-family: arial; font-size: 11px; }
+#hotel-left h2{ font-family: arial; font-size: 15px; }
+#search-hotel h2{  padding-bottom: 12px; padding-left: 70px; padding-top: 13px; margin-bottom: 10px; }
+#search-hotel p label{ width: 250px; padding: 7px 0; }
+#search-hotel p{ width: 250px; padding-left: 35px; }
+#search-hotel p.country select{ width: 180px; }
+#search-hotel p select.check-bulan{ margin: 0 17px;}
+#search-hotel p span{ margin-left: 35px; margin-right: 17px; }
+#search-hotel p select.kamar-middle{ margin: 0 25px;}
+#search-hotel p label, #search-hotel p span{ color: #666;}
+#search-hotel p input{  margin-top: 18px;  }
+#hotel-left input{ background: url(../images/button_search_hotel.png) no-repeat; width: 118px; height: 33px; border: none; color: #fff; font-weight: bold; font-family: arial; font-size: 14px; cursor: pointer; padding-bottom: 5px;  }
+#maps{ float:left; margin-left: 17px; height: 263px;  }
+#maps h2, #maps a{ float: left; }
+#maps h2{ background: url(../images/icon_search_maps.png) no-repeat left; padding-left: 45px; margin-left: 10px; margin-top: 25px; height: 34px; }
+#maps iframe{ border: none; height: 134px; width: 204px;}
+#maps a{ padding-left: 15px; padding-top: 15px; }
+#maps p input{ margin-left: 13px; margin-top: 10px; }
+#hotel-facilities{ float: left; margin-left:15px; height: 275px; }
+#hotel-facilities h2{ margin-bottom: 15px; margin-left: 65px; margin-top: 25px; }
+#hotel-facilities p input.facilities{ background: url(../images/button_show_facilities.png) no-repeat; width:164px; height: 33px; margin-left: 10px; margin-top: 6px;  }
+#hotel-facilities img{ margin-left: 11px; margin-top: 12px; }
+
+#recreation{ float: left; margin-left: 18px; }
+#recreation h2{ margin-left: 35px; margin-top: 31px; margin-bottom: 13px; }
+#recreation img{ margin-left: 8px; margin-top: 10px; }
+#recreation p input.btn-recreation{ background: url(../images/button_recreation.png) no-repeat; width: 164px; height: 33px; margin-left: 8px; margin-top: 7px; }
+
+
+/*** Right ***/
+#hotel-right{ margin-left: 10px; }
+#alamat-left{ float: left; }
+#alamat-right{ float: right; }
+#hotel-right h1{ color: #121212; font-size: 25px; font-weight: normal; }
+#alamat-left p{   color: #121212;  font-size: 12px; font-style: italic; }
+

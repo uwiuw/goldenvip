@@ -1,6 +1,12 @@
 <?php
 //@todo bagian list pd html di id="menu-footer" perlu dikonversi ke alamat yg baru
 $o = <<<HTML
+</div>
+</div>
+<div id="admin-hotel-bottom"></div>
+</div>
+</div>
+<div class="clear"></div>
 <div id="footer">
         <div class="container">
             <div id="social-network">
