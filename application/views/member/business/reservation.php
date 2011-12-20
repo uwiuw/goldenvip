@@ -10,30 +10,38 @@
 <script type="text/javascript">
 	site = "<?php echo site_url(); ?>";
 	image = "<?php echo base_url(); ?>asset/images/loading.gif";
+
 	jQuery(function(){
 		jQuery("#tablesorter-demo").tablesorter();	
-		jQuery( "#datepicker" ).datepicker({ 
+		var dates = jQuery( "#datepicker, #datepicker1" ).datepicker({
+			defaultDate: "+0d",
 			changeMonth: true,
-			dateFormat:"yy-m-d",
+            dateFormat:"yy-mm-dd",
 			numberOfMonths: 3,
-			showButtonPanel: false
-		});
-		jQuery( "#datepicker1" ).datepicker({ 
-			changeMonth: true,
-			dateFormat:"yy-m-d",
-			numberOfMonths: 3,
-			showButtonPanel: false
+            minDate: -0,
+			onSelect: function( selectedDate ) {
+				var option = this.id == "datepicker" ? "minDate" : "maxDate",
+					instance = jQuery( this ).data( "datepicker" );
+					date = jQuery.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						jQuery.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings );
+				dates.not( this ).datepicker( "option", option, date );
+			}
 		});
 		jQuery('#slider').carouFredSel({
 			prev: '#next',
 			next: '#prev',
 			});
 		<?php
+			$compliment = TRUE;
 			$get_compliment = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','compliment',$this->session->userdata('member'),'uid');
-			if($get_compliment['compliment'] == '1')
+			if($get_compliment['compliment'] == '1' || $set_compliment == '0')
 			{
+				$compliment = FALSE;
 		?>
 		jQuery('#compliment_true').hide();
+		
 		<?php 
 			}
 			else
@@ -45,9 +53,10 @@
 		
 		jQuery('#cash_payment').hide();
 	});
+	
 	function check_destination_detail()
 	{
-		uid = jQuery('#destination').val();
+		uid = jQuery('#propinsi').val();
 		load('member/post_data/get_destnation_detail/'+uid,'#destination_detail');
 	}
 	
@@ -109,40 +118,42 @@
         daysleft = selisih/miliday;
         daysleftint = Math.round(daysleft);
 		
-        if(document.getElementById("compliment").value=="1" && daysleftint > document.getElementById("malam").value){
+        if(document.getElementById("compliment").value=="Compliment" && daysleftint > document.getElementById("malam").value){
             document.getElementById("error").innerHTML = "you are only permitted to stay for " + document.getElementById("malam").value + " nights to compliment";
         }
         else if (document.getElementById("datepicker").value == document.getElementById("datepicker1").value){
             document.getElementById("error").innerHTML = "Minimal 1 Night";
         }
 
-        else if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value=="" || document.getElementById("compliment").value=="" ){
+        else if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value=="" || document.getElementById("compliment").value=="0" ){
              document.getElementById("error").innerHTML = "you must fill all data";
         }else{
             document.forms["reservasi"].submit();
         }
     }
     function checknotkompliment(){
-        if (document.getElementById("payment").value=="2"){
-            if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value=="" || document.getElementById("creditCardNumber").value=="" || document.getElementById("nameOnCC").value=="" || document.getElementById("month").value=="" || document.getElementById("year").value=="" || document.getElementById("signature").value==""){
-            document.getElementById("error").innerHTML = "you must fill all data";
+        if (document.getElementById("select_payment").value=="Credit Card"){
+            if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value=="" || document.getElementById("select_payment").value=="0" )
+			{
+            	document.getElementById("error").innerHTML = "you must fill all data";
             }else if (document.getElementById("datepicker").value == document.getElementById("datepicker1").value){
                 document.getElementById("error").innerHTML = "Minimal 1 Night";
             }
             else{
-                document.forms["reservasiNo"].submit();
-            }
-        }else{
-            if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value==""){
-            document.getElementById("error").innerHTML = "you must fill all data";
-            }else if (document.getElementById("datepicker").value == document.getElementById("datepicker1").value){
-                document.getElementById("error").innerHTML = "Minimal 1 Night";
-            }
-            else{
-                document.forms["reservasiNo"].submit();
+                document.forms["reservasi"].submit();
             }
         }
-
+		else{
+            if(document.getElementById("propinsi").value=="" || document.getElementById("datepicker").value=="" || document.getElementById("datepicker1").value=="" || document.getElementById("select_payment").value=="0" )
+			{
+            	document.getElementById("error").innerHTML = "you must fill all data";
+            }else if (document.getElementById("datepicker").value == document.getElementById("datepicker1").value){
+                document.getElementById("error").innerHTML = "Minimal 1 Night";
+            }
+            else{
+                document.forms["reservasi"].submit();
+            }
+        }
     }
 </script>
 <style type="text/css">
@@ -233,11 +244,13 @@ Account No. (IDR) 070.137.5068</font></center></div>
                             </div>
                             
                             <div id="creditCardNumber"></div>
-                            
                             <input name="malam" id="malam" value="3" type="hidden">
-                            
                             <div>
-                                <input value="Submit" id="submit_photo" class="et-form-btn" onclick="check()" type="button">
+                            <?php if($compliment) { ?>
+                                	<input value="Submit" id="submit_photo" class="et-form-btn" onclick="check()" type="button">
+                            <?php }else { ?>
+                            		<input value="Submit" id="submit_photo" class="et-form-btn" onclick="checknotkompliment()" type="button">
+                            <?php } ?>
                                 <div class="clr"></div>
                             </div>
                         </form>
@@ -246,7 +259,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 			</div>
 		</div>
             
-		<div id="right">
+		<div id="right" style="width:560px;">
 			<div class="line-visit-hotel"> 
             	<div class="shadow-left"><a id="prev"></a></div>
 				<ul id="slider" style="float:left;">
@@ -283,7 +296,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 								{
 									$sql = "select a.check_in, a.check_out,b.category_name,c.hotel_name 
 											from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
-											where a.deleted=0 and a.PA=1 and a.uid_member='180' order by a.uid desc";
+											where a.deleted=0 and a.PA=1 and a.uid_member='".$d['uid']."' order by a.uid desc";
 								}
 								else
 								{

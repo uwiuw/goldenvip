@@ -19,6 +19,34 @@ class Member extends CI_Controller
 		$this->load->view('member/old/template');
 	}
 	
+        function profile()
+	{
+		is_member();
+		$data['title']="Member | Home Page";
+		$data['page'] = "profile";
+		$data['nav'] = "profile";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		$data['member'] = getMemberByUid($this->session->userdata('member'));
+		$data['bank'] = $this->Mix->dropdown_menu('uid','bank','tx_rwmembermlm_bank');
+		$data['country'] = $this->Mix->dropdown_menu('uid','country','tx_rwmembermlm_phonecountrycode');
+		$data['province'] = $this->Mix->dropdown_menu('uid','province','tx_rwmembermlm_province');
+		$data['city'] = $this->Mix->dropdown_menu('uid','city','tx_rwmembermlm_city');
+		$data['code'] = $this->Mix->dropdown_menu('uid','code','tx_rwmembermlm_phonecountrycode');
+		#$sql = "select voucher_code,status, crdate from tx_rwmembermlm_vouchercode where distributor='".$this->session->userdata('member')."' and hidden = '0' ";
+		$sql = "select a.voucher_code, a.status, a.crdate, b.firstname, b.lastname
+				from tx_rwmembermlm_vouchercode a
+				left join tx_rwmembermlm_member b on a.voucher_code = b.voucher_code
+				where a.distributor='".$this->session->userdata('member')."' ";
+		$data['total_data'] = $this->Mix->read_more_rows_by_sql($sql);
+		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='1' and distributor='".$this->session->userdata('member')."'";
+		$data['data_used'] = $this->Mix->read_rows_by_sql($sql);
+		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='0' and distributor='".$this->session->userdata('member')."'";
+		$data['data_unused'] = $this->Mix->read_rows_by_sql($sql);
+		
+		$this->load->vars($data);
+		$this->load->view('member/old/template');
+	}
+        
 	function report() # report page
 	{
 		is_member(); # Hanya member yang boleh memasuki halaman ini
@@ -54,35 +82,23 @@ class Member extends CI_Controller
 		$this->load->vars($data);
 		$this->load->view('member/old/template');
 	}
+        
+        function reservation()
+        {
+            is_member(); # Hanya member yang boleh memasuki halaman ini
+            $data['title']="Member | Home Page";
+            $data['page'] = "reservation";
+            $data['nav'] = "reservation";
+            $data['template']=base_url()."asset/theme/mygoldenvip/"; 
+
+            $this->load->vars($data);
+            $this->load->view('member/old/template');
+        }
 	
-	function profile()
-	{
-		is_member();
-		$data['title']="Member | Home Page";
-		$data['page'] = "profile";
-		$data['nav'] = "profile";
-		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
-		$data['member'] = getMemberByUid($this->session->userdata('member'));
-		$data['bank'] = $this->Mix->dropdown_menu('uid','bank','tx_rwmembermlm_bank');
-		$data['country'] = $this->Mix->dropdown_menu('uid','country','tx_rwmembermlm_phonecountrycode');
-		$data['province'] = $this->Mix->dropdown_menu('uid','province','tx_rwmembermlm_province');
-		$data['city'] = $this->Mix->dropdown_menu('uid','city','tx_rwmembermlm_city');
-		$data['code'] = $this->Mix->dropdown_menu('uid','code','tx_rwmembermlm_phonecountrycode');
-		#$sql = "select voucher_code,status, crdate from tx_rwmembermlm_vouchercode where distributor='".$this->session->userdata('member')."' and hidden = '0' ";
-		$sql = "select a.voucher_code, a.status, a.crdate, b.firstname, b.lastname
-				from tx_rwmembermlm_vouchercode a
-				left join tx_rwmembermlm_member b on a.voucher_code = b.voucher_code
-				where a.distributor='".$this->session->userdata('member')."' ";
-		$data['total_data'] = $this->Mix->read_more_rows_by_sql($sql);
-		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='1' and distributor='".$this->session->userdata('member')."'";
-		$data['data_used'] = $this->Mix->read_rows_by_sql($sql);
-		$sql = "select count(uid) as c_uid from tx_rwmembermlm_vouchercode where status='0' and distributor='".$this->session->userdata('member')."'";
-		$data['data_unused'] = $this->Mix->read_rows_by_sql($sql);
-		
-		$this->load->vars($data);
-		$this->load->view('member/old/template');
-	}
-	
+        /*
+         * member more function redirect page
+         */
+        
 	function join_now() # join now
 	{
 		#is_login();
@@ -251,7 +267,7 @@ class Member extends CI_Controller
 			}
 			else
 			{
-//				redirect('member/back-office','refresh');
+				redirect('member/back-office','refresh');
 			}
 		}
 		else
@@ -265,7 +281,6 @@ class Member extends CI_Controller
 		is_login(); # redirect ke halaman member jika member telah login
 		$this->member_login();	
 	}
-	
 	
 	function member_login() # login {back office}
 	{

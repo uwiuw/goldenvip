@@ -8,13 +8,17 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/picture.css" type="text/css"> 
   <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/style-nav.css" type="text/css"> 
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery-1.4.3.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>asset/js/jquery.nivo.slider.pack.js"></script>
+  <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/nivo-slider.css" type="text/css" />
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/js/script/public.js"></script>
   <script type="text/javascript">
   	var site = "<?php echo site_url(); ?>";
     var jQuery = $.noConflict();    
 	jQuery(document).ready(function(){
-			jQuery("li#nav-<?php echo $nav; ?> a").addClass('active');
+			jQuery("li a#nav-<?php echo $nav; ?>").addClass('active');
+			jQuery('#slider').nivoSlider();
 	});
+	
   </script>
 </head>
 
@@ -38,27 +42,33 @@
 			<div id="kotak-menu">
 				<div id="menu-top">
 					<span id="BOMenu">
-                        <a class="back-office" href="http://mygoldenvip.com/member/back-office/">BACK OFFICE</a>
+                        <a class="back-office" href="<?php echo site_url('member/back-office'); ?>">BACK OFFICE</a>
                     </span>
-                    <span id="JNMenu" class="join-now"><a href="http://mygoldenvip.com/member/join-now/" class="join-now">JOIN NOW</a></span>
+                    <span id="JNMenu" class="join-now"><a href="<?php echo site_url('member/join-now'); ?>" class="join-now">JOIN NOW</a></span>
 				</div>
 				<div class="clear"></div>
 				<ul id="nav">
-                	<li class="list-home"><a href="index.html">HOME</a></li>
-					<li><a href="#">ABOUT US</a>
-						<ul>
-							<li class="atas"><a href="about-us-story.html">The GVIP Story</a></li>
-							<li><a href="#">Vision and Mission</a></li>
-							<li><a href="#">Corporate Overview</a></li>
-							<li class="bawah"><a href="#">Why GVIP</a></li>
-						</ul>
-					</li>
-					<li><a href="#">NEWS</a></li>
-					<li><a href="#">OPPORTUNITY</a>
-					</li>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">CONTACT US</a></li>               
-				</ul>
+						<li class="atas"><a id="nav-home" href="<?php echo site_url();?>">HOME</a></li>
+						<li><a href="<?php echo site_url('about-us/the-gvip-story');?>" id="nav-about">ABOUT US</a>
+							<ul class="about">
+								<li style="margin-top: 12px;"><a href="<?php echo site_url('about-us/the-gvip-story');?>" >The GVIP Story</a></li>
+								<li class="tengah"><a href="<?php echo site_url('about-us/vision-and-mission');?>">Vision and Mission</a></li>
+								<li class="tengah"><a href="<?php echo site_url('about-us/corporate-overview');?>">Corporate Overview</a></li>
+								<li class="bawah"><a href="<?php echo site_url('about-us/why-gvip');?>">Why GVIP</a></li>
+							</ul>
+						</li>
+						<li><a href="<?php echo site_url('products/business');?>" id="nav-products">PRODUCTS</a>
+							<ul class="about">
+								<li style="margin-top: 12px;"><a href="<?php echo site_url('products/business');?>">Business</a></li>
+								<li class="tengah"><a href="<?php echo site_url('products/travel');?>">Travel</a></li>
+								<li class="tengah"><a href="<?php echo site_url('products/vip');?>">VIP</a></li>
+								<li class="bawah"><a href="<?php echo site_url('products/participant-hotels');?>">Participant Hotels</a></li>
+							</ul>
+						</li>
+						<li><a href="<?php echo site_url('news');?>" id="nav-news">NEWS</a></li>
+						<li><a href="<?php echo site_url('faq');?>" id="nav-faq">FAQ</a></li>
+						<li class="bawah"><a href="<?php echo site_url('contact-us');?>" id="nav-contact">CONTACT US</a></li>
+					</ul>
 			</div>
 		</div>
 	</div>

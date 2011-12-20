@@ -30,6 +30,7 @@ if(!function_exists('setGradeMember'))
 		/***
 		hasildebug
 		*/
+		if(!empty($m)){
 		       
 				
 		$direct = countDirectSponsored($m["uid"], $pid);
@@ -41,10 +42,7 @@ if(!function_exists('setGradeMember'))
 						FROM tx_rwmembermlm_historycycle
 						WHERE deleted = 0 and hidden = 0 and uid_member=$uid and pid=$pid                  
 						";                    
-				#$q=$GLOBALS['TYPO3_DB']->sql_query($sql);
-				#$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($q);
 				$result = $CI->Mix->read_rows_by_sql($sql);
-				
 				if($result["c_history"] > 0)
 				{
 					$update = array("grade"=>2, "tstamp"=>time());
@@ -70,30 +68,61 @@ if(!function_exists('setGradeMember'))
 		}
 		elseif($m["grade"]==4 && $m["permanent_grade"]==2)
 		{
-			if(($direct["left"] >= 6 && $direct["right"] >= 10) 
-				|| ($direct["left"] >= 8 && $direct["right"] >= 8) 
-				|| ($direct["left"] >= 10 && $direct["right"] >= 6))
+			if(($direct["left"] >= 6 && $direct["right"] >= 10) || ($direct["left"] >= 8 && $direct["right"] >= 8) || ($direct["left"] >= 10 && $direct["right"] >= 6))
 			{
-				$rec = getDirectSponsored($m["uid"], $pid);
-				$a = true;
-				$test = 'a';
-				foreach($rec as $b)
+				/*
+					* 	ambil semua direct sponsor nya 
+					* 	cek tahu anak kiri kanan nya apa sempurna ?
+				*/
+				$sql = "select uid, placement, username from tx_rwmembermlm_member where sponsor = '$uid' order by uid";
+				$direct_sponsor = $CI->Mix->read_more_rows_by_sql($sql);
+				
+				$kiri = 0;
+				$kanan = 0;
+				foreach($direct_sponsor as $row) 
 				{
-					$c = countDirectSponsored($m["uid"], $pid);
-					print_r($c);
-					if($c["left"] <= 0 && $c["right"] <= 0)
+					
+					if($row['placement']==1)
 					{
-						$a=false;
-						$test='b';
-						break;
+						$dsp = getDirectDownline($row['uid'],'67'); 
+						//$dsp = getDirectSponsored($row['uid'],'67'); 
+						if(!empty($dsp))
+						{
+							if(isset($dsp['kiri']) && isset($dsp['kanan']))
+							{  
+								// hitung ada berapa downline yang memiliki keluarga lengakap satu kiri satu kanan minimum
+								$kiri = $kiri +1;
+							}
+						}
+					}
+					else
+					{
+						$dsp = getDirectDownline($row['uid'],'67'); 
+						//$dsp = getDirectSponsored($row['uid'],'67'); 
+						if(!empty($dsp))
+						{
+							if(isset($dsp['kiri']) && isset($dsp['kanan']))
+							{  
+								// hitung ada berapa downline yang memiliki keluarga lengkap satu kiri satu kanan minimum
+								$kanan = $kanan +1;
+							}
+							
+						}
+					}
+						
+					if(($kiri == '8' && $kanan == '8') || ($kiri == '6' && $kanan == '10') || ($kiri=='10' && $kanan =='6'))
+					{
+						break; // hentikan iterasi dengan paksa karena status untuk upgrade telah terpenuhi.
 					}
 				}
-				echo $test;
-				if($a)
+				
+				if(($kiri == '8' && $kanan == '8') || ($kiri == '6' && $kanan == '10') || ($kiri=='10' && $kanan =='6'))
 				{
-					#$update = array("grade"=>5,"permanent_grade"=>2, "tstamp"=>time());
-					#updateMember($update, $m["uid"]); 
+					// echo "jadi platinum :)";
+					$update = array("grade"=>5,"permanent_grade"=>2, "tstamp"=>time());
+					updateMember($update, $m["uid"]);
 				}
+				//echo $kiri." ".$kanan;
 			}
 		}
 		/*
@@ -166,6 +195,7 @@ if(!function_exists('setGradeMember'))
 					updateMember($update, $m["uid"]);                                                               
 				}
 			}
+		}
 		}
 		 
 	}
@@ -253,6 +283,40 @@ if(!function_exists('getDirectSponsored'))
                 $i++;
             }    
 			*/        
+			$i = 0;
+			$final = array();
+			foreach($result as $row)
+			{
+					if($row['placement']=='1')
+					{ 
+						$final['kiri'][$i]['uid'] = $row['uid'];
+					}
+					if($row['placement']=='2')
+					{
+						$final['kanan'][$i]['uid'] = $row['uid']; 
+					}
+				$i++;
+			}
+            return $final;
+        }
+}
+
+if(!function_exists('getDirectDownline'))
+{
+	 function getDirectDownline($upline='0', $pid='0', $limit=0){
+		 	$CI =& get_instance();
+            $w="";
+            if($limit)
+                $w = "limit 0,$limit";
+                
+            $sql = "                   
+					select * 
+					from tx_rwmembermlm_member 
+					where upline = '$upline' and pid='$pid' and valid = 1 and deleted = 0 and hidden = 0
+					order by uid                 
+                    ";                         
+            $result=$CI->Mix->read_more_rows_by_sql($sql); 
+			    
 			$i = 0;
 			$final = array();
 			foreach($result as $row)
@@ -541,6 +605,10 @@ if(!function_exists('update_cyclebonus'))
 				set_point($uid,$r,'2');
 				$data['bonus'] = '25';
 				$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+				
+				$d = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$uid,'uid'); 
+				$com['commission'] = $d['commission']+$data['bonus'];
+				$CI->Mix->update_record('uid',$uid,$com,'tx_rwmembermlm_member');
 			}
 		}
 		else
@@ -556,6 +624,10 @@ if(!function_exists('update_cyclebonus'))
 					set_point($uid,$r,'2');
 					$data['bonus'] = '25';
 					$CI->Mix->add_with_array($data,'tx_rwmembermlm_historycycle');
+					
+					$d = $CI->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','commission',$uid,'uid'); 
+					$com['commission'] = $d['commission']+$data['bonus'];
+					$CI->Mix->update_record('uid',$uid,$com,'tx_rwmembermlm_member');
 				}
 			}
 		}
@@ -595,6 +667,165 @@ if(!function_exists('update_cyclebonus'))
 				print_r($data);
 				echo "</pre>";
 		}
+	}
+	
+	if(!function_exists('disable_complimentary'))
+	{
+		function disable_complimentary()
+		{
+			$CI =& get_instance();
+			$uid = $CI->session->userdata('member');
+			$data['compliment'] = '1';
+			$CI->Mix->update_record('uid',$uid,$data,'tx_rwmembermlm_member'); 
+		}
+	}
+	
+	# wilayah nya untuk menghitung matching bonus
+	# bukan wilayah ....
+	
+	if(!function_exists('setHistoryMatchingBonus'))
+	{
+		# fungsi yang digunakan untuk mengisi history matching bonus bo...
+		function setHistoryMatchingBonus($uidMember,$bonus=0, $pid){
+            $CI =& get_instance();
+			$data = array(
+                            "pid" => $pid,
+                            "crdate" => time(),
+                            "uid_member" => $uidMember,
+                            "bonus" => $bonus
+                        );
+			$result = $CI->Mix->add_with_array($data,'tx_rwmembermlm_historymatchingbonus');
+            return $result; # patut dipertimbankan apakah akan memerlukan nilai kembali???
+        }
+	}
+	
+	if(!function_exists('getMatchingBonus'))
+	{
+		# view dari matching bonus ajah... :p
+		function getMatchingBonus($urlVar, $limit, &$SmartyPaginate, $id, $uidMember, $pid=0){
+            $SmartyPaginate->connect($id);
+			$SmartyPaginate->setLimit($limit,$id);
+			$count = $SmartyPaginate->getCurrentIndex($id);			
+			$offset = $SmartyPaginate->getLimit($id);
+            
+            $sql = "SELECT *  
+                    FROM tx_rwmembermlm_historymatchingbonus
+                    WHERE deleted = 0 and hidden = 0 and 
+                          uid_member=$uidMember and pid=$pid 
+                    ORDER BY uid DESC                    
+                    ";
+            $q=$GLOBALS['TYPO3_DB']->sql_query($sql . " limit $count, $offset");
+                        
+            $field = $GLOBALS['TYPO3_DB']->admin_get_fields("tx_rwmembermlm_historymatchingbonus");            
+            
+            $i=0;            
+            while($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($q)){
+                foreach($field as $d){
+                    if($d["Field"]=="crdate"){
+                        $result[$d["Field"]] = date("Y-m-d H:i:s",$result[$d["Field"]]);
+                    }
+                    $_data[$i][$d["Field"]] = $result[$d["Field"]];                    
+                }
+                $i++;
+            }
+            $q=$GLOBALS['TYPO3_DB']->sql_query($sql);    
+            $totalrow = $GLOBALS['TYPO3_DB']->sql_num_rows($q);						
+			$SmartyPaginate->setTotal($totalrow,$id);
+			$SmartyPaginate->setUrl($urlVar,$id);
+			$SmartyPaginate->setPrevText('&lt; Previous',$id);
+			$SmartyPaginate->setNextText('Next &gt;',$id);
+			$SmartyPaginate->setLastText('Last &gt;&gt;',$id);
+			$SmartyPaginate->setFirstText('&lt;&lt; First',$id);                 
+            return $_data;
+        }
+	}
+	
+	if(!function_exists('MatchingBonus'))
+	{
+		function MatchingBonus($uidDownline, $pid){
+            /*
+                matching bonus berlaku penambahan $10 jika 
+                1. silver dapet hanya dari anak
+                2. gold dari anak dan cucu
+                3. platinum dari anak, cucu dan cicit 
+            */
+            //cek ayahnya
+			$match_bonus = 10;
+            $downline = getMemberByUid($uidDownline, $pid);
+			
+            $sponsor = getMemberByUid($downline["sponsor"], $pid);
+			
+			$CI =& get_instance();
+			
+			if($CI->session->userdata('member') != $downline['sponsor'])
+			{
+				if($sponsor){
+					if($sponsor["grade"]==3 || $sponsor["grade"]==4 || $sponsor["grade"]==5){
+						//if($member->checkCV($sponsor["uid"], $pid)){
+							$update = array("commission"=> $sponsor["commission"] + $match_bonus);
+							updateMember($update, $sponsor["uid"]);
+							setHistoryMatchingBonus($sponsor["uid"], $match_bonus, $pid);    
+						//}                    
+					}
+				}
+			}
+            //cek kakeknya 
+			if($sponsor["sponsor"]!='0')
+			{
+				$kakek = getMemberByUid($sponsor["sponsor"], $pid);
+				
+				if($kakek)
+				{
+					if($kakek["grade"]==4 || $kakek["grade"]==5)
+					{
+						//if($member->checkCV($kakek["uid"], $pid)){
+							$update = array("commission"=> $kakek["commission"] + $match_bonus);
+							updateMember($update, $kakek["uid"]);
+							setHistoryMatchingBonus($kakek["uid"], $match_bonus, $pid);    
+						//}                    
+					}
+				}
+				
+				//cek buyut
+				if($kakek["sponsor"]!='0')
+				{
+					$buyut = getMemberByUid($kakek["sponsor"], $pid);
+					
+					if($buyut["sponsor"]!='0')
+					{
+						if($buyut)
+						{
+							if($buyut["grade"]==5 || $buyut["grade"]==4 )
+							{
+								//if($member->checkCV($buyut["uid"], $pid)){
+									$update = array("commission"=> $buyut["commission"] + $match_bonus);
+									updateMember($update, $buyut["uid"]);
+									setHistoryMatchingBonus($buyut["uid"], $match_bonus, $pid);  
+								//}                    
+							}
+						}
+						
+						$buyut2 = getMemberByUid($buyut["sponsor"], $pid);
+						
+						if($buyut2["sponsor"]!='0')
+						{
+							if($buyut2)
+							{
+								if($buyut2["grade"]==5)
+								{
+									//if($member->checkCV($buyut["uid"], $pid)){
+										$update = array("commission"=> $buyut2["commission"] + $match_bonus);
+										updateMember($update, $buyut2["uid"]);
+										setHistoryMatchingBonus($buyut2["uid"], $match_bonus, $pid);  
+									//}                    
+								}
+							}
+						}
+						
+					}
+				}
+			}
+        }
 	}
 }
 ?>

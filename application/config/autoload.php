@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','mlm_member');
+$autoload['libraries'] = array('database','session','mlm_member','fpdf');
 
 
 /*

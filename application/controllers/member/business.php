@@ -10,7 +10,7 @@ class Business extends CI_Controller
     {
         $this->reservation();
     }
-    
+	
     public function reservation()
     {
         is_member(); # Hanya member yang boleh memasuki halaman ini
@@ -24,13 +24,22 @@ class Business extends CI_Controller
 		{
 			$this->Mix->dell_one_by_one('uid',$uid['uid'],'tx_rwadminhotel_booking');
 		}
+		
+		$m = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
+		if($m['package'] !='1' and $m['package'] !='0')
+		{
+			$data['set_compliment'] = '0';
+		}
+		else
+		{
+			$data['set_compliment'] = '1';
+		}
 			
         $data['title']="Member | Home Page";
         $data['page'] = "business/reservation";
         $data['nav'] = "reservation";
         $data['template']=base_url()."asset/theme/mygoldenvip/";
 		$data['destination'] = $this->Mix->dropdown_menu('uid','destination','tx_rwmembermlm_destination');
-        
         $this->load->vars($data);
         $this->load->view('member/template');
     }
@@ -69,10 +78,18 @@ class Business extends CI_Controller
 			
 		}
 		// 	else ny buat username di tabel fe_user
+		if($this->input->post('destination_detail'))
+		{
+			$w = "uid_destination = '".$this->input->post('destination')."' and uid_destination_detail = '".$this->input->post('destination_detail')."'";
+		}
+		else
+		{
+			$w = "uid_destination = '".$this->input->post('destination')."'";
+		}
 		$destination = $this->input->post('destination');
+		
 		$sql = "select uid,hotel_name,star,location from tx_rwadminhotel_hotel 
-				where uid_destination = '".$destination."' order by star asc";
-				
+				where $w order by star asc";
 		$data['city'] = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_destination','destination',$destination,'uid');
 		
 		$data['listhotel'] = $this->Mix->read_more_rows_by_sql($sql);
@@ -143,23 +160,41 @@ class Business extends CI_Controller
 		$sql = "select uid from tx_rwadminhotel_booking where hidden = '1' and uid_member = '".$uid_member['uid']."' ";
 		$uid = $this->Mix->read_rows_by_sql($sql);
 		
-		$data['hidden'] = '0';
-		$data['date_booking'] = date('Y-m-d H:i:s');
-		$data['pa'] = '1';
-		$data['receipt'] = '1';
-		$uid2 = $uid['uid'];
+		if(!empty($uid))
+		{
+			
+			if($this->input->post('name'))
+			{
+				$data['name_reservation'] = $this->input->post('name');
+				$data['email'] = $this->input->post('email');
+				$data['insurance'] = $this->input->post('mega');
+			}
+			
+			$data['hidden'] = '0';
+			$data['date_booking'] = date('Y-m-d H:i:s');
+			$data['pa'] = '1';
+			$data['receipt'] = '1';
+			$uid2 = $uid['uid'];
+			
+			$this->Mix->update_record('uid',$uid2,$data,'tx_rwadminhotel_booking');
+			$this->update_hotel($uid2);
+			disable_complimentary();
+			
+			$this->get_pdf($uid['uid']);
+		}
+		else
+		{
+			redirect('member/reservation/business','refresh');
+		}
 		
-		$this->Mix->update_record('uid',$uid2,$data,'tx_rwadminhotel_booking');
-		$this->update_hotel($uid2);
-		$this->disable_complimentary();
-        $post_data['title']="Member | Reservation | Use Reservation For ? ";
-        $post_data['page'] = "business/save_reservation";
-        $post_data['nav'] = "reservation";
-        $post_data['template']=base_url()."asset/theme/mygoldenvip/";
-		$post_data['destination'] = $this->Mix->dropdown_menu('uid','destination','tx_rwmembermlm_destination');
+        //$post_data['title']="Member | Reservation | Use Reservation For ? ";
+        //$post_data['page'] = "business/save_reservation";
+        //$post_data['nav'] = "reservation";
+        //$post_data['template']=base_url()."asset/theme/mygoldenvip/";
+		//$post_data['destination'] = $this->Mix->dropdown_menu('uid','destination','tx_rwmembermlm_destination');
         
-        $this->load->vars($post_data);
-        $this->load->view('member/template');
+        //$this->load->vars($post_data);
+        //$this->load->view('member/template');
 	}
 	
 	function update_hotel($uid)
@@ -172,11 +207,101 @@ class Business extends CI_Controller
 		$this->Mix->update_record('uid',$uid_room['uid_room'],$data,'tx_rwadminhotel_cat_room'); 
 	}
 	
-	function disable_complimentary()
+	function set_for_other()
 	{
-		$uid = $this->session->userdata('member');
-		$data['compliment'] = '1';
-		$this->Mix->update_record('uid',$uid,$data,'tx_rwmembermlm_member'); 
+		is_member();
+		$data = array();
+		$u = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$this->session->userdata('member'),'uid');
+		$uid_member = $this->Mix->read_row_ret_field_by_value('fe_users','uid',$u['username'],'username');
+		$check = $this->Mix->read_row_by_two('uid_member',$uid_member['uid'],'hidden','1','tx_rwadminhotel_booking');
+		if(!empty($check))
+		{
+			$sql = "select c.username, d.firstname,a.qty, a.check_in, a.rate as retail_rate, a.check_out, a.uid_room, a.uid_member, b.category_name from 
+					tx_rwadminhotel_booking a,
+					tx_rwadminhotel_cat_room b,
+					fe_users c,
+					tx_rwmembermlm_member d
+					where 
+					a.uid_room = b.uid and
+					c.uid = a.uid_member and
+					d.username = c.username and
+					a.uid_member = '".$uid_member['uid']."' and 
+					a.hidden = '1'";
+			/* data halaman */
+			if($check['reservation']!='Compliment'){$data['compliment_only'] = '0'; $qty=$check['qty']-$myself;}
+			else{$data['compliment_only'] = '1';$data['hidden'] = '<input type="hidden" name="compliment" value="1">';}
+			$data['sch'] = $this->Mix->read_rows_by_sql($sql);
+			$data['qty'] = 1;
+			$data['page'] = "business/set_for_other";
+			$data['title']="Member | Home Page | Reservation";
+			$data['nav'] = "reservation";
+			$this->load->vars($data);
+			$this->load->view('member/template');
+		}
+		else
+		{
+			redirect('member/reservation/business','refresh');
+		}
+	}
+	 
+	 function get_pdf($uid = 0)
+	{
+		$sql = "select a.uid as id_booking, a.name_reservation as name, a.reservation as status ,
+				a.check_in, a.check_out,c.hotel_name,b.category_name as room, 
+				a.qty, a.rate as price, a.payment 
+				from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid 
+				INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
+				where a.deleted=0
+				and a.uid='".$uid."'";
+		$pdf = $this->Mix->read_rows_by_sql($sql); 
+		
+		$this->fpdf->FPDF('P','cm','LEGAL');
+        $this->fpdf->SetTopMargin(2);
+		$this->fpdf->SetLeftMargin(2);
+		$this->fpdf->Ln();
+        $this->fpdf->AddPage();
+		$this->fpdf->Image(base_url().'upload/pics/logo.jpg',1.6,1.4,3.5);      
+        $this->fpdf->ln(0); 
+		$this->fpdf->SetFont('Arial','i',12);
+		$this->fpdf->text(8.6,3,'Payment of Receipt ');
+		
+		$this->fpdf->text(1.6,4,'ID Booking ');
+		$this->fpdf->text(6.6,4,': '.$pdf['id_booking']);
+		
+		$y = 4.5;
+		$this->fpdf->text(1.6,4.5,'Name Reservation '); 
+		$this->fpdf->text(6.6,$y,': '.$pdf['name']);
+		
+		$this->fpdf->text(1.6,$y+0.5,'Status ');
+		$this->fpdf->text(6.6,$y+0.5,': '.$pdf['status']);
+		
+		//$this->fpdf->text(1.6,$y+1,'Depart ');
+		//$this->fpdf->text(6.6,$y+1,': '.$pdf['depart']);
+		
+		$this->fpdf->text(1.6,$y+1.5,'Check-In ');
+		$this->fpdf->text(6.6,$y+1.5,': '.$pdf['check_in']);
+		
+		$this->fpdf->text(1.6,$y+2,'Check-Out ');
+		$this->fpdf->text(6.6,$y+2,': '.$pdf['check_out']);
+		
+		$this->fpdf->text(1.6,$y+2.5,"Hotel's Name ");
+		$this->fpdf->text(6.6,$y+2.5,": ".$pdf['hotel_name']);
+		
+		$this->fpdf->text(1.6,$y+3,'Room Type ');
+		$this->fpdf->text(6.6,$y+3,': '.$pdf['room']);
+		
+		$this->fpdf->text(1.6,$y+3.5,'Qty ');
+		$this->fpdf->text(6.6,$y+3.5,': '.$pdf['qty']);
+		
+		$this->fpdf->text(1.6,$y+4,'Price ');
+		$this->fpdf->text(6.6,$y+4,': IDR '.$pdf['price']);
+		
+		$this->fpdf->text(1.6,$y+4.5,'Payment ');
+		$this->fpdf->text(6.6,$y+4.5,': '.$pdf['payment']);
+		
+		$this->fpdf->Output();
+	
+		 
 	}
 }
 ?>

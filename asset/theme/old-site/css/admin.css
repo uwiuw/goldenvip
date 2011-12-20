@@ -991,7 +991,8 @@ a.button, a.button:hover{text-decoration:none;}
     text-align: center;
     font-weight: bold;
 }
-.browse-data{background:url(../images/browse-icon.png) center no-repeat; width:16px; height:16px; display:block;}
+.browse-data{background:url(../images/browse-icon.png) center no-repeat; width:16px; height:16px; display:block; float:left; margin-right:4px;}
+.delete-data{background:url(../images/del-icon.png) center no-repeat; width:16px; height:16px; display:block; float:left;}
 #find {
     background-color: #FFFFFF;
     border-color: #CCCCCC;

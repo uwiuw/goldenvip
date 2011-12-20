@@ -1,5 +1,6 @@
+<script type="text/javascript" src="<?php echo base_url();?>asset/theme/old-site/js/jquery.fesetup.js"></script>
 <script type="text/javascript">
-	
+	var site = "<?php echo site_url();?>";
 	jQuery(function(){
 		jQuery('#disp_regional').hide();
 		jQuery('#disp_city').hide();
@@ -66,6 +67,7 @@
 		}
 	}
 </script>
+
 <div class="container">
 				<div class="frame-photo"><a id="c76"></a>
 
@@ -80,24 +82,30 @@
 				</div>
 
 				<div class="site-map">
-					<div class="baseurl"><a href="http://mygoldenvip.com"><img src="<?php echo base_url(); ?>asset/theme/old-site/images/icon_home.png" alt="Icon Home" /></a></div>
-					<div class="linkQ"><a href="http://mygoldenvip.com/member/" >Member</a><span>JOIN NOW</span></div>
+					<div class="baseurl"><a href=""><img src="<?php echo base_url(); ?>asset/theme/old-site/images/icon_home.png" alt="Icon Home" /></a></div>
+					<div class="linkQ"><a href="" >Member</a><span>JOIN NOW</span></div>
 				</div>
 				<div class="clear"></div>
 				<div class="main-content">
 					<div class="kotak-content"><a id="c38"></a>
 						<div class="tx-rwmembermlm-pi1">
- 
-						 
-								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now/saving');?>"><input type="hidden" name="usercategory" id="usercategory" value="4" />
+ 								<?php if($this->session->flashdata('info')){ ?>
+						 				<div><label class="errdisp" style="color:#F00; font-size:14px; width:100%; text-align:center;"><?php echo $this->session->flashdata('info'); ?></label><div class="clr"></div></div>
+                         		<?php } ?>
+								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now/saving');?>">
+                                <input type="hidden" name="pid" value="67" />
 									<div>
-                                    	<label class="desc">First Name * : </label><input class="text" value="" type="text" name="firstname" id="firstname" size="50" maxlength="100"/><label id="error_firstname" class="errdisp"></label>
+                                    	<label class="desc">First Name * : </label>
+                                        <input class="text" value="" type="text" name="firstname" id="firstname" size="50" maxlength="100"/>
+                                        <label id="error_firstname" class="errdisp"></label>
 										<div class="clr"></div>
 
 									</div>
 									
                                     <div>
-                                    	<label class="desc">Last Name * : </label><input class="text" value="" type="text" name="lastname" id="lastname" size="50" maxlength="100"/><label id="error_lastname" class="errdisp"></label>
+                                    	<label class="desc">Last Name * : </label>
+                                        <input class="text" value="" type="text" name="lastname" id="lastname" size="50" maxlength="100"/>
+                                        <label id="error_lastname" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
@@ -154,12 +162,12 @@
                                        </select>
                                         <?php 
 											$y[]='Year &nbsp; &nbsp;';
-											 
+											$id = "id='y' class='dropdown'";
 											for($i=2010;$i>=1945;$i--)
 											{
 												$y[$i]=$i;
 											}
-											echo form_dropdown('y',$y,"id='y' class='dropdown'");
+											echo form_dropdown('y',$y,'1970',$id);
 										?>  
                                         <label id="error_dob" class="errdisp"></label>
 
@@ -168,18 +176,24 @@
 									</div>
                                     
 									<div>
-                                    	<label class="desc">Email * : </label><input class="text" value="" type="text" name="email" id="email" size="50" maxlength="100"/><label id="error_email" class="errdisp"></label>
+                                    	<label class="desc">Email * : </label>
+                                        <input class="text" value="" type="text" name="email" id="email" size="50" maxlength="100"/>
+                                        <label id="error_email" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
 									<div>
-                                    	<label class="desc">Username (max 12 chars, no space) * : </label><input class="text" value="" type="text" name="username" id="username" size="20" maxlength="12"/><label id="error_username" class="errdisp"></label>
+                                    	<label class="desc">Username (max 12 chars, no space) * : </label>
+                                        <input class="text" value="" type="text" name="username" id="username" size="20" maxlength="12"/>
+                                        <label id="error_username" class="errdisp"></label>
 										<div class="clr"></div>
 
 									</div>
                                     
 									<div>
-                                    	<label class="desc">Password * : </label><input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100"/><label id="error_password1" class="errdisp"></label>
+                                    	<label class="desc">Password * : </label>
+                                        <input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100"/>
+                                        <label id="error_password1" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
@@ -217,12 +231,14 @@
 									<div id="disp_province">
                                     	<label class="desc">State/Province * : </label>
                                         <label id="block_province"></label>
+                                        <label id="error_province" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
 									<div id="disp_city">
                                     	<label class="desc">City * : </label>
                                         <label id="block_city"></label>
+                                        <label id="error_city" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
@@ -239,7 +255,7 @@
                                     <div id="disp_regional">
                                     	<label class="desc">Regional * : </label>
                                         <label id="block_regional"></label>
-
+										<label id="error_regional" class="errdisp"></label>
 										<div class="clr"></div>
 										<label class="desc">&nbsp;</label> Choose the city based on your nearest residence area 
 										<div class="clr"></div>
@@ -248,19 +264,14 @@
 									<div id="display_dist">
                                     	<label class="desc">Distributor * : </label>
                                         <label id="block_distributor"></label>
+                                        <label id="error_distributor" class="errdisp"></label>
+                                        <div class="clr"></div>
                                     </div>
                                     
-                                    <div id="display_vc">
-                                    	<label class="desc">Voucher Code * : </label>
-                                        <label id="block_vc">
-                                        	<input type="text" name="vc">
-                                        </label>
-                                    </div>
-                                    	
 									<div>
                                     	<label class="desc">Package * : </label>
                                         <?php 
-											$id = "id='package' class='dropdown' onchange='select_package()'";
+											$id = "id='pack' class='dropdown' onchange='select_package()'";
 											echo form_dropdown('package',$package,$page['package'],$id); 
 										?>
                                         <label id="error_pack" class="errdisp"></label>
@@ -279,20 +290,11 @@
 										<div class="clr"></div>
 									</div>
                                      
-                                    <div id="display_sel_pck3">
-                                    	<label class="desc">Placement * : </label>
-                                        <select name="placement">
-                                        	<option value="1">Left</option>
-                                            <option value="2">Right</option>
-                                        </select>
-										<div class="clr"></div>
-									</div>
-                                     
 									<div>
                                     	<label class="desc">Bank Name * : </label>
                                         <?php 
-											$id = "id='bank' class='dropdown'";
-											echo form_dropdown('bank',$bank,$page['bank'],$id); 
+											$id = "id='bank_name' class='dropdown'";
+											echo form_dropdown('bank_name',$bank,$page['bank'],$id); 
 										?>
                                         <label id="error_bank_name" class="errdisp"></label>
 										<div class="clr"></div>
@@ -319,7 +321,7 @@
 
 										<div class="clr"></div>
 									</div>
-									<div><input class="et-form-btn" name="submitreg1" id="submitreg1" type="submit" value=" Submit " /></div>
+									<div><input class="et-form-btn" name="submitreg1" id="submitreg1" type="submit" value="Submit" /></div>
 								</form>
 								<p align="right"><strong>* ) Field should be completed and not empty</strong></p>
 							</div>

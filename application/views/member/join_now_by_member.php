@@ -1,5 +1,6 @@
  <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery-1.4.3.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>asset/js/script/public.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>asset/theme/old-site/js/jquery.fesetup.member.js"></script>
  <script type="text/javascript">
 	var site = "<?php echo site_url(); ?>";
 	jQuery(function(){
@@ -34,34 +35,7 @@
 		jQuery('#display_dist').fadeIn(); 
 		load_no_image('member/post_data/get_distributor/'+uid,'#block_distributor');
 	}
-	function select_package()
-	{
-		e = jQuery('#package').val();
-		if(e=='3')
-		{
-			jQuery('#display_sel_pck2').fadeIn();
-			load_no_image('member/post_data/get_pck2/'+e,'#block_pck2');
-		}
-		else
-		{
-			jQuery('#display_sel_pck2').hide();
-			jQuery('#display_sel_pck3').hide();
-		}
-	}
-	function select_package2()
-	{
-		e = jQuery('#package2').val();
-		if(e>'3')
-		{
-			jQuery('#display_sel_pck3').fadeIn();
-			load_no_image('member/post_data/get_pck3/'+e,'#block_pck3');
-		}
-		else
-		{
-			jQuery('#display_sel_pck2').hide();
-			jQuery('#display_sel_pck3').hide();
-		}
-	}
+	  
 </script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/form.css" type="text/css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/picture.css" type="text/css">  
@@ -89,9 +63,11 @@
 				<div class="main-content">
 					<div class="kotak-content"><a id="c38"></a>
 						<div class="tx-rwmembermlm-pi1">
- 
+								<?php if($this->session->flashdata('info')){ ?>
+                                        <div><label class="errdisp" style="color:#F00; font-size:14px; width:100%; text-align:center;"><?php echo $this->session->flashdata('info'); ?></label><div class="clr"></div></div>
+                                <?php } ?>
 						 
-								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now/saving');?>"><input type="hidden" name="usercategory" id="usercategory" value="4" />
+								<form class="et-form"  method="post" id="form-photo" name="form-photo" autocomplete="off" action="<?php echo site_url('member/join-now-by-member');?>"><input type="hidden" name="usercategory" id="usercategory" value="4" />
 									<div>
                                     	<label class="desc">First Name * : </label><input class="text" value="" type="text" name="firstname" id="firstname" size="50" maxlength="100"/><label id="error_firstname" class="errdisp"></label>
 										<div class="clr"></div>
@@ -161,7 +137,7 @@
 											{
 												$y[$i]=$i;
 											}
-											echo form_dropdown('y',$y,"id='y' class='dropdown'");
+											echo form_dropdown('y',$y,'1970',"id='y' class='dropdown'");
 										?>  
                                         <label id="error_dob" class="errdisp"></label>
 
@@ -181,7 +157,7 @@
 									</div>
                                     
 									<div>
-                                    	<label class="desc">Password * : </label><input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100"/><label id="error_password1" class="errdisp"></label>
+                                    	<label class="desc">Password * : </label><input class="text" value="" type="password" name="password1" id="password1" size="50" maxlength="100" /><label id="error_password1" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
@@ -219,12 +195,14 @@
 									<div id="disp_province">
                                     	<label class="desc">State/Province * : </label>
                                         <label id="block_province"></label>
+                                        <label id="error_province" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
 									<div id="disp_city">
                                     	<label class="desc">City * : </label>
                                         <label id="block_city"></label>
+                                        <label id="error_city" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
@@ -241,7 +219,7 @@
                                     <div id="disp_regional">
                                     	<label class="desc">Regional * : </label>
                                         <label id="block_regional"></label>
-
+                                        <label id="error_regional" class="errdisp"></label>
 										<div class="clr"></div>
 										<label class="desc">&nbsp;</label> Choose the city based on your nearest residence area 
 										<div class="clr"></div>
@@ -254,46 +232,38 @@
                                     <div id="display_vc">
                                     	<label class="desc">Voucher Code * : </label>
                                         <label id="block_vc">
-                                        	<input type="text" name="vc">
+                                        	<input type="text" name="vc" id="voucher">
                                         </label>
+                                        <label id="error_voucher" class="errdisp"></label>
+                                        <div class="clr"></div>
                                     </div>
                                     	
 									<div>
                                     	<label class="desc">Package * : </label>
                                         <?php 
-											$id = "id='package' class='dropdown' onchange='select_package()'";
+											$id = "id='package' class='dropdown' ";
 											echo form_dropdown('package',$package,$page['package'],$id); 
 										?>
                                         <label id="error_pack" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
-                                    
-                                    <div id="display_sel_pck2">
-                                    	<label class="desc">Package VIP * : </label>
-                                        <label id="block_pck2"></label>
-										<div class="clr"></div>
-									</div>
-                                    
-                                    <div id="display_sel_pck3">
-                                    	<label class="desc">Select Type Package * : </label>
-                                        <label id="block_pck3"></label>
-										<div class="clr"></div>
-									</div>
                                      
-                                    <div id="display_sel_pck3">
+                                    <div id="display_sel_pck">
                                     	<label class="desc">Placement * : </label>
-                                        <select name="placement">
+                                        <select name="placement" id="placement">
+                                        	<option value="">-- selected --</option>
                                         	<option value="1">Left</option>
                                             <option value="2">Right</option>
                                         </select>
+                                        <label id="error_placement" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                      
 									<div>
                                     	<label class="desc">Bank Name * : </label>
                                         <?php 
-											$id = "id='bank' class='dropdown'";
-											echo form_dropdown('bank',$bank,$page['bank'],$id); 
+											$id = "id='bank_name' class='dropdown'";
+											echo form_dropdown('bank_name',$bank,$page['bank'],$id); 
 										?>
                                         <label id="error_bank_name" class="errdisp"></label>
 										<div class="clr"></div>

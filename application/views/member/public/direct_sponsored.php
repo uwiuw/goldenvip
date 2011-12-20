@@ -17,7 +17,7 @@
                                 <?php
 										$sql = "select uid, pid, firstname, lastname, email, mobilephone, city, sponsor 
 												from tx_rwmembermlm_member
-												where sponsor = '".$this->session->userdata('member')."' order by uid                   
+												where sponsor = '".$this->session->userdata('member')."' and hidden = '0' and valid = '1' order by uid                   
 												";
 										$direct_sponsor = $this->Mix->read_more_rows_by_sql($sql);
 										if(!empty($direct_sponsor))

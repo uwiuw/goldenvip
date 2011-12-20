@@ -1,0 +1,476 @@
+/* CSS Golden VIP*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+div.clear { clear:both; font-size:1px; }
+img { border:none; }
+a, a:link, a:hover, a:visited { text-decoration:none; outline:none; color:blue; }
+body{ }
+
+.container{ width:1040px; margin:0 auto; }
+.last{ border:none !important; }
+
+#presented{ background: #c7b286; height: 6px; }
+/*** HEADER ***/
+#header{ background:url(../images/bg_header1.png) repeat-x; height:128px; font-family:Tahoma; border-bottom:2px solid #ccb789; padding-bottom:2px;  }
+#header .container{ position: relative; }
+#header .container #presentedBy div{ 
+    position: absolute;
+    right: 37px;
+    top: 3px;
+    color: #67542A;
+    font-size: 10px;
+}
+#logo_GoldenVIP{ float:left; margin-top:-12px; margin-left:38px; }
+#kotak-menu, #menu-top, #navigation{ float:right; margin-right:18px; }
+#menu-top{ font-size:10px; margin-top: 15px; }
+#menu-top span, #menu-top span a{ float:left; }
+#menu-top span{ background:url(../images/bg_button_top.png) no-repeat; width:120px; height:23px; padding-top:5px; margin-top:20px; }
+span.join-now{ margin-left:15px; }
+#menu-top span a{ font-weight:bold; color:#67542a; height:16px; margin-left:6px;  }
+#menu-top span a:hover{ color:#fff; }
+#menu-top span a.back-office{ background:url(../images/icon_back_office.png) no-repeat right; padding-right:32px;  }
+#menu-top span.join-now a{ background:url(../images/icon_join_now.png) no-repeat right; padding-right:51px;  }
+
+/*** Main Menu & Menu Drop Down ***/
+/*
+#navigation{ margin-top:15px; list-style:none; }
+#navigation li{ float:left; padding:0px; }
+#navigation li.list-home{ background:url(../images/separator_menu.png) no-repeat; }
+#navigation li a{ background: url(../images/separator_menu.png) no-repeat right; display:block; padding-left: 10px; padding-right: 15px; color:#887b5f; font-weight:bold; line-height:35px; margin:0px; text-align:center; font-size:11px; }
+#navigation li a:hover, #navigation li a.selected{ color:#fff; }
+#navigation li ul.about{ background:url(../images/bg_menu_dropdown.png) no-repeat; display:none; height:97px; padding-top:10px; border:0px; position:absolute; width:145px; z-index:200; }
+#navigation li ul.opportun{ background:url(../images/bg_menu_opportunity.png) no-repeat; display:none; height:38px; padding-top:10px; border:0px; position:absolute; width:145px; z-index:200; }
+#navigation li:hover ul{ display:block; }
+#navigation li li { display:block; float:none; margin:0px; padding:0px; width:auto; }
+#navigation li:hover li a{ background:none; }
+#navigation li ul a{ display:block; font-size:11px; font-style:normal; margin:0px; padding-left: 5px; text-align:left; line-height:2; border-bottom:1px dotted; color: #a29478; width: 120px; background: url(../images/list_panah.png) no-repeat left; }
+#navigation li ul a:hover, #navigation li ul li:hover a{ color:#000; text-decoration:none; }
+*/
+/*** BANNER ***/
+
+.content{ background:url(../images/bg_banner.png) repeat-x; margin-bottom:7px; padding-top:20px; min-height:  450px; }
+
+
+/*** FOOTER ***/
+#footer{ background:url(../images/bg_footer.png) repeat-x; height:159px; }
+#social-network{ background:url(../images/border_social_network.png) no-repeat bottom; width:945px; margin-left:45px; padding-top:10px; height:68px; }
+#fb, #fb label, #fb img, #fb span{ float:left; }
+#fb label{ color: #A28E69; font-family: trebuchet MS; font-size: 13px; margin-right: 10px; margin-top: 15px; }
+#fb span{ color: #3D5C9A; font-family: tahoma; font-size: 12px; margin-left: 10px; margin-top: 15px; }
+#thawte{ float:right; }
+
+#menu-footer{ text-align:center; font-family:tahoma; font-size:10px; padding-top:10px; height:45px;  }
+#menu-footer ul li{ display:inline; color:#A28E69; }
+#menu-footer ul li a{ padding:0 5px; color:#A28E69; }
+#menu-footer ul li a:hover, #menu-footer ul li a.selected{ color: #fff;}
+#menu-footer span{ color:#1da0e3; }
+#menu-footer span a{ color:#1da0e3; }
+
+#develop{ margin-left:45px; font-family:tahoma; font-size:10px; color:#A28E69; width:935px; }
+span#copyright{ float:left; padding-top:5px; }
+span#created{ float:right; }
+#created label{ float:left; padding-top:5px; padding-right:5px; }
+
+/*** Halaman Login ***/
+#form-member{
+    padding-left: 20px;
+    padding-top: 45px;
+    height: 155px;
+}
+#form-member, #form-member p, #form-member p label, #form-member p input, #form-member p span, .check-login,.other-link{ float: left; }
+#form-member p label{  
+    color: #121212;
+    float: left;
+    font-family: arial;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    width: 100px;
+    
+}
+#form-member p input{ 
+    background: url("../images/input_login_hotel.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    cursor: text;
+    font-size: 25px;
+    height: 31px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    width: 300px;
+}
+#form-member p select{
+    margin-bottom: 10px;
+    padding: 4px;
+    width: 297px;
+}
+#form-member p.select-box{
+    /*display: none;*/
+}
+#form-member p span{
+    float: left;
+    margin-right: 9px;
+    font-weight: bold;
+}
+#form-member p input.login-member{ background: url(../images/button_login_hotel.png) no-repeat; width: 68px; height: 33px; color: #fff; cursor: pointer; padding: 0px; font-size: 13px; font-weight: bold; }
+#form-member p font{ color:#ff0000; }
+#form-member p.login-admin-hotel{
+    float: right;
+    margin-right: 40px;
+}
+/*** Halaman Hotel ***/
+#hotel-login{ 
+   -moz-background-inline-policy: continuous;
+    background: url("../images/bg_login_hotel.png") no-repeat scroll 0 0 transparent;
+    height: 288px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    position: inherit;
+    width: 468px;
+}
+
+#hotel-login h2{ padding-left: 140px; width:534px; height: 51px; padding-top: 20px; margin-bottom:10px; font-family: arial; font-weight: normal; font-size: 25px;  }
+
+.check-login{ margin-top: 40px; margin-left: 10px; font-family: arial; font-size: 10px; color: #646464; }
+.check-login input{ margin-right: 5px;  }
+.other-link{ width: 468px; }
+.other-link a{ font-family: tahoma; font-size: 14px; font-weight: bold; color: #121212; }
+.other-link a:hover{ color: #666;}
+.other-link a.forgot-paswd{ 
+    float: left;
+    margin-left: 15px; }
+.other-link a.new-account{ float: right; }
+
+#hotel-login .tx-felogin-pi1 p a{
+    color: #905E14;
+    float: left;
+    margin-top: -10px;
+}
+#hotel-login .tx-felogin-pi1 form div input[type="text"]{
+    background: url("../images/input_login_hotel.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    cursor: text;
+    font-size: 25px;
+    height: 31px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    width: 300px;
+}
+
+/*** halaman Home Hotel ***/
+#home-hotel{ background: url(../images/bg_home_hotel.png) no-repeat; width: 969px; height: 1462px; margin-left: 45px;}
+#head-hotel, #content-hotel, #hotel-left, #hotel-right, #head-hotel h2{ float: left; }
+#head-hotel a{ float: right; color: #121212; font-weight: bold; font-family: arial; background: url(../images/icon_message.png) no-repeat left 2px; padding-left: 25px; height: 16px; font-size: 11px; padding-right: 10px; }
+#head-hotel{ width: 895px; padding-left: 65px; padding-top: 22px; height: 30px; }
+#head-hotel h2{ font-family: trebuchet ms; font-weight: normal; font-size: 16px; color: #fff; }
+
+#hotel-left .box-image1{ background: url(../images/kotak_image.png) no-repeat; width: 230px; height: 215px; margin-left: 18px; margin-top: 10px; padding-left: 5px; padding-top: 4px; }
+#hotel-left{ width: 250px; }
+#search-hotel{ float: left; width: 250px; height: 350px; }
+#search-hotel p label, #search-hotel p, #search-hotel p select, #search-hotel p a, #search-hotel p span{ float: left; font-family: arial; font-size: 11px; }
+#hotel-left h2{ font-family: arial; font-size: 15px; }
+#search-hotel h2{  padding-bottom: 12px; padding-left: 70px; padding-top: 13px; margin-bottom: 10px; }
+#search-hotel p label{ width: 250px; padding: 7px 0; }
+#search-hotel p{ width: 250px; padding-left: 35px; }
+#search-hotel p.country select{ width: 180px; }
+#search-hotel p select.check-bulan{ margin: 0 17px;}
+#search-hotel p span{ margin-left: 35px; margin-right: 17px; }
+#search-hotel p select.kamar-middle{ margin: 0 25px;}
+#search-hotel p label, #search-hotel p span{ color: #666;}
+#search-hotel p input{  margin-top: 18px;  }
+#hotel-left input{ background: url(../images/button_search_hotel.png) no-repeat; width: 118px; height: 33px; border: none; color: #fff; font-weight: bold; font-family: arial; font-size: 14px; cursor: pointer; padding-bottom: 5px;  }
+#maps{ float:left; margin-left: 17px; height: 263px;  }
+#maps h2, #maps a{ float: left; }
+#maps h2{ background: url(../images/icon_search_maps.png) no-repeat left; padding-left: 45px; margin-left: 10px; margin-top: 25px; height: 34px; }
+#maps iframe{ border: none; height: 134px; width: 204px;}
+#maps a{ padding-left: 15px; padding-top: 15px; }
+#maps p input{ margin-left: 13px; margin-top: 10px; }
+#hotel-facilities{ float: left; margin-left:15px; height: 275px; }
+#hotel-facilities h2{ margin-bottom: 15px; margin-left: 65px; margin-top: 25px; }
+#hotel-facilities p input.facilities{ background: url(../images/button_show_facilities.png) no-repeat; width:164px; height: 33px; margin-left: 10px; margin-top: 6px;  }
+#hotel-facilities img{ margin-left: 11px; margin-top: 12px; }
+
+#recreation{ float: left; margin-left: 18px; }
+#recreation h2{ margin-left: 35px; margin-top: 31px; margin-bottom: 13px; }
+#recreation img{ margin-left: 8px; margin-top: 10px; }
+#recreation p input.btn-recreation{ background: url(../images/button_recreation.png) no-repeat; width: 164px; height: 33px; margin-left: 8px; margin-top: 7px; }
+
+
+/*** Right ***/
+#hotel-right{ margin-left: 10px; }
+#alamat-left{ float: left; }
+#alamat-right{ float: right; }
+#hotel-right h1{ color: #121212; font-size: 25px; font-weight: normal; }
+#alamat-left p{   color: #121212;  font-size: 12px; font-style: italic; }
+.csc-firstHeader{
+    display: none;
+}
+.tx-felogin-pi1 h3{
+    display: none;
+}
+.tx-felogin-pi1 label{
+    color:#121212;
+    float:left;
+    font-family:arial;
+    font-size:17px;
+    font-weight:bold;
+    margin-bottom:5px;
+    /*width:100px;*/
+}
+#hotel-login-backoffice .tx-felogin-pi1 form div input[type="password"],
+.tx-felogin-pi1 #user, #pass{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:transparent url(../images/input_login_hotel.png) no-repeat scroll 0 0;
+    border:medium none;
+    cursor:text;
+    font-size:18px;
+    height:31px;
+    margin-bottom:10px;
+    padding-left:10px;
+    width:300px;
+    color: #000000;
+}
+
+.tx-felogin-pi1 fieldset{
+    border:medium none;
+}
+.tx-felogin-pi1 legend{
+    display: none;
+}
+.tx-felogin-pi1{
+    padding-top: 32px;
+    padding-left: 20px;
+   
+}
+.tx-felogin-pi1 form{
+    padding-top: 10px;
+}
+.tx-felogin-pi1 div{
+    
+}
+.tx-felogin-pi1 .error-msg{    
+    color: red;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+.tx-felogin-pi1 form input[value="Reset Password"]{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background: url("../images/button_reset_password.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 33px;
+    margin-bottom: 15px;
+    margin-left: 255px;
+    padding-bottom: 5px;
+    width: 134px;
+}
+.tx-felogin-pi1 form input[value="Login"]{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background: url("../images/button_login_hotel.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 33px;
+    margin-bottom: 15px;
+    margin-left: 320px;
+    padding-bottom: 5px;
+    width: 68px;
+}
+
+/** Halaman Admin Hotel **/
+#admin-hotel-top{
+    background: url(../images/bg_top_hotel.png) no-repeat; 
+    height: 21px; 
+    width: 969px;
+}
+#admin-hotel-middle{
+    background: none repeat scroll 0 0 #FFF5C0;
+    margin-left: 2px;
+    min-height: 550px;
+    width: 965px;
+}
+#admin-hotel-bottom{
+    background: url("../images/bg_bottom_hotel.png") no-repeat scroll 0 0 transparent;
+    height: 21px;
+    margin-bottom: 20px;
+    width: 969px;
+}
+#admin-hotel-middle #admin-left h2{
+    background: url("../images/menu.png") no-repeat scroll 0 0 transparent;
+    height: 46px;
+    margin-bottom: 10px;
+    margin-left: 12px;
+    width: 236px;
+}
+#admin-left, #admin-right{ float: left; }
+#admin-left{ width: 267px; margin-right: 10px; }
+#admin-hotel-middle #admin-left #menu-admin{
+    list-style: none;
+}
+#menu-admin li a{
+     background: url("../images/list_menu_admin.png") no-repeat scroll left center transparent;
+    color: #000000;
+    font-size: 17px;
+    margin-bottom: 5px;
+    margin-left: 8px;
+    padding-left: 20px;
+}
+#menu-admin li{
+    border-bottom: 1px dotted;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+}
+#menu-admin{ margin: 0 13px; }
+#admin-right .content-admin-right{ 
+    background: none repeat scroll 0 0 #D0BB8E;
+    min-height: 450px;
+    margin-top: 45px;
+    width: 675px;
+}
+#menu-admin .active{
+    color: red;
+}
+
+/*** Halaman Back Office ***/
+#hotel-login-backoffice{ 
+   -moz-background-inline-policy: continuous;
+    background: url("../images/bg_login_hotel.png") no-repeat scroll 0 0 transparent;
+    height: 288px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    position: inherit;
+    width: 468px;
+}
+
+#hotel-login-backoffice h2{ padding-left: 140px; width:534px; height: 51px; padding-top: 20px; margin-bottom:10px; font-family: arial; font-weight: normal; font-size: 25px;  }
+
+#hotel-login-backoffice .tx-felogin-pi1 p a, #hotel-login .tx-felogin-pi1 p a{
+    color: #905E14;
+    float: left;
+    /*margin-top: -30px;*/
+    font-size: 16px;
+}
+#hotel-login-backoffice .tx-felogin-pi1 form div input[type="text"]{
+    background: url("../images/input_login_hotel.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    cursor: text;
+    font-size: 25px;
+    height: 31px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    width: 300px;
+}
+#hotel-login-backoffice .tx-felogin-pi1, #hotel-login .tx-felogin-pi1{
+    font-size: 12px;
+    text-align: center;
+}
+#logout .tx-felogin-pi1{
+    margin-top: -60px;
+    float: right;
+    
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+#logout .tx-felogin-pi1{
+    margin-top: -40px;
+    float: right;
+    margin-right: 5px;
+    
+}    
+}
+#logout .tx-felogin-pi1 input[type="submit"]{
+    background: url("../images/icon_logout.png") no-repeat scroll right center transparent;
+    border: medium none;
+    color: #67542A;
+    cursor: pointer;
+    float: left;
+    margin-left: 10px;
+    
+    padding-right: 40px;
+}
+.tx-rwadminhotelmlm-pi1 #welcome{
+    text-align: center;
+    font-size: 30px;
+    padding-top: 40px;
+    font-family: fantasy;
+}
+#pack .teksnya{
+    font-family:arial;
+    font-size:11px;
+    padding-top:8px;
+    text-align:left;
+    width:61px;
+    
+}
+.search_book{
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    border:2px solid #CCCCCC;
+    color:#888888;
+    display:block;
+    float:left;
+    font-size:14px;
+    margin-right:5px;
+    padding:2px 5px;
+    width:240px;
+}
+.search_book_cat{
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    border:2px solid #CCCCCC;
+    color:#888888;
+    display:block;
+    float:left;
+    font-size:12px;
+    margin-right:5px;
+    padding:2px 5px;
+    width:254px;
+}
+.button_search_book{
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    background-color:#666666;
+    padding:15px 3px;
+    color: #CCCCCC;
+    border: none;
+    font-family: arial;
+}    
+#pack table{
+    margin-top:6px;
+    margin-top:4px;
+}
+#welcome-to-hotel{
+    float: right;
+    font-style: italic;
+}
+#logo_core img{
+    height:150px;
+    padding-left:11px;
+    padding-top:20px;
+    width:250px;
+}
+#welcome-to-hotel .tx-rwadminhotelmlm-pi1{
+    width: 680px;
+}
+    

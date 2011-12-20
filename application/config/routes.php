@@ -48,7 +48,20 @@ $route['(:any)'] = "main";
 # public page
 $route['home-page'] = "main/homepage";
 $route['about-us'] = "main/about";
-$route['products'] = "main/products";
+$route['about-us/the-gvip-story'] = "main/about";
+$route['about-us/vision-and-mission'] = "main/vision_and_mission";
+$route['about-us/corporate-overview'] = "main/corporate_overview";
+$route['about-us/why-gvip'] = "main/why_gvip";
+
+
+$route['products'] = "main/business";
+$route['products/business'] = "main/business";
+$route['products/vip'] = "main/vip";
+$route['products/travel'] = "main/travel";
+$route['products/participant-hotels'] = "main/participant_hotels";
+
+
+
 $route['news'] = "main/news";
 $route['faq'] = "main/faq";
 $route['contact-us'] = "main/contact";
@@ -65,10 +78,17 @@ $route['_admin/voucher_code'] = 'panel/main/list_voucher'; # admin area for mana
 $route['_admin/generate_vc'] = 'panel/main/generate_vc';
 $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 
+$route['_admin/comision_payment'] = 'panel/commission'; 
+$route['_admin/comision_payed'] = 'panel/commission/comision_payed';
+$route['_admin/update_data_member'] = 'panel/main/update_data_member';
 # member area
 $route['member'] = 'member/main';
 $route['member/home-page'] = 'member/main';
+$route['member/list-member-request'] = 'member/main/list_member_request';
+$route['member/opportunity'] = 'member/main/opportunity';
+$route['member/news'] = 'member/main/news';
 $route['member/profile'] = 'member/main/profile';
+$route['member/profile/update-profile'] = 'member/main/update_profile';
 $route['member/report/genealogy'] = 'member/main/report';
 $route['member/report/commision'] = 'member/main/commision';
 $route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';
@@ -77,12 +97,30 @@ $route['member/thank-you-registering'] = 'member/main/thankyou';
 $route['member/logout'] = 'member/main/member_logout';
 $route['member/check-login'] = 'member/main/check_login';
 $route['member/join-now'] = 'member/main/join_now';
+	$route['member/join-now/saving'] = 'member/main/join_now_saving';
+	$route['member/join-now/set-active-member'] = 'member/main/set_active_member';
+	$route['member/join-now-by-member'] = 'member/main/join_by_member';
 # member package business
-$route['member/1/reservation'] = 'member/business';
-$route['member/1/use-this-reservation-for'] = 'member/business/set_reservation';
-$route['member/1/save-reservation'] = 'member/business/save_reservation';
-$route['member/2/reservation'] = 'member/travel';
-$route['member/3/reservation'] = 'member/vip';
+$route['member/reservation/business'] = 'member/business';
+$route['member/reservation/business/use-this-reservation-for']='member/business/set_reservation';
+$route['member/reservation/business/save-reservation'] = 'member/business/save_reservation';
+$route['member/reservation/business/set-for-other'] = 'member/business/set_for_other';
+# member package vip
+$route['member/reservation/vip'] = 'member/vip';
+$route['member/reservation/vip/holy-land'] = 'member/vip';
+$route['member/reservation/vip/non-holy-land'] = 'member/vip/non_holyland';
+$route['member/reservation/vip/package-selected'] = 'member/vip/package_selected';
+$route['member/reservation/vip/use-this-reservation-for'] = 'member/vip/use_this_reservation_for';
+$route['member/reservation/vip/set-for-other'] = 'member/vip/set_for_other';
+$route['member/reservation/vip/set-for-myself'] = 'member/vip/set_for_myself';
+$route['member/reservation/vip/set-reservation'] = 'member/vip/set_reservation';
+# member package travel
+$route['member/reservation/travel'] = 'member/travel';
+$route['member/reservation/travel/package-selected'] = 'member/travel/package_selected';
+$route['member/reservation/travel/use-this-reservation-for'] = 'member/travel/use_this_reservation_for';
+$route['member/reservation/travel/set-for-other'] = 'member/travel/set_for_other';
+$route['member/reservation/travel/set-for-myself'] = 'member/travel/set_for_myself';
+$route['member/reservation/travel/set-reservation'] = 'member/travel/set_reservation';
 
 # member business saving reservation
 $route['member/reservation/list-hotel'] = 'member/business/list_hotel';

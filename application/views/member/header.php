@@ -63,26 +63,21 @@
 								<li style="margin-top: 12px;"><a href="<?php echo site_url('member/report/genealogy'); ?>" >Genealogy</a></li>
 								<li class="tengah"><a href="<?php echo site_url('member/report/commision'); ?>" >Commision</a></li>
 								<li class="bawah"><a href="<?php echo site_url('member/report/direct-sponsored'); ?>" >Direct Sponsored</a></li>
-
 							</ul>
 						</li>
 						<li id="nav-opportunity"><a href="<?php echo site_url('member/opportunity'); ?>" >OPPORTUNITY</a></li>
 						<?php $uri = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$this->session->userdata('member'),'uid'); ?>
                                                 <li id="nav-reservation">
-                                                    <?php
-                                                     if($uri['package'] == '1' or $uri['package']=='0')
-                                                     {
-                                                         echo "<a href=\"".site_url('member/1/reservation')."\" >RESERVATION</a>";
-                                                     }
-                                                     elseif($uri['package']=='2')
-                                                     {
-                                                         echo "<a href=\"".site_url('member/2/reservation')."\" >RESERVATION</a>";
-                                                     }
-                                                     else
-                                                     {
-                                                         echo "<a href=\"".site_url('member/3/reservation')."\" >RESERVATION</a>";
-                                                     }
-                                                    ?>
+                                                	<a href="<?php echo site_url('member/reservation/business'); ?>" >RESERVATION</a>
+                                                    <ul>
+                                                    	<li style="margin-top: 12px;"><a href="<?php echo site_url('member/reservation/business'); ?>" >BUSINESS</a></li>
+                                                        <li><a href="<?php echo site_url('member/reservation/travel'); ?>" >TRAVEL</a></li>
+                                                        <li><a href="<?php echo site_url('member/reservation/vip'); ?>" >VIP</a></li>
+                                                        	<ul>
+                                                            	<li style="margin-left: 120px; margin-top:-10px;"><a href="<?php echo site_url('member/reservation/vip/holy-land'); ?>" >HOLY LAND</a></li>
+                                                                <li style="margin-left: 120px;"><a href="<?php echo site_url('member/reservation/vip/non-holy-land'); ?>" >NON HOLY LAND</a></li>
+                                                            </ul>
+                                                    </ul>
                                                 </li>
 						<li id="nav-news" class="bawah"><a href="<?php echo site_url('member/news'); ?>" >NEWS</a></li>                   
 				</ul>
