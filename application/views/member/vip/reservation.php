@@ -43,6 +43,7 @@
 	function get_time_sch()
 	{
 		<?php 
+			# ambil data dari tabel destination, pid 4 holyland dan pid 5 adalah non holyland
 			$data = $this->Mix->read_rows_by_one('pid',$pid,'tx_rwmembermlm_destination'); 
 			foreach($data as $row)
 			{
@@ -50,12 +51,28 @@
 				if(document.getElementById('packagevip').value == <?php echo $row['uid']; ?>)
 				{
 					<?php
-						$sch['time_sch'] = $this->Mix->read_rows_by_two('hidden','0','pid',$row['uid'],'tx_rwagen_vipschedule');
+						# ambil waktu penerbangan jika ada.
+						# uid dari destination yang akan menjadi tolak ukurnya
+						# package.destination = destination.uid
+						# schedule.package = package.uid
+						# ambil time_sch dari schedule
+                                                $day = date('Y-m-d');
+						$sql = "select a.time_sch, a.package, b.uid, 
+								b.destination, c.uid
+								from
+								tx_rwagen_vipschedule a, tx_rwagen_vippackage b,
+								tx_rwmembermlm_destination c
+								where a.package = b.uid
+								and b.destination = c.uid
+								and a.hidden = 0
+                                                                and a.time_sch > '$day'
+								and b.destination = '".$row['uid']."'";
+						$sch = $this->Mix->read_more_rows_by_sql($sql);
 					?>
 					schDays = [
 						<?php 
 							$i = 1;
-							foreach($sch['time_sch'] as $list) 
+							foreach($sch as $list) 
 							{ 
 								$ambil = date_parse($list['time_sch']);
 							
@@ -113,18 +130,23 @@
 	function get_select_payment()
 	{
 		
-		if(jQuery('#select_payment').val == '1')
+		if(jQuery('#select_payment').val() == 'Cash')
 		{
 			jQuery('#cash_payment').fadeIn();
 		}
-		else if(jQuery('#select_payment').val == '2')
+		else if(jQuery('#select_payment').val() == 'Credit Card')
 		{
 			jQuery('#cash_payment').fadeIn();
 		}
-		else
+		else if(jQuery('#cash_payment').val()=='Redeem Points')
 		{
+                        alert('test');
 			jQuery('#cash_payment').fadeIn();
 		}
+                else
+                {
+                    jQuery('#cash_payment').fadeOut();
+                }
 	}
 	function check()
 	{
@@ -191,7 +213,7 @@
 <div class="container">
 	<div id="box-reservation">
 		<div id="reservation-top">
-			<div id="home-top"><h2>VIP Reservation For Package <?php echo $selected; ?></h2></div>
+			<div id="home-top"><h2>VIP Reservation For <?php echo $selected; ?> Package</h2></div>
 		</div>
 		<div id="reservation">
 		<div id="left">
@@ -202,7 +224,7 @@
                         <form method="POST" action="<?php echo site_url('member/reservation/vip/package-selected');?>" class="et-form" name="reservasi" enctype="multipart/form-data"> 
                         
                             <div>
-                                <label class="desc">Select Destination :</label>
+                                <label class="desc">Destination :</label>
                                	<?php 
 							   		$id = "id = 'packagevip' onchange = 'get_time_sch();'";
 									echo form_dropdown('destination',$destination,'0',$id); 
@@ -232,7 +254,7 @@
                                 <select id="select_payment" name="select_payment" onchange="get_select_payment();">
                                     <option selected="selected" value="0">-- Select Payment --</option>
                                     <option value="Cash">Cash</option>
-                                    <option value="Credit Card">Credit Card</option>
+                                    
                                 </select>
                                 <div class="clr"></div>
                             </div>
@@ -269,7 +291,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 			</div>
             
 			<div class="visit-hotel">
-            	<h2>Thank you for making your reservatiion. Your confirmed booking hotels as follows :</h2>
+            	<h2>Thank you for making your reservation. Your confirmed booking Tour as follows :</h2>
 				<div class="box-visit-left"></div>
 				<div class="box-visit-middle">
 					<div class="tx-rwadminhotelmlm-pi1">
@@ -277,31 +299,42 @@ Account No. (IDR) 070.137.5068</font></center></div>
                             <thead>
                                 <tr>
                                     <th width="24" class="header">No.</th>
-                                    <th width="87" class="header headerSortDown">Time Schedule</th>
-                                    <th width="72" class="header headerSortDown">Reservation</th>
-                                    <th width="60" class="header headerSortDown">Package Agen</th>
-                                    <th width="65" class="header headerSortDown">Destination</th>
+                                    <th width="87" class="header headerSortDown">Destination</th>
+                                    <th width="72" class="header headerSortDown">Package Type</th>
+                                    <th width="60" class="header headerSortDown">Schedule</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
 								
-							$sql = "select a.reservation, c.nama as package, d.name as agen,  e.time_sch, f.rate, a.payed, f.nama, g.destination
-									from
-									tx_rwagen_vipbooking a,
-									tx_rwmembermlm_member b,
-									tx_rwagen_vippackage c,
-									tx_rwagen_agen d,
-									tx_rwagen_vipschedule e,
-									tx_rwagen_vipbookingdetails f,
-									tx_rwmembermlm_destination g
-									where 
-									a.uid_member = b.uid and
-									a.uid_sch = e.uid and
-									e.agen = d.uid and
-									e.package = c.uid and
-									g.uid = e.pid and
-									f.pid = a.uid and a.hidden = '0' and a.uid_member = '".$this->session->userdata('member')."'";
+                                $sql = "select a.reservation, 
+                                        c.nama as package, 
+                                        d.name as agen,  
+                                        e.time_sch, 
+                                        f.rate, 
+                                        a.payed, 
+                                        f.nama, 
+                                        g.destination,
+                                        a.qty
+                                        from
+                                        tx_rwagen_vipbooking a,
+                                        tx_rwmembermlm_member b,
+                                        tx_rwagen_vippackage c,
+                                        tx_rwagen_agen d,
+                                        tx_rwagen_vipschedule e,
+                                        tx_rwagen_vipbookingdetails f,
+                                        tx_rwmembermlm_destination g
+                                        where 
+                                        a.uid_member = b.uid and
+                                        a.uid_sch = e.uid and
+                                        c.agen = d.uid and
+                                        e.package = c.uid and
+                                        c.destination = g.uid and
+                                        f.pid = a.uid and 
+                                        a.hidden = '0' and 
+                                        a.uid_member = '".$this->session->userdata('member')."'
+                                        order by a.uid desc
+                                        limit 0,10 ";
 								$retail = $this->Mix->read_more_rows_by_sql($sql);
 								if(!empty($retail))
 								{
@@ -311,10 +344,10 @@ Account No. (IDR) 070.137.5068</font></center></div>
 							?>
                                 <tr class="even">
                                     <td><?php echo $i; ?>.</td>
-                                    <td><?php echo $row['time_sch']; ?></td>
-                                    <td><?php echo $row['nama']; ?></td>
-                                    <td><?php echo $row['package']; ?></td>
                                     <td><?php echo $row['destination']; ?></td>
+                                    <td><?php echo $row['qty']."  ".$row['package']; ?></td>
+                                    <td><?php echo $row['time_sch']; ?></td>
+                                    
                                 </tr>
                             <?php 
 									$i++;

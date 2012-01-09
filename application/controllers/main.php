@@ -11,7 +11,7 @@ class Main extends CI_Controller {
 	{
 		$this->homepage();
 	}
-	function homepage()	# home uri
+	function homepage()	# home
 	{
 		$uri = $this->uri->segment('2');
 		if($uri=='post_data')
@@ -118,6 +118,17 @@ class Main extends CI_Controller {
 		$this->load->vars($data);
 		$this->load->view('public/old/template');
 	}
+        
+        function catalogue_of_point_rewards()
+        {
+            $data['title']="Golden VIP : Catalogue of Point Rewards";
+            $data['page'] = "catalogue_of_point_rewards";
+            $data['nav'] = "products";
+            $data['template']=base_url()."asset/theme/mygoldenvip/"; 
+
+            $this->load->vars($data);
+            $this->load->view('public/old/template');
+        }
 	
 	function news()
 	{
@@ -155,6 +166,7 @@ class Main extends CI_Controller {
 		switch($data)
 		{
 			case "del_dist": # site_url/segment_2/del_dist/segment_4
+				is_admin();
 				$this->del_dist();
 				break;
 			case "get_member";
@@ -176,9 +188,11 @@ class Main extends CI_Controller {
 				$this->get_regional();
 				break;
 			case "search_distributor":
+				is_admin();
 				$this->search_distributor();
 				break;
 			case "get_vc_by_dist":
+				is_admin();
 				$this->get_vc_by_dist();
 				break;
 			case "get_distributor":
@@ -221,13 +235,30 @@ class Main extends CI_Controller {
 				$this->del_member_request();
 				break;
 			case "browse-member-request":
+				is_member();
 				$this->browse_member_request();
 				break;
 			case "hide_member":
+				is_admin();
 				$this->hide_member();
 				break;
 			case "del-vc":
+				is_admin();
 				$this->del_vc();
+				break;
+			case "get_mail":
+				$this->get_mail();
+				break;
+			case "get_username":
+				$this->get_username();
+				break;
+			case "edit_vip_rate":
+				is_admin();
+				$this->edit_vip_rate();
+				break;
+			case "edit_travel_rate":
+				is_admin();
+				$this->edit_travel_rate();
 				break;
 		}
 	}
@@ -309,71 +340,13 @@ class Main extends CI_Controller {
 		$id = "id='regional' onchange='regional_change();'";
 		echo form_dropdown('regional',$regional,'1',$id); 
 	}
-	function search_distributor()
-	{
-		$val = $this->input->post('reg');
-		$cat = $this->input->post('cat');
-		$sql = "select m.uid, m.pid, m.firstname, m.lastname, m.email, m.username, m.mobilephone, c.city from tx_rwmembermlm_member m, tx_rwmembermlm_city c where c.uid = m.regional and m.usercategory='".$cat."' and m.firstname like '%".$val."%' and m.pid = '67'";
-		$data = $this->Mix->read_more_rows_by_sql($sql);
-		$i=1;
-		if(!empty($data))
-		{
-			foreach($data as $row)
-			{
-			echo "
-				<tr valign='top'> 
-					<td width='7%'>
-						$i.
-					</td>
-					<td class='name-data'>
-					   ".$row['firstname'].' '.$row['lastname']."             
-					</td>
-					<td>
-						".$row['email']."
-					</td>
-					<td>
-						".$row['username']."
-					</td>
-					<td>
-						".$row['mobilephone']."
-					</td>
-					<td>
-						".$row['city']."
-					</td>
-					<td>
-					<a href='javascript:void();' onclick='load(\"_admin/post_data/get_member/".$row['uid']."/".$row['pid']."\",\"#site-content\")' class='browse'></a>
-					";
-					 
-					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','valid',$row['uid'],'uid'); 
-					if($d['valid']=='1')
-					{
-					echo " 
-					<a href=\"javascript:void()\" onclick=\"load('_admin/post_data/hide_member/".$row['uid']."/".$row['pid']."','#info-saving');\" class=\"lampunyala\" id=\"hide".$row['uid']."\"></a>";
-					 
-					}
-					else
-					{
-					 echo "
-					<a href=\"javascript:void()\" onclick=\"load('_admin/post_data/hide_member/".$row['uid']."/".$row['pid']."','#info-saving');\" class=\"lampumati\" id=\"hide".$row['uid']."\"></a>";
-					}
-					
-					echo"
-					</td>
-				</tr>  ";
-				$i++;
-			} 
-		}
-		else
-		{
-			echo "<tr><td colspan='7'>Not Found</td></tr>";
-		}
-	}
 	
 	function get_vc_by_dist()
 	{
-		$url = $this->uri->segment('4');
+                is_admin();
+		/*$url = $this->uri->segment('4');
 		$data = get_vc_member($url);
-		$this->load->view('panel/page/distributor/dist_vc',$data);
+		$this->load->view('panel/page/distributor/dist_vc',$data);*/
 	}
 	
 	function get_distributor()
@@ -381,7 +354,14 @@ class Main extends CI_Controller {
 		$url = $this->uri->segment('4');
 		$distributor = $this->Mix->read_disrtibutor($url);
 		$id = "id='distributor' onchange='get_vc()'";
-		echo form_dropdown('distributor',$distributor,'1',$id);
+		if(count($distributor) == '1')
+		{
+			echo "<font style='float:left;font-size:12px; font-weight:bold; color:#F00;'>Sorry we can't allow you to blank this field, there are no options distributor for this regional. <br /> Are you interest to be distributor for this regional ? Call us.</font>";
+		}
+		else
+		{
+			echo form_dropdown('distributor',$distributor,'1',$id);
+		}
 	}
 	
 	function get_pck2()
@@ -450,21 +430,21 @@ class Main extends CI_Controller {
 	function reservation_vip()
 	{
 		$uid = $this->uri->segment('4');
-		$sql = "select a.uid,a.time_sch, a.qty, a.booking, b.nama, c.name as travel, d.destination, b.deskripsi, b.harga as retail_rate
+		$sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
+				d.destination, b.deskripsi, b.retail_rate
 				from tx_rwagen_vipschedule a, 
 				tx_rwagen_vippackage b, 
 				tx_rwagen_agen c, 
-				tx_rwmembermlm_destination d
-				
-				where a.pid = d.uid and
-				a.package = b.uid and
-				a.agen = c.uid and
-				a.hidden = 0 and
-				a.uid = '$uid'
+				tx_rwmembermlm_destination d 
+				where 
+				a.package = b.uid
+				and
+				b.agen = c.uid
+				and
+				b.destination = d.uid
+				and a.uid = '$uid'
 				";
 		$sql1 = "select reservation from tx_rwagen_vipbooking where uid_member = '".$this->session->userdata('member')."' and hidden = '1' ";
-		
-		
 		$res = $this->Mix->read_rows_by_sql($sql1);
 		$data['reservation'] = $res['reservation'];
 		$data['pack'] = $this->Mix->read_more_rows_by_sql($sql);
@@ -478,17 +458,19 @@ class Main extends CI_Controller {
 	function reservation_travel()
 	{
 		$uid = $this->uri->segment('4');
-		$sql = "select a.uid,a.time_sch, a.qty, a.booking, b.nama, c.name as travel, d.destination, b.deskripsi, b.harga as retail_rate
+		$sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
+				d.destination, b.deskripsi, b.retail_rate
 				from tx_rwagen_travelschedule a, 
 				tx_rwagen_travelpackage b, 
 				tx_rwagen_agen c, 
-				tx_rwmembermlm_destination d
-				
-				where a.pid = d.uid and
-				a.package = b.uid and
-				a.agen = c.uid and
-				a.hidden = 0 and
-				a.uid = '$uid'
+				tx_rwmembermlm_destination d 
+				where 
+				a.package = b.uid
+				and
+				b.agen = c.uid
+				and
+				b.destination = d.uid
+				and a.uid = '$uid'
 				";
 		$sql1 = "select reservation from tx_rwagen_travelbooking where uid_member = '".$this->session->userdata('member')."' and hidden = '1' ";
 		
@@ -548,6 +530,7 @@ class Main extends CI_Controller {
 						jQuery('#info-saving').addClass('update-nag');
 						jQuery('#hide$uid').removeClass('lampunyala');
 						jQuery('#hide$uid').addClass('lampumati');
+                                                jQuery('#browsemember$uid').hide();
 					});
 				</script>
 			";
@@ -563,6 +546,8 @@ class Main extends CI_Controller {
 						jQuery('#info-saving').addClass('update-nag');
 						jQuery('#hide$uid').removeClass('lampumati');
 						jQuery('#hide$uid').addClass('lampunyala');
+                                                jQuery('#browsemember$uid').fadeIn();
+                                                jQuery('#browsemember$uid').removeClass('hidden-data');
 					});
 				</script>
 			";
@@ -582,5 +567,82 @@ class Main extends CI_Controller {
 				</script>
 			";
 		echo "Voucher Code has been delete.";
+	}
+	function get_mail()
+	{
+		$mail =  $_GET['e']; 
+		$sql = "select email from tx_rwmembermlm_member where email = '$mail' ";
+		$data = $this->Mix->read_rows_by_sql($sql);
+		if(empty($data))
+		{
+			echo "ok";
+		}
+		else
+		{
+			echo "exist";
+		}
+	}
+	
+	function get_username()
+	{
+		$u =  $_GET['e']; 
+		$sql = "select username from tx_rwmembermlm_member where username = '$u' ";
+		$data = $this->Mix->read_rows_by_sql($sql);
+		if(empty($data))
+		{
+			echo "ok";
+		}
+		else
+		{
+			echo "exist";
+		}
+	}
+	
+	function edit_vip_rate()
+	{
+		$uid = $this->uri->segment('4');
+		$sql = "select
+                        b.uid,
+                        a.destination,
+                        b.nama as package,
+                        c.name as agen,
+                        b.retail_rate,
+                        b.gvip_rate
+                        from
+                        tx_rwmembermlm_destination a,
+                        tx_rwagen_vippackage b,
+                        tx_rwagen_agen c
+                        where 
+                        b.destination = a.uid and
+                        b.agen = c.uid and
+                        a.hidden = 0 and
+                        b.uid='$uid'";
+		$data = $this->Mix->read_rows_by_sql($sql);
+		$data['cat'] = '3';
+		$this->load->view('panel/page/tour_travel/edit_rate',$data); 
+	}
+	
+	function edit_travel_rate()
+	{
+		$uid = $this->uri->segment('4');
+		$sql = "select
+                        b.uid,
+                        a.destination,
+                        b.nama as package,
+                        c.name as agen,
+                        b.retail_rate,
+                        b.gvip_rate
+                        from
+                        tx_rwmembermlm_destination a,
+                        tx_rwagen_travelpackage b,
+                        tx_rwagen_agen c
+                        where 
+                        b.destination = a.uid and
+                        b.agen = c.uid and
+                        a.hidden = 0
+                        and b.uid='$uid'";
+		$data = $this->Mix->read_rows_by_sql($sql);
+		$data['cat'] = '2';
+		$this->load->view('panel/page/tour_travel/edit_rate',$data); 
 	}
 }

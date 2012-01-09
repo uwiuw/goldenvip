@@ -62,7 +62,8 @@
 								<li style="margin-top: 12px;"><a href="<?php echo site_url('products/business');?>">Business</a></li>
 								<li class="tengah"><a href="<?php echo site_url('products/travel');?>">Travel</a></li>
 								<li class="tengah"><a href="<?php echo site_url('products/vip');?>">VIP</a></li>
-								<li class="bawah"><a href="<?php echo site_url('products/participant-hotels');?>">Participant Hotels</a></li>
+                                                                <li class="tengah"><a href="<?php echo site_url('products/participant-hotels');?>">Participant Hotels</a></li>
+                                                                <li class="bawah"><a href="<?php echo site_url('products/catalogue-of-point-rewards');?>">Catalogue of Point Rewards</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo site_url('news');?>" id="nav-news">NEWS</a></li>

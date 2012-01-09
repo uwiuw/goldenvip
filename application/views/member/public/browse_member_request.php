@@ -23,7 +23,7 @@
 												<tr class="odd">
 													<td width="200px"><strong>Package</strong></td>
 													<td><strong><?php $p = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','package',$mreq['package'],'uid'); echo $p['package'] ; ?></strong>
-                                                    <input type="text" name="package" value="<?php echo $mreq['package']; ?>">
+                                                    <input type="hidden" name="package" value="<?php echo $mreq['package']; ?>">
                                                     </td>
 												</tr>
 												<tr class="even">
@@ -87,7 +87,7 @@
 													<td><strong><?php echo $mreq['name_on_bank_account']; ?></strong></td>
 												</tr>
 												<tr class="even">
-													<td width="200px"><strong>Voucher Code</strong></td>
+													<td width="200px"><strong>Voucher Code*</strong></td>
 													<td><input type="text" id="voucher_code" name="voucher_code" size="50" maxlength="100" value=""></td>
 												</tr>
 												<tr class="odd">
@@ -96,7 +96,9 @@
 												</tr>
 												<tr class="even">
 													<td width="200px"><strong>Lock Placement *</strong></td>
-													<td><select class="dropdown" name="placement" id="placement"><option selected="1" value="1">LEFT</option><option value="2">RIGHT</option></select></td>
+													<td>
+                                                    <select class="dropdown" name="placement" id="placement"><option selected="1" value="1">LEFT</option><option value="2">RIGHT</option></select> <font color="#FF0000">*)Please be carefull it's permanent placement and can't be undo or move.</font>
+                                                    </td>
 												</tr>
 											</tbody>
 										</table>

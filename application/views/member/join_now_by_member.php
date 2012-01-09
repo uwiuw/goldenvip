@@ -52,7 +52,6 @@
 	function select_package()
 	{
 		e = jQuery('#package').val();
-		alert(e);
 		if(e=='3')
 		{
 			jQuery('#display_sel_pck2').fadeIn();

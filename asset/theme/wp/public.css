@@ -1,0 +1,26 @@
+/* 
+    Document   : public
+    Created on : Dec 28, 2011, 1:58:16 PM
+    Author     : aceng nursamsudin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+.browse{display:block;background:url(images/browse-icon.png) center;width:16px;height:16px;float:left;margin-right:5px}
+.del-data{display:block;background:url(images/del-icon.png) center;width:16px;height:16px;float:left;margin-left:5px}
+.lampumati{background:url(images/lampu-mati.png) center no-repeat;float:left;width:16px;height:16px;display:block}
+.lampunyala{background:url(images/lampu-nyala.png) center no-repeat;width:16px;height:16px;display:block;float:left}
+.edit-icon{background:url(images/edit-icon.png) center no-repeat;width:18px;height:18px;display:block;float:left; margin-right:5px; }
+.isi-content-admin-tour{padding-left: 5px;}
+.error {
+    background: none repeat scroll 0 0 #815401;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    margin-right: 5px;
+    text-align: center;
+}

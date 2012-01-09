@@ -1,0 +1,17 @@
+/* 
+    Document   : public
+    Created on : Jan 5, 2012, 10:34:47 PM
+    Author     : aceng nursamsudin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+th.manage-action{width:30px;}
+td.no-color{background:none;}
+table.wp-list-table tr:hover{background:#CCC; cursor:pointer;}
+.hidden-data{display: none;}

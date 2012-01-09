@@ -10,8 +10,7 @@
 <script type="text/javascript">
 	function select_distributor()
 	{
-		v = jQuery('#distributor').val();
-		load_no_image('_admin/post_data/get_vc_by_dist/'+v,'#list_voucher');
+            send_form(document.select_vc,'_admin/searching_form','#site-content');
 	}
 	jQuery(function(){
 		jQuery("#myTable").tablesorter();
@@ -28,15 +27,17 @@
 
 <!-- conetent -->
 <p>
-    <center>
-        <strong>List Data Voucher Code</strong>
-    </center>
+    &Colon; Voucher Code Management
 </p>
 
+<form name="select_vc">
 <table>
 	<tr>
     	<td>Select by distributor</td>
-    	<td><?php $id=" id = 'distributor' onchange='select_distributor();'"; echo form_dropdown('distributor',$distributor,'0',$id); ?> </td>
+    	<td>
+            <?php $id=" id = 'distributor' onchange='select_distributor();'"; echo form_dropdown('distributor',$distributor,'0',$id); ?>
+            <input type="hidden" name="search" value="display_vocher_code">
+        </td>
     </tr>
     <tr>
         <td>Total Data</td>
@@ -51,6 +52,8 @@
         <td>: <?php echo $data_used['data_used']; ?></td>
     </tr>
 </table>
+</form>
+
 <br />
 <h2><a class="button add-new-h2" href="javascript:void();" onclick="load('_admin/generate_vc','#site-content');">Generate Voucher Code</a></h2>
 <br />
@@ -67,7 +70,7 @@
                 Status
             </th> 
             <th width="12%">
-                Issued Date
+                Registered Date
             </th> 
             <th width="25%">
                 Distributor
@@ -107,7 +110,7 @@
 				?>
             </td>
             <td>
-                <?php echo date('d-M-Y H:i:s',$row['crdate']); ?>
+                <?php if(!empty($row['tstamp'])) : echo date('d-M-Y H:i:s',$row['tstamp']); endif; ?>
             </td>
             <td>
                 <?php echo $distributor[$row['distributor']]; ?>

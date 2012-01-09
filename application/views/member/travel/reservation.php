@@ -56,12 +56,29 @@
 				if(document.getElementById('packagetravel').value == <?php echo $row['uid']; ?>)
 				{
 					<?php
-						$sch['time_sch'] = $this->Mix->read_rows_by_two('hidden','0','pid',$row['uid'],'tx_rwagen_travelschedule');
+						# ambil waktu penerbangan jika ada.
+						# uid dari destination yang akan menjadi tolak ukurnya
+						# package.destination = destination.uid
+						# schedule.package = package.uid
+						# ambil time_sch dari schedule
+                                                $day = date('Y-m-d');
+						$sql = "select a.time_sch, a.package, b.uid, 
+								b.destination, c.uid
+								from
+								tx_rwagen_travelschedule a, 
+                                                                tx_rwagen_travelpackage b,
+								tx_rwmembermlm_destination c
+								where a.package = b.uid
+								and b.destination = c.uid
+								and a.hidden = 0
+                                                                and a.time_sch > '$day'
+								and b.destination = '".$row['uid']."'";
+						$sch = $this->Mix->read_more_rows_by_sql($sql);
 					?>
 					schDays = [
 						<?php 
 							$i = 1;
-							foreach($sch['time_sch'] as $list) 
+							foreach($sch as $list) 
 							{ 
 								$ambil = date_parse($list['time_sch']);
 							
@@ -197,7 +214,7 @@
 <div class="container">
 	<div id="box-reservation">
 		<div id="reservation-top">
-			<div id="home-top"><h2>travel Reservation For Package <?php echo $selected; ?></h2></div>
+			<div id="home-top"><h2>Reservation :</h2></div>
 		</div>
 		<div id="reservation">
 		<div id="left">
@@ -208,7 +225,7 @@
                         <form method="POST" action="<?php echo site_url('member/reservation/travel/package-selected');?>" class="et-form" name="reservasi" enctype="multipart/form-data"> 
                         
                             <div>
-                                <label class="desc">Select Destination :</label>
+                                <label class="desc">Destination :</label>
                                	<?php 
 							   		$id = "id = 'packagetravel' onchange = 'get_time_sch();'";
 									echo form_dropdown('destination',$destination,'0',$id); 
@@ -217,7 +234,7 @@
                             </div>
                             
                     		<div>
-                                <label class="desc">Depart:
+                                <label class="desc">Departure:
                                 </label><input id="datepicker" name="datepicker" type="text" onchange= "check_schedule_tour();">
                                 <div class="clr"></div>
                             </div>
@@ -245,8 +262,15 @@
                             </div>
                             
                             <div id="cash_payment">
-                            	<div id="lipo"><center><font color="#FF0000">Payment in Indonesian Rupiah. Kindly Transfer should be made to PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN travel) Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
-Account No. (IDR) 070.137.5068</font></center></div>
+                            	<div id="lipo">
+                                    <center>
+                                        <font color="#FF0000">
+                                        
+IDR payment should be transfered to PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN VIP) at 
+<b style="font-size:larger;">Permata Bank Acct. No. 070.137.5068</b>
+</font>
+                                    </center>
+                                </div>
                             </div>
                             
                             <div id="creditCardNumber"></div>
@@ -276,7 +300,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 			</div>
             
 			<div class="visit-hotel">
-            	<h2>Thank you for making your reservatiion. Your confirmed booking hotels as follows :</h2>
+            	<h2>Thank you for making your reservatiion. Your confirmed booking tour as follows :</h2>
 				<div class="box-visit-left"></div>
 				<div class="box-visit-middle">
 					<div class="tx-rwadminhotelmlm-pi1">
@@ -284,31 +308,41 @@ Account No. (IDR) 070.137.5068</font></center></div>
                             <thead>
                                 <tr>
                                     <th width="24" class="header">No.</th>
-                                    <th width="87" class="header headerSortDown">Depart</th>
-                                    <th width="72" class="header headerSortDown">Reservation</th>
-                                    <th width="60" class="header headerSortDown">Package Agen</th>
-                                    <th width="65" class="header headerSortDown">Destination</th>
+                                    <th width="87" class="header headerSortDown">Destination</th>
+                                    <th width="72" class="header headerSortDown">Package Type</th>
+                                    <th width="60" class="header headerSortDown">Depart</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
 								
-							$sql = "select a.reservation, c.nama as package, d.name as agen,  e.time_sch, f.rate, a.payed, f.nama, g.destination
-									from
-									tx_rwagen_travelbooking a,
-									tx_rwmembermlm_member b,
-									tx_rwagen_travelpackage c,
-									tx_rwagen_agen d,
-									tx_rwagen_travelschedule e,
-									tx_rwagen_travelbookingdetails f,
-									tx_rwmembermlm_destination g
-									where 
-									a.uid_member = b.uid and
-									a.uid_sch = e.uid and
-									e.agen = d.uid and
-									e.package = c.uid and
-									g.uid = e.pid and
-									f.pid = a.uid and a.hidden = '0' and a.uid_member = '".$this->session->userdata('member')."'";
+                                $sql = "select a.reservation, 
+                                        c.nama as package, 
+                                        d.name as agen,  
+                                        e.time_sch, 
+                                        f.rate, 
+                                        a.payed, 
+                                        f.nama, 
+                                        g.destination
+                                        from
+                                        tx_rwagen_travelbooking a,
+                                        tx_rwmembermlm_member b,
+                                        tx_rwagen_travelpackage c,
+                                        tx_rwagen_agen d,
+                                        tx_rwagen_travelschedule e,
+                                        tx_rwagen_travelbookingdetails f,
+                                        tx_rwmembermlm_destination g
+                                        where 
+                                        a.uid_member = b.uid and
+                                        a.uid_sch = e.uid and
+                                        c.agen = d.uid and
+                                        e.package = c.uid and
+                                        c.destination = g.uid and
+                                        f.pid = a.uid and 
+                                        a.hidden = '0' and 
+                                        a.uid_member = '".$this->session->userdata('member')."'
+                                        order by a.uid desc
+                                        limit 0,10 ";
 								$retail = $this->Mix->read_more_rows_by_sql($sql);
 								if(!empty($retail))
 								{
@@ -318,10 +352,9 @@ Account No. (IDR) 070.137.5068</font></center></div>
 							?>
                                 <tr class="even">
                                     <td><?php echo $i; ?>.</td>
-                                    <td><?php echo $row['time_sch']; ?></td>
-                                    <td><?php echo $row['nama']; ?></td>
-                                    <td><?php echo $row['package']; ?></td>
                                     <td><?php echo $row['destination']; ?></td>
+                                    <td><?php echo $row['package']; ?></td>
+                                    <td><?php echo $row['time_sch']; ?></td>
                                 </tr>
                             <?php 
 									$i++;
@@ -330,6 +363,7 @@ Account No. (IDR) 070.137.5068</font></center></div>
 							?>
                             </tbody>
                         </table>
+                       
 					</div>
 				</div>
 				<div class="box-visit-right"></div>

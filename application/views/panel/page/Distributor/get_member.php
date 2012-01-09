@@ -165,9 +165,7 @@
         <tr>
         	<td>Bank Name *</td>
             <td>
-           		<?php
-					echo form_dropdown('bank_name',$bank,$page['bank_name']);
-				?>
+           		<input type="text" name="bank_name" value="<?php echo $page['bank_name']; ?>"/>
            	</td>
         </tr>
         

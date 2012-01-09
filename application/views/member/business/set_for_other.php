@@ -33,14 +33,8 @@ function check(){
 		if((email_anda.indexOf('@',0)==-1)||(email_anda.indexOf('.',0)==-1)){
 			document.getElementById("error").innerHTML = "Email Not Valid";
 		}else{
-			if(document.kwitansi.mega[0].checked || document.kwitansi.mega[1].checked)
-			{
-				document.forms["kwitansi"].submit();
-			}
-			else
-			{
-				document.getElementById("error").innerHTML ="Mega Insurance can't blank";
-			}
+			
+			document.forms["kwitansi"].submit();
 	
 		}
 	}
@@ -76,13 +70,7 @@ function calculation()
 										<div><label class="desc">Email :</label><input type="text" id="email" name="email">
 											<div class="clr"></div>
 										</div>
-                                        <div>
-                                        	<label class="desc">Using Mega Travel Insurance ?</label>
-                                            <input type="radio" name="mega" value="1" >Yes
-                                            <input type="radio" name="mega" value="0" >No
-                                            <span style="color: red; text-align: center;font-size: 12px;" id="mega<?php echo $i;?>"></span>
-                                        	<div class="clr"></div>
-                                        </div>
+                                        
 										<div><label class="desc">Room Type :</label><input type="text" disabled="1" value="<?php echo $sch['category_name'];?>" id="room_type" name="room_type"><input type="hidden" value="" id="room_type1" name="room_type1">
 											<div class="clr"></div>
 										</div>
@@ -104,14 +92,9 @@ function calculation()
                                                  	<td colspan="2" id="payment"></td>
                                                 </tr>
                                             	<tr align="center">
-                                                	<td>
+                                                    <td>
                                             			<input type="button" onclick="check()" name="button" class="button_black" id="submit_photo" value="Booking Now">
                                                     </td>
-                                                    <?php if($compliment_only=='1') { echo $hidden; } else {?>
-                                                    <td>
-                                            			<input type="button" onclick="calculation()" name="button" class="button_black" id="submit_photo" value="Calculation">
-                                                    </td>
-                                                    <?php } ?>
                                                  </tr>
                                             </table>
 											<div class="clr"></div>

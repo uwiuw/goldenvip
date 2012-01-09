@@ -84,8 +84,10 @@ jQuery(document).ready(function(){
         //alert(!jQuery("#agree").is(':checked'));
                                 
         //START VALIDATION 
+		
+		
         clearLabelError();                
-       
+      	 
         if(!firstname){        
             jQuery("#error_firstname").text("can't be empty");
             return false;
@@ -105,11 +107,44 @@ jQuery(document).ready(function(){
             return false;
         }
 		
-        
+		var check =1;
+		 jQuery.ajax({
+          type: "GET",                  
+          dataType: "html",
+          async: false,
+          url:site+'public/post_data/get_mail/?e='+email,
+          success: function (data, status) {
+            if(!data.result){
+				if(data != 'ok'){
+					jQuery("#error_email").text("email already exists");  
+					check = 0;       
+				}
+            }    
+          }          
+        });
+		
         if(!username){        
             jQuery("#error_username").text("can't be empty");
             return false;
         }
+		
+		 //CHECK AVAILABLE USERNAME
+        
+        jQuery.ajax({
+          type: "GET",                  
+          dataType: "html",
+          async: false,
+          url:site+'public/post_data/get_username/?e='+username,
+          success: function (data, status) {             
+            if(!data.result){
+				if(data != 'ok'){
+					check = 0;
+					jQuery("#error_username").text("username already exists"); 
+				}
+            }    
+          }          
+        });        
+		
         if(username.length < 4){        
             jQuery("#error_username").text("length > 3 caracters");
             return false;
@@ -138,6 +173,22 @@ jQuery(document).ready(function(){
             jQuery("#error_mobilephone").text("can't be empty");
             return false;
         }
+		
+		if(homephone)
+		{
+			if(isNaN(homephone))
+			{
+				jQuery("#error_homephone").text("is not a number");
+				return false;
+			}
+		}
+		
+		if(isNaN(mobilephone))
+		{
+			jQuery("#error_mobilephone").text("is not a number");
+			return false;
+		}
+		
         if(!province){
             jQuery("#error_province").text("can't be empty");
             return false;
@@ -187,6 +238,12 @@ jQuery(document).ready(function(){
             jQuery("#error_bank_account_number").text("can't be empty");
             return false;
         }
+		
+		if(isNaN(bank_account_number))
+		{
+			jQuery("#error_bank_account_number").text("is not a number");
+			return false;
+		}
         
         if(!name_on_bank_account){
             jQuery("#error_name_on_bank_account").text("can't be empty");
@@ -196,9 +253,12 @@ jQuery(document).ready(function(){
         if(!jQuery("#agree").is(':checked')){
             jQuery("#error_agree").text("Please agree term & conditions");
             return false;
-        }
-       
-        //END VALIDATION   
-		return true;            
+        } 
+		  
+        //END VALIDATION        
+        if(check)
+            return true;
+        else
+            return false;           
     });    
 })

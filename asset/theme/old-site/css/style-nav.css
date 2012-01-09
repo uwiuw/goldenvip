@@ -8,8 +8,8 @@
 #nav li:hover { position:relative; }
 #nav li:hover a, #nav li a.active{ color:#fff; text-decoration: none !important;}
 
-#nav ul li{ float:none; margin-left: 0px; background: #fff7e6; width: 142px; margin-left: 2px;  }
-#nav ul li a { width:118px; height:22px; line-height:18px; padding-right: 0px; display:block; text-align: left; padding-left: 15px; padding-top: 1px; margin-left: 5px;
+#nav ul li{ float:none; margin-left: 0px; background: #fff7e6; width: 182px; margin-left: 2px;  }
+#nav ul li a { width:158px; height:22px; line-height:18px; padding-right: 0px; display:block; text-align: left; padding-left: 15px; padding-top: 1px; margin-left: 5px;
      border-bottom: 1px dotted; margin-right: 15px; }
 #nav li:hover ul li a { color:#95876a; background:url(../images/list_panah.png) no-repeat left 8px; }
 

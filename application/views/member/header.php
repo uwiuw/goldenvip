@@ -19,10 +19,9 @@
     var jQuery = $.noConflict();    
 	jQuery(document).ready(function(){
 			jQuery("li#nav-<?php echo $nav; ?> a").addClass('active');
-			jQuery('a[rel*=facebox]').facebox({
-        	loadingImage : '<?php echo base_url(); ?>asset/images/loading.gif',
-        	closeImage   : '<?php echo base_url(); ?>asset/images/closelabel.png'
-      	})
+			
+                jQuery("#halaman2").remove();
+                jQuery("#halaman1").removeClass('display-none');
 	});
   </script>
 </head>
@@ -57,7 +56,7 @@
 				<ul id="nav">
                 	<li id="nav-homepage"><a href="<?php echo site_url('member/home-page'); ?>">HOME</a></li>
 
-						<li id="nav-profile"><a href="#info<?php #echo site_url('member/profile');?>" rel="facebox" >PROFILE</a></li>
+						<li id="nav-profile"><a href="<?php echo site_url('member/profile');?>" rel="facebox" >PROFILE</a></li>
 						<li id="nav-report"><a href="<?php echo site_url('member/report/genealogy/'); ?>" >REPORT</a>
 							<ul>
 								<li style="margin-top: 12px;"><a href="<?php echo site_url('member/report/genealogy'); ?>" >Genealogy</a></li>
@@ -74,8 +73,8 @@
                                                         <li><a href="<?php echo site_url('member/reservation/travel'); ?>" >TRAVEL</a></li>
                                                         <li><a href="<?php echo site_url('member/reservation/vip'); ?>" >VIP</a></li>
                                                         	<ul>
-                                                            	<li style="margin-left: 120px; margin-top:-10px;"><a href="<?php echo site_url('member/reservation/vip/holy-land'); ?>" >HOLY LAND</a></li>
-                                                                <li style="margin-left: 120px;"><a href="<?php echo site_url('member/reservation/vip/non-holy-land'); ?>" >NON HOLY LAND</a></li>
+                                                            	<li style="margin-left: 120px; margin-top:-10px;"><a href="<?php echo site_url('member/reservation/vip/holy-land'); ?>" >HOLYLAND</a></li>
+                                                                <li style="margin-left: 120px;"><a href="<?php echo site_url('member/reservation/vip/non-holy-land'); ?>" >NON HOLYLAND</a></li>
                                                             </ul>
                                                     </ul>
                                                 </li>

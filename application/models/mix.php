@@ -193,6 +193,7 @@ class Mix extends CI_Model
 		$data = array(); 
 		$this->db->where('pid',$pid);
 		$this->db->where('hidden',$hidden);
+		$this->db->order_by($field2,'asc');
 		$q = $this->db->get($tb);
 		$data['']= '-- select --';
 		if($q->num_rows()>0)
@@ -214,6 +215,7 @@ class Mix extends CI_Model
 		$data = array(); 
 		$this->db->where('hidden',$hidden);
 		$this->db->where('uid_country',$uid);
+		$this->db->order_by('province','asc');
 		$q = $this->db->get('tx_rwmembermlm_province');
 		$data['']= '-- select --';
 		if($q->num_rows()>0)
@@ -232,6 +234,7 @@ class Mix extends CI_Model
 		$data = array(); 
 		$this->db->where('hidden',$hidden);
 		$this->db->where('uid_province',$uid);
+		$this->db->order_by('city','asc');
 		$q = $this->db->get('tx_rwmembermlm_city');
 		$data['']= '-- select --';
 		if($q->num_rows()>0)
@@ -245,10 +248,12 @@ class Mix extends CI_Model
 		return $data;
 	}
 	
-	function read_package_by_pid($pid='0')
+	function read_package_by_pid($pid='0',$hidden='0')
 	{
 		$data = array(); 
 		$this->db->where('pid',$pid);
+                $this->db->where('hidden',$hidden);
+		$this->db->order_by('destination','asc');
 		$q = $this->db->get('tx_rwmembermlm_destination');
 		$data['']= '-- select --';
 		if($q->num_rows()>0)
@@ -268,6 +273,7 @@ class Mix extends CI_Model
 		$this->db->where('regional',$regional);
 		$this->db->where('pid',$pid);
 		$this->db->where('usercategory',$cat);
+		$this->db->order_by('firstname','asc');
 		$q = $this->db->get('tx_rwmembermlm_member');
 		$data['']= '-- select --';
 		if($q->num_rows()>0)
@@ -286,6 +292,7 @@ class Mix extends CI_Model
 		$data = array();
 		$this->db->where('hidden','0');
 		$this->db->where('uid_destination',$val);
+		$this->db->order_by('destination_detail','asc');
 		$q = $this->db->get('tx_rwmembermlm_destination_detail');
 		if($q->num_rows()>0)
 		{
@@ -313,6 +320,23 @@ class Mix extends CI_Model
 		$q->free_result();
 		return $data;
 	}
+        
+        function read_package_destination($sql)
+	{
+		$data = array(); 
+		$q = $this->db->query($sql);
+		if($q->num_rows()>0)
+		{
+                        $data['']= '-- select --';
+			foreach($q->result_array() as $row)
+			{
+				$data[$row['uid']] = $row['destination'];
+			}
+		}
+		$q->free_result();
+		return $data;
+	}
+        
 	function read_rows_data_by_sql($sql)
 	{
 		$data = array(); 
@@ -327,6 +351,22 @@ class Mix extends CI_Model
 		$q->free_result();
 		return $data;
 	}
+        
+        function read_rows_by_sql_to_dropdown($sql,$name='destination')
+        {
+            $data = array();
+            $q = $this->db->query($sql);
+            if($q->num_rows()>0)
+            {
+                foreach($q->result_array() as $row)
+                {
+                        $data[$row['uid']] = $row[$name];
+                }
+            }
+            $q->free_result();
+            return $data;
+        }
+        
 	function read_row_by_three($field,$val,$field2,$val2,$field3,$val3,$tb)
 	{
 		$data = array();

@@ -47,8 +47,8 @@ a.et-form-btn{
 							<div class="tx-rwadminhotelmlm-pi1">
 								<div id="quest"><?php echo $tulisan; ?></div>
 									<div id="button">
-                                    	<a href="<?php echo site_url('member/reservation/travel/set-for-other');?>" class="et-form-btn"> Others </a>
-                                        <a href="<?php echo site_url('member/reservation/travel/set-for-myself');?>" class="et-form-btn"> Myself </a>
+                                    	<a href="<?php echo site_url("member/reservation/travel/set-for-other/?uid=".$uid_sch."&qty=".$qty."&uidnum=".$uidnum."");?>" class="et-form-btn"> Others </a>
+                                        <a href="<?php echo site_url("member/reservation/travel/set-for-myself/?uid=".$uid_sch."&qty=".$qty."&uidnum=".$uidnum."");?>" class="et-form-btn"> Myself </a>
 									</div>
 							</div>
 						</div>

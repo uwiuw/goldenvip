@@ -11,6 +11,7 @@
 	site = "<?php echo site_url(); ?>";
 	jQuery(function(){
 		jQuery('.password').hide();
+                jQuery('.password2').hide();
 		jQuery( "#datepicker" ).datepicker({
 			showOn: "button",
 			buttonImage: "<?php echo base_url(); ?>asset/images/calendar.gif",
@@ -31,13 +32,24 @@
 		jQuery('#tablesorter tr:even').addClass('odd');
 		jQuery('#change-pwd').click(function(){
 			if(jQuery('.password').is(':visible')){
-				jQuery(this).val('Change Password');
+				jQuery(this).val('Change 1st Password');
 				cancel_reset_password();
 			}
 			else
 			{
-				jQuery(this).val('Cancel Change Password');
+				jQuery(this).val('Cancel Change 1st Password');
 				reset_password();
+			}
+		});
+                jQuery('#change-pwd2').click(function(){
+			if(jQuery('.password2').is(':visible')){
+				jQuery(this).val('Change 2nd Password');
+				cancel_reset_password2();
+			}
+			else
+			{
+				jQuery(this).val('Cancel Change 2nd Password');
+				reset_password2();
 			}
 		});
 		jQuery("#myTable").tablesorter();
@@ -54,10 +66,23 @@
 	
 	function reset_password(){
 		jQuery('.password').fadeIn();
+                jQuery('#password').val('');
+                jQuery('#password2').val('');
 	}
 	
 	function cancel_reset_password(){
 		jQuery('.password').fadeOut();
+	}
+        
+        function reset_password2(){
+		jQuery('.password2').fadeIn();
+                
+	}
+	
+	function cancel_reset_password2(){
+		jQuery('.password2').fadeOut();
+                jQuery('#password2nd').val('');
+                jQuery('#password2nd2').val('');
 	}
 	
 	function check_val_pwd()
@@ -65,6 +90,11 @@
 		if(jQuery('input#password2').val() != jQuery('input#password').val())
 		{
 			jQuery('.info').text('Password Not Same');
+		}
+                
+                if(jQuery('input#password2nd').val() != jQuery('input#password2nd2').val())
+		{
+			jQuery('.info2').text('Password Not Same');
 		}
 	}
 	
@@ -76,7 +106,14 @@
 		}
 		else
 		{
-			document.forms["update_data"].submit();
+			if(jQuery('input#password2nd').val() != jQuery('input#password2nd2').val())
+                        {
+                                jQuery('.info2').text('Password Not Same');
+                        }
+                        else
+                        {
+                                document.forms["update_data"].submit();
+                        }
 		}
 	}
 </script>
@@ -84,15 +121,19 @@
 <div id="show-ctn-member"> 
 	<div class="tx-rwmembermlm-pi1"> 
 		<div id="home-office" class="sponsor">
-			<div id="home-top">
-				<h2>Report » Genealogy</h2>
-            </div>
-			<div id="home-bottom">
-				<p><strong>* ) Field should be completed and not empty</strong></p>
-				<div align="right">
-                    <input type="button" value="Change Password" id="change-pwd" />
-                    <?php if($this->session->flashdata('info')) { ?><div class="error"><?php echo $this->session->flashdata('info'); ?></div><?php } ?>
-                </div>
+                    <div id="home-top">
+                            <h2>Report » Genealogy</h2>
+                    </div>
+                    <div id="home-bottom">
+                        <p><strong>* ) Field should be completed and not empty</strong></p>
+                        <div align="right">
+                            <input type="button" value="Change 1st Password" id="change-pwd" />
+                            
+                        </div>
+                        <div align="right" style="margin:10px 0 0; ">
+                            <input type="button" value="Change 2nd Password" id="change-pwd2" />
+                            <?php if($this->session->flashdata('info')) { ?><div class="error"><?php echo $this->session->flashdata('info'); ?></div><?php } ?>
+                        </div>
 				
 <br />
 <form name="update_data" action="<?php echo site_url('member/profile/update-profile'); ?>" method="post">
@@ -126,13 +167,23 @@
         </tr>
  		
         <tr class="password">
-        	<td>New Password *</td>
+        	<td>New 1st Password *</td>
             <td><input type="password" name="password" id = "password"></td>
         </tr>
         
         <tr class="password">
-        	<td>Confirm Password *</td>
+        	<td>Confirm 1st Password *</td>
             <td><input type="password" name="password2"  id = "password2" onchange="check_val_pwd();"><font color="#FF0000" class="info"></font></td>
+        </tr>
+        
+        <tr class="password2">
+        	<td>New 2nd Password *</td>
+            <td><input type="password" name="password2nd" id = "password2nd"></td>
+        </tr>
+        
+        <tr class="password2">
+        	<td>Confirm 2nd Password *</td>
+            <td><input type="password" name="password2nd"  id = "password2nd2" onchange="check_val_pwd();"><font color="#FF0000" class="info2"></font></td>
         </tr>
                
         <tr>
@@ -226,10 +277,8 @@
         <tr>
         	<td>Bank Name *</td>
             <td>
-           		<?php
-					echo form_dropdown('bank_name',$bank,$member['bank_name']);
-				?>
-           	</td>
+           		<input type="text" value="<?php echo $member['bank_name']; ?>" name="bank_name">
+            </td>
         </tr>
         
         <tr>
@@ -276,7 +325,7 @@ Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
 
 												<th>Status</th>
 												<th>Downlines</th>
-												<th style="text-align: center;">Issued Date</th>
+												<th style="text-align: center;">Registered Date</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -290,7 +339,7 @@ Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
 												<td <?php if($row['status']=='1'){ echo "style='background-color: red;color: white;font-weight: bold;'";} ?>><?php echo $row['voucher_code']; ?></td>
 												<td <?php if($row['status']=='1'){ echo "style='background-color: red;color: white;font-weight: bold;'";} ?>><?php if($row['status']=='1'){echo "Used"; }else{ echo "Available";} ?></td>
 												<td <?php if($row['status']=='1'){ echo "style='background-color: red;color: white;font-weight: bold;'";} ?>><strong><?php echo $row['firstname']." ".$row['lastname']; ?></strong></td>
-												<td align="center" <?php if($row['status']=='1'){ echo "style='background-color: red;color: white;font-weight: bold;'";} ?>><?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_vouchercode','crdate',$row['voucher_code'],'voucher_code'); echo date('Y-m-d H:i:s',$d['crdate']); ?></td>
+												<td align="center" <?php if($row['status']=='1'){ echo "style='background-color: red;color: white;font-weight: bold;'";} ?>><?php if($row['tstamp'] != 0){echo date('Y-m-d H:i:s',$row['tstamp']);} ?></td>
 											</tr>
 											<?php $i ++;} ?>	
 										</tbody>

@@ -9,11 +9,12 @@ class Travel extends CI_Controller
 	
 	function get_data_package()
 	{
+            is_member();
 		$data['destination'] = $this->Mix->read_package_by_pid('2');
 		$data['pid'] = '2';
 		$data['title']="Member | Home Page | Reservation";
-        $data['page'] = "travel/reservation";
-        $data['nav'] = "reservation";
+                $data['page'] = "travel/reservation";
+                $data['nav'] = "reservation";
 		$data['template']=base_url()."asset/theme/mygoldenvip/";
 		$m = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
 		if($m['package'] != '2')
@@ -75,18 +76,26 @@ function package_selected()
 		$this->Mix->add_with_array($insert,'tx_rwagen_travelbooking');
 		/* end */
 				
-		$sql = "select a.uid,a.time_sch, a.qty, a.booking, b.nama, c.name, d.destination
-				from tx_rwagen_travelschedule a, 
-				tx_rwagen_travelpackage b, 
-				tx_rwagen_agen c, 
-				tx_rwmembermlm_destination d
-				
-				where a.pid = d.uid and
-				a.package = b.uid and
-				a.agen = c.uid and
-				a.hidden = 0 and
-				d.uid = '$tujuan' and
-				a.time_sch = '$tanggal'";
+		$sql = "select 
+                        a.uid,
+                        a.time_sch, 
+                        a.qty, 
+                        a.booking, 
+                        b.nama, 
+                        c.name, 
+                        d.destination
+                        from 
+                        tx_rwagen_travelschedule a, 
+                        tx_rwagen_travelpackage b, 
+                        tx_rwagen_agen c, 
+                        tx_rwmembermlm_destination d
+                        where 
+                        b.destination = d.uid and
+                        a.package = b.uid and
+                        b.agen = c.uid and
+                        a.hidden = 0 and
+                        d.uid = '$tujuan' and
+                        a.time_sch = '$tanggal'";
 		
 		$data['sch'] = $this->Mix->read_more_rows_by_sql($sql);
 		/* data halaman */
@@ -102,7 +111,7 @@ function package_selected()
 		is_member();
 		$qty = '1';
 		$data = array();
-		/* check : 	jika terdapat data dengan inisiasi hidden 1 maka data tersebut akan di update untuk qty dan uid_sch */
+		/* check : 	jika terdapat data dengan inisiasi hidden 1 maka data tersebut akan di update untuk qty dan uid_sch ny pada tabel booking */
 		$check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_travelbooking');
 		if(!empty($check))
 		{
@@ -115,27 +124,11 @@ function package_selected()
 			{
 				$data['tulisan'] = "I Agree To Us My Complimentry  To : ";
 			}
-			$up['uid_sch'] = $this->input->post('uid_sch');
-			$up['qty'] = $qty;
-			
-			$d = $this->Mix->read_row_ret_field_by_value('tx_rwagen_travelschedule','booking',$this->input->post('uid_sch'),'uid'); 
-			$q = $this->Mix->read_row_ret_field_by_value('tx_rwagen_travelschedule','qty',$this->input->post('uid_sch'),'uid'); 
-			
-			$qty = $qty + $d['booking'];
-			if($qty > $q['qty'])
-			{
-				echo "<b>sorry is not enough quota <b>"; 
-				redirect('member/reservation/travel','refresh');
-			}
-			else
-			{
-				$quote['booking'] = $qty;
-				$this->Mix->update_record('uid',$this->input->post('uid_sch'),$quote,'tx_rwagen_travelschedule');
-				$this->Mix->update_record('uid',$check['uid'],$up,'tx_rwagen_travelbooking');
-			}
-			
 		}
 		/* data halaman */
+		$data['uid_sch'] = $this->input->post('uid_sch');
+		$data['qty'] = $qty;
+		$data['uidnum'] = $check['uid'];
 		$data['page'] = "travel/use_this_reservation_for";
 		$data['title']="Member | Home Page | Reservation";
         $data['nav'] = "reservation";
@@ -150,71 +143,99 @@ function package_selected()
 		if(!empty($check))
 		{
 			$up['hidden'] = '0';
-			if($check['qty'] == 1)
+			if($_GET['qty'] == 1)
 			{
-				$this->set_data_final_booking_travel_click_myself();
-				disable_complimentary();
+				$this->check_qty();
+                                $allow  = 1;
+				$this->set_data_final_booking_travel_click_myself($allow);
+				if($check['reservation'] != 'Personal Account')
+				{
+					disable_complimentary();
+				}
 				$this->Mix->update_record('uid',$check['uid'],$up,'tx_rwagen_travelbooking');
-				$this->get_pdf($check['uid'],$check['qty']);
-				
-				//$data['title']="Member | Reservation | Thank you ";
-				//$data['page'] = "business/save_reservation";
-				//$data['nav'] = "reservation";
-				//$this->load->vars($data);
-				//$this->load->view('member/template');
+				$this->get_pdf($check['uid'],$_GET['qty']);
 			}
 			else
 			{
+				$qty = $_GET['qty'];
+				if(empty($qty)){echo "<b>sorry you can't reserverd, please try again. <b>";redirect('member/reservation/travel','refresh');}
 				$this->set_data_final_booking_travel_click_myself();
-				$this->set_for_other($check['qty'],1, 'and Myself');
+				$this->set_for_other($_GET['qty'],1, 'and Myself');
 			}
 		}
 		else
 		{
 			redirect('member/reservation/travel','refresh');
-
 		}
 	}
 	
-	function set_data_final_booking_travel_click_myself()
+	function set_data_final_booking_travel_click_myself($allow = 0)
 	{
-		$sql = "select a.uid as uid_booking, b.uid as uid_sch, c.harga from tx_rwagen_travelbooking a, tx_rwagen_travelschedule b, tx_rwagen_travelpackage c
-				where a.hidden = '1' and
-				a.uid_sch = b.uid and
-				b.package  = c.uid
-				and a.uid_member = '".$this->session->userdata('member')."'";
-		$get_data_sch = $this->Mix->read_rows_by_sql($sql);
-		$get_data_member = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
-		$data['nama'] = $get_data_member['firstname']." ".$get_data_member['lastname'];
-		$data['email'] = $get_data_member['email'];
-		$data['insurance'] = '1';
-		$data['hidden'] = '0';
-		$data['pid'] = $get_data_sch['uid_booking'];
-		$data['rate'] = $get_data_sch['harga']+100;
-		# menambahkan data pada tabel travel booking detail
-		$this->Mix->add_with_array($data,'tx_rwagen_travelbookingdetails');
+            is_member();
+		$check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_travelbooking');
+		if(empty($check['uid_sch']) || $allow == 1)
+		{
+			$uidnum = $_GET['uidnum'];
+			$up['uid_sch'] = $_GET['uid'];
+			$up['qty'] = $_GET['qty'];
+			$this->Mix->update_record('uid',$uidnum,$up,'tx_rwagen_travelbooking');
+			
+			$sql = "select a.uid as uid_booking, 
+                                b.uid as uid_sch, 
+                                c.retail_rate as harga 
+                                from 
+                                tx_rwagen_travelbooking a, 
+                                tx_rwagen_travelschedule b, 
+                                tx_rwagen_travelpackage c 
+                                where 
+                                a.hidden = '1' and
+                                a.uid_sch = b.uid and
+                                b.package  = c.uid and
+                                a.uid_member = '".$this->session->userdata('member')."'";
+			$get_data_sch = $this->Mix->read_rows_by_sql($sql);
+			$get_data_member = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
+			$data['nama'] = $get_data_member['firstname']." ".$get_data_member['lastname'];
+			$data['email'] = $get_data_member['email'];
+			$data['insurance'] = '1';
+			$data['hidden'] = '0';
+			$data['pid'] = $get_data_sch['uid_booking'];
+			$data['rate'] = $get_data_sch['harga'];
+			# menambahkan data pada tabel travel booking detail
+			$this->Mix->add_with_array($data,'tx_rwagen_travelbookingdetails');
+		}
 	}
 	
 	function set_for_other($qty = '1',$myself = 0,$me = '')
 	{
 		is_member();
+		if(empty($qty)){echo "<b>sorry you can't reserverd, please try again. <b>";redirect('member/reservation/travel','refresh');}
 		$data = array();
 		$check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_travelbooking');
 		if(!empty($check))
 		{
-			$sql = "select a.uid,a.time_sch, a.qty, a.booking, b.nama as package, c.name as travel, d.destination, b.harga as retail_rate
-					from tx_rwagen_travelschedule a, 
+			$sql = "select 
+					a.uid,
+					a.time_sch, 
+					a.qty, 
+					a.booking, 
+					b.nama as package, 
+					c.name as travel, 
+					d.destination, 
+					b.retail_rate
+					from 
+					tx_rwagen_travelschedule a, 
 					tx_rwagen_travelpackage b, 
 					tx_rwagen_agen c, 
-					tx_rwmembermlm_destination d
-					
-					where a.pid = d.uid and
+					tx_rwmembermlm_destination d 
+					where 
 					a.package = b.uid and
-					a.agen = c.uid and
-					a.uid='".$check['uid_sch']."'";
+					b.agen = c.uid and
+					b.destination = d.uid  
+					and a.uid='".$_GET['uid']."'";
 			/* data halaman */
-			if($check['reservation']!='Compliment'){$data['compliment_only'] = '0'; $qty=$check['qty']-$myself;}
+			if($check['reservation']!='Compliment'){$data['compliment_only'] = '0'; $qty=$_GET['qty']-$myself;}
 			else{$data['compliment_only'] = '1';$data['hidden'] = '<input type="hidden" name="compliment" value="1">';}
+			
 			$data['me'] = $me;
 			$data['qty'] = $qty;
 			$data['sch'] = $this->Mix->read_rows_by_sql($sql);
@@ -235,6 +256,7 @@ function package_selected()
 	{
 		is_member();
 		$data = array();
+                $this->check_qty();
 		$check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_travelbooking');
 		if(!empty($check))
 		{
@@ -260,8 +282,10 @@ function package_selected()
 			}
 			
 			$up['hidden'] = '0';
+                        //$qty = $this->input->post('qty');
 			$this->Mix->update_record('uid',$get_data_sch['uid_booking'],$up,'tx_rwagen_travelbooking');
-			$this->get_pdf($check['uid'],$check['qty']);
+			//echo "werwe".$chek['qty'];
+                        $this->get_pdf($check['uid'],$check['qty']);
 			
 			//$page['title']="Member | Reservation | Thank you ";
 			//$page['page'] = "business/save_reservation";
@@ -278,23 +302,36 @@ function package_selected()
 	
 	function get_pdf($uid = 0, $limit = 0)
 	{
-		$sql = "select a.uid, a.uid_sch, a.payment, b.nama, b.rate as price, a.qty, c.time_sch, 
-				d.nama as package, d.deskripsi, e.name as agen, a.reservation
-				from tx_rwagen_travelbooking a,
-				tx_rwagen_travelbookingdetails b,
-				tx_rwagen_travelschedule c,
-				tx_rwagen_travelpackage d,
-				tx_rwagen_agen e
-				where a.uid='$uid' 
-				and a.uid = b.pid
-				and a.uid_sch = c.uid 
-				and c.package = d.uid 
-				and e.uid = c.agen limit 0,$limit";
+            is_member();
+		$sql = "select 
+                        a.uid, 
+                        a.uid_sch, 
+                        a.payment, 
+                        b.nama, 
+                        b.rate as price, 
+                        a.qty, 
+                        c.time_sch, 
+                        d.nama as package, 
+                        d.deskripsi, 
+                        e.name as agen, 
+                        a.reservation
+                        from 
+                        tx_rwagen_travelbooking a,
+                        tx_rwagen_travelbookingdetails b,
+                        tx_rwagen_travelschedule c,
+                        tx_rwagen_travelpackage d,
+                        tx_rwagen_agen e
+                        where 
+                        a.uid='$uid' and 
+                        b.pid = a.uid and 
+                        a.uid_sch = c.uid and 
+                        c.package = d.uid and 
+                        d.agen = e.uid
+                        limit 0,$limit";
 		$data = $this->Mix->read_more_rows_by_sql($sql);
 		foreach($data as $row)
 		{
 			$pdf['payment'] = $row['payment'];
-			$pdf['price'] = $row['price'];
 			$pdf['qty'] = $row['qty'];
 			$pdf['package'] = $row['package'];
 			$pdf['deskripsi'] = $row['deskripsi'];
@@ -305,33 +342,37 @@ function package_selected()
 		}
 		
 		//debug_data($pdf);
-		 
+		  
 		$this->fpdf->FPDF('P','cm','A4');
-        $this->fpdf->SetTopMargin(2);
+                $this->fpdf->SetTopMargin(2);
 		$this->fpdf->SetLeftMargin(2);
 		$this->fpdf->Ln();
-        $this->fpdf->AddPage();
+                $this->fpdf->AddPage();
 		$this->fpdf->Image(base_url().'upload/pics/logo.jpg',1.6,1.4,3.5);      
-        $this->fpdf->ln(0); 
+                $this->fpdf->ln(0); 
 		$this->fpdf->SetFont('Arial','i',12);
-		$this->fpdf->text(8.6,3,'Payment of Receipt ');
+		$this->fpdf->text(8.6,3,'Payment');
 		
 		$this->fpdf->text(1.6,4,'ID Booking ');
 		$this->fpdf->text(6.6,4,': '.$pdf['id_booking']);
 		
 		$y = 4.5;
 		$this->fpdf->text(1.6,4.5,'Name Reservation ');
+                
+                $price = 0;
 		foreach($data as $row)
 		{
 			$this->fpdf->text(6.6,$y,': '.$row['nama']);
 			$y = $y+ 0.5;
+                        $price = $row['price'] + $price;
 		}
 		
+                $price = number_format($price);
 		
 		$this->fpdf->text(1.6,$y+0.5,'Status ');
 		$this->fpdf->text(6.6,$y+0.5,': '.$pdf['status']);
 		
-		$this->fpdf->text(1.6,$y+1,'Depart ');
+		$this->fpdf->text(1.6,$y+1,'Time Schedule ');
 		$this->fpdf->text(6.6,$y+1,': '.$pdf['depart']);
 		  
 		$this->fpdf->text(1.6,$y+1.5,"Package ");
@@ -344,12 +385,44 @@ function package_selected()
 		$this->fpdf->text(6.6,$y+2.5,': '.$pdf['qty']);
 		
 		$this->fpdf->text(1.6,$y+3,'Price ');
-		$this->fpdf->text(6.6,$y+3,': USD '.$pdf['price']);
+		$this->fpdf->text(6.6,$y+3,': USD '.$price);
 		
 		$this->fpdf->text(1.6,$y+3.5,'Payment ');
 		$this->fpdf->text(6.6,$y+3.5,': '.$pdf['payment']);
 		
 		$this->fpdf->Output();
-		 
+	}
+        
+        function check_qty()
+	{
+            is_member();
+		$qty = $_GET['qty'];
+		$uid = $_GET['uid'];
+		$uidnum = $_GET['uidnum'];
+		$up['uid_sch'] = $uid;
+		$up['qty'] = $qty;
+		if(empty($qty) || empty($uid))
+		{
+			echo "<b>sorry you can't reserverd, please try again. <b>"; 
+			redirect('member/reservation/travel','refresh');
+		}
+		else
+		{
+			$d = $this->Mix->read_row_ret_field_by_value('tx_rwagen_travelschedule','booking',$up['uid_sch'],'uid'); 
+			$q = $this->Mix->read_row_ret_field_by_value('tx_rwagen_travelschedule','qty',$up['uid_sch'],'uid'); 
+			
+			$qty = $qty + $d['booking'];
+			if($qty > $q['qty'])
+			{
+				echo "<b>sorry is not enough quota <b>"; 
+				redirect('member/reservation/travel','refresh');
+			}
+			else
+			{
+				$quote['booking'] = $qty;
+				$this->Mix->update_record('uid',$up['uid_sch'],$quote,'tx_rwagen_travelschedule');
+				$this->Mix->update_record('uid',$uidnum,$up,'tx_rwagen_travelbooking');
+			}
+		}
 	}
 }

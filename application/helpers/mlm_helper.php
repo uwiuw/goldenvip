@@ -360,6 +360,14 @@ if(!function_exists('diffDay'))
 	}
 }
 
+if(!function_exists('diffDay2'))
+{
+	function diffDay2 ($date1, $date2){
+		//$date1 & $date2 format YYYY-MM-DD
+		return $date_diff = strtotime($date1)-strtotime($date2);  
+	}
+}
+
 if(!function_exists('getMinCV'))
 {
 	# check user minimal grade (derajat)
@@ -415,50 +423,62 @@ if(!function_exists('get_tips_info'))
 {
 	function get_tips_info($uid,$pid='67')
 	{
-		$result = array();
-		$CI =& get_instance();
-		if($uid != "")
-		{
-			$sql = "select username, point_left, point_right, sponsor from tx_rwmembermlm_member where uid = '".$uid."'";
-			$result  = $CI->Mix->read_rows_by_sql($sql); 
-		} 
-		if(!empty($result))
-		{ 
-			if($result['sponsor']!='0')
-			{
-				$sql = "select username from tx_rwmembermlm_member where uid = '".$result['sponsor']."'";
-				$data = $CI->Mix->read_rows_by_sql($sql);
-				$result['sponsor'] = $data['username'];
-			}
-			else
-			{
-				$result['sponsor'] = "GoldenVIP";
-			}
-			echo "
-			<script type='text/javascript'>
-				jQuery(document).ready(function(){jQuery('#tipsy-".$uid."').tipsy();});
-			</script>
-			<p>
-				<a id='tipsy-".$uid."' href='".site_url("member/post_data/get_genealogy/$uid")."' title='
-					<table>
-						<tr>
-							<td>Username</td>
-							<td>".$result['username']."</td>
-						</tr>
-						<tr>
-							<td>Sponsor By</td>
-							<td>".$result['sponsor']."</td>
-						</tr>
-						<tr>
-							<td>Left Point : ".$result['point_left'].",</td>
-							<td>Right Point : ".$result['point_right'].",</td>
-						</tr>
-					</table>
-				' class='gen-btn'>".$result['username']."</a>
-			</p>
-			<div class='clear-line'></div>
-			";
-		}
+            $result = array();
+            $CI =& get_instance();
+            if($uid != "")
+            {
+                    $sql = "select username, point_left, point_right, sponsor, package from tx_rwmembermlm_member where uid = '".$uid."'";
+                    $result  = $CI->Mix->read_rows_by_sql($sql); 
+            } 
+            if(!empty($result))
+            { 
+                    if($result['sponsor']!='0')
+                    {
+                            $sql = "select username from tx_rwmembermlm_member where uid = '".$result['sponsor']."'";
+                            $data = $CI->Mix->read_rows_by_sql($sql);
+                            $result['sponsor'] = $data['username'];
+                    }
+                    else
+                    {
+                            $result['sponsor'] = "GoldenVIP";
+                    }
+                    
+                    $class = 'gen-business';
+                    if($result['package']==2 or $result['package']==13)
+                    {
+                        $class='gen-travel';
+                    }
+                    
+                    if($result['package']==4 or $result['package']==5 or $result['package']==12)
+                    {
+                        $class='gen-vip';
+                    }
+                    
+                    echo "
+                    <script type='text/javascript'>
+                            jQuery(document).ready(function(){jQuery('#tipsy-".$uid."').tipsy();});
+                    </script>
+                    <p>
+                            <a id='tipsy-".$uid."' href='".site_url("member/post_data/get_genealogy/$uid")."' title='
+                                    <table>
+                                            <tr>
+                                                    <td>Username</td>
+                                                    <td>".$result['username']."</td>
+                                            </tr>
+                                            <tr>
+                                                    <td>Sponsor By</td>
+                                                    <td>".$result['sponsor']."</td>
+                                            </tr>
+                                            <tr>
+                                                    <td>Left Point : ".$result['point_left'].",</td>
+                                                    <td>Right Point : ".$result['point_right'].",</td>
+                                            </tr>
+                                    </table>
+                            ' class='$class'>".$result['username']."</a>
+                    </p>
+                    <div class='clear-line'></div>
+                    ";
+            }
 	}
 }
 
@@ -502,9 +522,9 @@ if(!function_exists('get_leaf_right'))
 
 if(!function_exists('getAccountMLM'))
 {
-	function getAccountMLM($cat = '3')
+	function getAccountMLM($cat = '3',$limit = '10000')
 	{
-		$sql="select m.uid, m.pid, m.firstname, m.lastname, m.email, m.username, m.mobilephone, c.city from tx_rwmembermlm_member m, tx_rwmembermlm_city c where c.uid = m.regional and m.usercategory='".$cat."' and m.pid = '67' limit 0,50";
+		$sql="select m.uid, m.pid, m.firstname, m.lastname, m.email, m.username, m.mobilephone, c.city from tx_rwmembermlm_member m, tx_rwmembermlm_city c where c.uid = m.regional and m.usercategory='".$cat."' and m.pid = '67' limit 0,$limit";
 		$CI =& get_instance();
 		$result = $CI->Mix->read_more_rows_by_sql($sql);
 		return $result;

@@ -59,6 +59,7 @@ $route['products/business'] = "main/business";
 $route['products/vip'] = "main/vip";
 $route['products/travel'] = "main/travel";
 $route['products/participant-hotels'] = "main/participant_hotels";
+$route['products/catalogue-of-point-rewards'] = "main/catalogue_of_point_rewards";
 
 
 
@@ -67,6 +68,9 @@ $route['faq'] = "main/faq";
 $route['contact-us'] = "main/contact";
 
 # admin gvip area
+$route['_admin/login'] = 'panel/main/login';
+$route['_admin/check_login'] = 'panel/main/check_login';
+$route['_admin/logout'] = 'panel/main/logout';
 $route['_admin'] = 'panel/main';
 $route['_admin/home_page'] = 'panel/main/home_page';
 
@@ -81,12 +85,53 @@ $route['_admin/generate_vc/generate'] = 'panel/main/take_post_and_generate_vc';
 $route['_admin/comision_payment'] = 'panel/commission'; 
 $route['_admin/comision_payed'] = 'panel/commission/comision_payed';
 $route['_admin/update_data_member'] = 'panel/main/update_data_member';
+
+# mlm extra
+$route['_admin/new_distributor'] = 'panel/main/new_distributor';
+$route['_admin/member_migration'] = 'panel/main/member_migration';
+$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
+$route['_admin/searching_form'] = 'panel/main/searching_form';
+
+# tour and travel
+$route['_admin/tour_travel/member_profit'] = 'panel/tour_travel';
+$route['_admin/tour_travel/vip_rate'] = 'panel/tour_travel/vip_rate';
+$route['_admin/tour_travel/travel_rate'] = 'panel/tour_travel/travel_rate';
+$route['_admin/tour_travel/tour_travel_admin'] = 'panel/tour_travel/tour_travel_admin';
+$route['_admin/tour_travel/update_rate'] = 'panel/tour_travel/update_rate';
+$route['_admin/tour_travel/selected_profit_member'] = 'panel/tour_travel/select_profit_member';
+$route['_admin/tour_travel/paid_booking'] = 'panel/tour_travel/paid_booking';
+$route['_admin/tour_travel/destination'] = 'panel/tour_travel/tour_destination';
+$route['_admin/tour_travel/add_new_data_travel'] = 'panel/tour_travel/add_new_data_travel';
+$route['_admin/tour_travel/update_new_destination'] =
+
+$route['_admin/tour_travel/saving_new_destination'] = 'panel/tour_travel/saving_new_destination';
+$route['_admin/tour_travel/update_new_destination'] = 'panel/tour_travel/update_destination';
+$route['_admin/tour_travel/browse'] = 'panel/tour_travel/browse_data';
+# panel management hotel
+$route['_admin/hotel/management'] = 'panel/admin_hotel';
+$route['_admin/hotel/member_profit'] = 'panel/admin_hotel/member_profit';
+$route['_admin/hotel/golden_vip_rate'] = 'panel/admin_hotel/golden_vip_rate';
+$route['_admin/hotel/destination'] = 'panel/admin_hotel/destination';
+$route['_admin/hotel/area_in_detail'] = 'panel/admin_hotel';
+$route['_admin/hotel/pagination'] = 'panel/admin_hotel';
+$route['_admin/hotel/get_detail'] = 'panel/admin_hotel/read_address';
+$route['_admin/hotel/read_address'] = 'panel/admin_hotel/read_address';
+$route['_admin/hotel/update_data_hotel'] = 'panel/admin_hotel/update_data_hotel';
+$route['_admin/hotel/searching_form'] = 'panel/admin_hotel/searching_form';
+$route['_admin/hotel/searching_form_member_profit'] = 'panel/admin_hotel/searching_form_member_profit';
+$route['_admin/hotel/update_data_golden_rate'] = 'panel/admin_hotel/update_data_golden_rate';
+$route['_admin/hotel/add_new_data_hotel'] = 'panel/admin_hotel/add_new_data_hotel';
+
+$route['_admin/hotel/saving_destination'] = 'panel/admin_hotel/saving_destination';
+
 # member area
 $route['member'] = 'member/main';
 $route['member/home-page'] = 'member/main';
 $route['member/list-member-request'] = 'member/main/list_member_request';
 $route['member/opportunity'] = 'member/main/opportunity';
 $route['member/news'] = 'member/main/news';
+$route['member/lock_profile']='member/main/lock_profile';
+$route['member/open_profile']='member/main/open_profile';
 $route['member/profile'] = 'member/main/profile';
 $route['member/profile/update-profile'] = 'member/main/update_profile';
 $route['member/report/genealogy'] = 'member/main/report';
@@ -122,6 +167,8 @@ $route['member/reservation/travel/set-for-other'] = 'member/travel/set_for_other
 $route['member/reservation/travel/set-for-myself'] = 'member/travel/set_for_myself';
 $route['member/reservation/travel/set-reservation'] = 'member/travel/set_reservation';
 
+# redeeem points
+$route['member/reservation/redeem_points'] = 'member/main/redeem_points';
 # member business saving reservation
 $route['member/reservation/list-hotel'] = 'member/business/list_hotel';
 
@@ -142,5 +189,25 @@ $route['admin-hotel/login/sub-menu-admin/room-management'] = 'admin_hotel/room_m
 $route['admin-hotel/login/sub-menu-admin/rooms-pics-updating'] = 'admin_hotel/rooms_pics_updating';
 $route['admin-hotel/login/sub-menu-admin/hotels-pics-updating'] = 'admin_hotel/hotels_pics_updating';
 
+# admin tour reservation
+$route['admin-tour'] = "admin_tour";
+$route['admin-tour/login']="admin_tour/login";
+$route['admin-tour/logout']="admin_tour/logout";
+$route['admin-tour/check-login'] = "admin_tour/check_login";
+$route['admin-tour/home'] = "admin_tour/get_package";
+$route['admin-tour/package-management'] = "admin_tour/get_package";
+$route['admin-tour/booking'] = 'admin_tour/get_member_booking';
+$route['admin-tour/set-schedule'] = 'admin_tour/set_schedule';
+$route['admin-tour/set-schedule/save-schedule'] = 'admin_tour/save_schedule';
+$route['admin-tour/last-schedule'] = 'admin_tour/last_schedule';
+$route['admin-tour/last-schedule/browse'] = 'admin_tour/get_form';
+//$route['admin-tour/account-settings']='admin_tour/account_settings';
+//$route['admin-tour/account-settings/update']='admin_tour/account_settings_update';
+$route['admin-tour/edit_data'] = 'admin_tour/get_form';
+$route['admin-tour/update_data_package'] = 'admin_tour/update_package';
+$route['admin-tour/in-active-data']= 'admin_tour/get_form';
+$route['admin-tour/package-management/add-package'] = 'admin_tour/add_package';
+$route['admin-tour/package-management/add_data_package'] = 'admin_tour/save_data_package';
+$route['admin-tour/booking/cancel'] = 'admin_tour/get_form';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

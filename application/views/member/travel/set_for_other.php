@@ -39,15 +39,7 @@ function check(){
 				document.getElementById("error<?php echo $i;?>").innerHTML = "Can't blank";
 			}
 			else{
-				if(!(document.kwitansi.mega<?php echo $i;?>[0].checked) && !(document.kwitansi.mega<?php echo $i;?>[1].checked))
-				{
-					document.getElementById("mega<?php echo $i;?>").innerHTML = "Please choice one";
-				}
-				else
-				{
 					nilai = nilai +1;
-					//
-				}
 			}
 			<?php } ?>
 			if(nilai == <?php echo $qty; ?>)
@@ -87,7 +79,7 @@ function calculation()
 
 </script>
 								<div id="kwitansi">
-									<form name="kwitansi" class="et-form" action="<?php echo site_url('member/reservation/travel/set-reservation'); ?>" method="POST">
+									<form name="kwitansi" class="et-form" action="<?php echo site_url('member/reservation/travel/set-reservation?uid='.$_GET['uid']."&qty=".$_GET['qty']."&uidnum=".$_GET['uidnum']); ?>" method="POST">
                                         <div style="width:100%; text-align:center">
                                         	<label>Use this reservation for <?php echo $qty; ?> People <?php echo $me; ?></label>
 											<div class="clr"></div>
@@ -108,13 +100,7 @@ function calculation()
                                             <div style="color: red; text-align: center;font-size: 12px;" id="error<?php echo $i; ?>"></div>
 											<div class="clr"></div>
 										</div>
-                                        <div>
-                                        	<label class="desc">Using Mega Travel Insurance ?</label>
-                                            <input type="radio" name="mega<?php echo $i;?>" value="1" >Yes
-                                            <input type="radio" name="mega<?php echo $i;?>" value="0" >No
-                                            <span style="color: red; text-align: center;font-size: 12px;" id="mega<?php echo $i;?>"></span>
-                                        	<div class="clr"></div>
-                                        </div>
+                                        
                                         <?php } ?>
 										
                                         <div><label class="desc">Destination :</label><input type="text" disabled="1" value="<?php echo $sch['destination']; ?>" id="destination" name="destination"> 
@@ -139,11 +125,7 @@ function calculation()
                                                 	<td>
                                             			<input type="button" onclick="check()" name="button" class="button_black" id="submit_photo" value="Booking Now">
                                                     </td>
-                                                    <?php if($compliment_only=='1') { echo $hidden; } else {?>
-                                                    <td>
-                                            			<input type="button" onclick="calculation()" name="button" class="button_black" id="submit_photo" value="Calculation">
-                                                    </td>
-                                                    <?php } ?>
+                                                    
                                                  </tr>
                                             </table>
 											<div class="clr"></div>

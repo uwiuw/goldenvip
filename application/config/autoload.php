@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','mlm_member','fpdf');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','mlm','voucher','admin', 'admin_hotel');
+$autoload['helper'] = array('url','form','mlm','voucher','admin', 'admin_hotel', 'kirim_email');
 
 
 /*

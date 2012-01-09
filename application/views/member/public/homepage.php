@@ -3,7 +3,9 @@
 			<div id="page-backoffice">             
 				<div id="home-office">
 					<div id="home-top">
-						<h2>Home Office</h2>
+						<h2>
+                        	Home Office <?php echo "(".$p['package'].")"; ?>
+                        </h2>
                         <div id="show-message">
                             <div class="tx-rwmembermlm-pi1">
                                 <div class="not_null">
@@ -37,6 +39,9 @@
                         	  Conratulation on achieving your 6000 poin point rewards, you've entitle to have your 1 (one) complimentary of VIP Package.
                             </pre>
                         </p>
+                        <div id="download">
+                                <p><a href="<?php echo base_url();?>upload/document/application_form.doc" class="download" title="Download Application Form" target="_blank">*Download Application Form</a></p>
+                        </div>
 					</div>
 				</div> 
                 <div class="garis-homeoffice"></div>

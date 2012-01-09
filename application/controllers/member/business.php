@@ -167,7 +167,6 @@ class Business extends CI_Controller
 			{
 				$data['name_reservation'] = $this->input->post('name');
 				$data['email'] = $this->input->post('email');
-				$data['insurance'] = $this->input->post('mega');
 			}
 			
 			$data['hidden'] = '0';
@@ -263,7 +262,7 @@ class Business extends CI_Controller
 		$this->fpdf->Image(base_url().'upload/pics/logo.jpg',1.6,1.4,3.5);      
         $this->fpdf->ln(0); 
 		$this->fpdf->SetFont('Arial','i',12);
-		$this->fpdf->text(8.6,3,'Payment of Receipt ');
+		$this->fpdf->text(8.6,3,'Payment ');
 		
 		$this->fpdf->text(1.6,4,'ID Booking ');
 		$this->fpdf->text(6.6,4,': '.$pdf['id_booking']);

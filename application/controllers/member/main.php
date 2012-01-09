@@ -10,7 +10,13 @@ class Main extends CI_Controller
 	function homepage() # home
 	{
 		is_member(); # Hanya member yang boleh memasuki halaman ini
-		$sql = "select count(uid) as req from tx_rwmembermlm_member where sponsor = '".$this->session->userdata('member')."' and valid = '0' and hidden = '1'";
+		$sql = "select count(uid) as req from tx_rwmembermlm_member where sponsor = '".$this->session->userdata('member')."' and valid = '0' and hidden = '1'"; 
+		$d=$this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$this->session->userdata('member'),'uid'); 
+		if($d['package'] ==0)
+		{
+			$d['package'] = '1';
+		} 
+		$data['p']=$this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','package',$d['package'],'uid');
 		$data['mreq'] = $this->Mix->read_rows_by_sql($sql);
 		$data['title']="Member | Home Page";
 		$data['page'] = "public/homepage";
@@ -23,6 +29,7 @@ class Main extends CI_Controller
     function profile()
 	{
 		is_member();
+                is_profile();
 		$data['title']="Member | Home Page";
 		$data['page'] = "public/profile";
 		$data['nav'] = "profile";
@@ -33,8 +40,8 @@ class Main extends CI_Controller
 		$data['province'] = $this->Mix->dropdown_menu('uid','province','tx_rwmembermlm_province');
 		$data['city'] = $this->Mix->dropdown_menu('uid','city','tx_rwmembermlm_city');
 		$data['code'] = $this->Mix->dropdown_menu('uid','code','tx_rwmembermlm_phonecountrycode');
-		#$sql = "select voucher_code,status, crdate from tx_rwmembermlm_vouchercode where distributor='".$this->session->userdata('member')."' and hidden = '0' ";
-		$sql = "select a.voucher_code, a.status, a.crdate, b.firstname, b.lastname
+		
+		$sql = "select a.voucher_code, a.status, a.tstamp, b.firstname, b.lastname
 				from tx_rwmembermlm_vouchercode a
 				left join tx_rwmembermlm_member b on a.voucher_code = b.voucher_code
 				where a.distributor='".$this->session->userdata('member')."' ";
@@ -47,6 +54,45 @@ class Main extends CI_Controller
 		$this->load->vars($data);
 		$this->load->view('member/template');
 	}
+        
+        function lock_profile()
+        {
+            is_member();
+		$data['title']="Member | Home Page";
+		$data['page'] = "public/lock_profile";
+		$data['nav'] = "profile";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		$this->load->vars($data);
+		$this->load->view('member/template');
+        }
+        
+        function open_profile()
+        {
+            is_member();
+            $log = $this->input->post('log');
+            $pwd = md5($this->input->post('pwd'));
+            if($this->input->post('log') and $this->input->post('pwd')):
+                # cek username dan uid
+                $uid = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$log,'username');
+                if($uid['uid'] != $this->session->userdata('member')):
+                    $this->session->set_flashdata('info',"Username and Password don't match");
+                    redirect('member/lock_profile','refresh');
+                else:
+                    $data = $this->Mix->read_row_by_two('username',$log,'password',$pwd,'fe_users');
+                    if(!empty($data)):
+                        $data['open_profile'] = 'status-open';
+                        $this->session->set_userdata($data);
+                        redirect('member/profile');
+                    else:
+                        $this->session->set_flashdata('info',"Username and Password don't match");
+                        redirect('member/lock_profile','refresh');
+                    endif;
+                endif;
+            else:
+                $this->session->set_flashdata('info',"Username and Password don't match");
+                redirect('member/lock_profile','refresh');
+            endif;
+        }
         
 	function report() # report page
 	{
@@ -63,6 +109,86 @@ class Main extends CI_Controller
 	function commision()
 	{
 		is_member(); # Hanya member yang boleh memasuki halaman ini
+		$sql = "SELECT a.crdate, a.bonus, b.username as downline_name, a.paid, b.package, c.package
+				FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b, tx_rwmembermlm_package c
+				WHERE a.deleted = 0 and a.hidden = 0 and 
+				a.uid_member='".$this->session->userdata('member')."' and a.pid='67' and a.uid_downline=b.uid
+				and c.uid = b.package
+				ORDER BY a.uid ASC";
+		$data['fast_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$sql = "SELECT  sum(a.bonus) as fast
+				FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b
+				WHERE a.deleted = 0 and a.hidden = 0 and a.paid = 0 
+				and a.uid_member='".$this->session->userdata('member')."' and a.pid='67' and a.uid_downline=b.uid";
+				
+		$data['total_fastbonus'] = $this->Mix->read_rows_by_sql($sql);
+		
+		$sql = "SELECT *  
+				FROM tx_rwmembermlm_historycycle
+				WHERE deleted = 0 and hidden = 0 and 
+					  uid_member='".$this->session->userdata('member')."' and pid='67' 
+				ORDER BY uid DESC                    
+				";
+		$data['cycle_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$sql = "SELECT sum(bonus) as cycle 
+				FROM tx_rwmembermlm_historycycle
+				WHERE deleted = 0 and hidden = 0 and paid = 0
+					  and uid_member='".$this->session->userdata('member')."' and pid='67' 
+				ORDER BY uid DESC";
+		$data['total_cycle'] = $this->Mix->read_rows_by_sql($sql);
+		
+		$sql = "SELECT *  
+				FROM tx_rwmembermlm_historymatchingbonus
+				WHERE deleted = 0 and hidden = 0 and 
+					  uid_member='".$this->session->userdata('member')."' and pid='67'
+				ORDER BY uid DESC                    
+				";
+		$data['matching_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$sql = "SELECT sum(bonus)as matching  
+				FROM tx_rwmembermlm_historymatchingbonus
+				WHERE deleted = 0 and hidden = 0 and paid = 0 
+					  and uid_member='".$this->session->userdata('member')."' and pid='67'
+				ORDER BY uid DESC                    
+				";
+		$data['total_matching'] = $this->Mix->read_rows_by_sql($sql);
+		
+		$sql = "SELECT a.*, b.username as downline_name 
+				FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
+				WHERE a.deleted = 0 and a.hidden = 0 and 
+					  a.uid_member='".$this->session->userdata('member')."' and a.pid='67' and a.uid_downline=b.uid
+				ORDER BY a.uid DESC                    
+				";
+		#$sql = "select * from tx_rwmembermlm_historymentorbonus where uid_member = ";
+		$data['mentor_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$sql = "SELECT sum(a.bonus) as mentor
+				FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
+				WHERE a.deleted = 0 and a.hidden = 0 and paid = 0 and
+					  a.uid_member='".$this->session->userdata('member')."' and a.pid='67' and a.uid_downline=b.uid                    
+				";
+		#$sql = "select * from tx_rwmembermlm_historymentorbonus where uid_member = ";
+		$data['total_mentor'] = $this->Mix->read_rows_by_sql($sql);
+		
+		# untuk retail bonus akan disesuaikan dengan paket yg diambil member, pending untuk sementara. 
+		$u = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$this->session->userdata('member'),'uid');
+		$d = $this->Mix->read_row_ret_field_by_value('fe_users','uid',$u['username'],'username');
+		if(isset($d['uid']))
+		{
+		$sql = "select a.*,b.category_name,b.retail_rate,b.rate as golden_rate,c.hotel_name 
+				from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b 
+				ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c 
+				ON b.uid_hotel=c.uid 
+				where a.deleted=0 and a.PA=1 and a.uid_member='".$d['uid']."' order by a.uid desc";
+		}
+		else
+		{
+			$sql = "select uid from fe_users where username = '".$u['username']."'";
+		}
+		$data['retail_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+										
 		$data['title']="Member | Home Page";
 		$data['page'] = "public/commision";
 		$data['nav'] = "report";
@@ -75,6 +201,13 @@ class Main extends CI_Controller
 	function direct_sponsored()
 	{
 		is_member(); # Hanya member yang boleh memasuki halaman ini
+		
+		$sql = "select uid, pid, firstname, lastname, email, mobilephone, city, sponsor 
+				from tx_rwmembermlm_member
+				where sponsor = '".$this->session->userdata('member')."' and hidden = '0' and valid = '1' order by uid                   
+				";
+		$data['direct_sponsor'] = $this->Mix->read_more_rows_by_sql($sql);
+		
 		$data['title']="Member | Home Page";
 		$data['page'] = "public/direct_sponsored";
 		$data['nav'] = "report";
@@ -84,6 +217,18 @@ class Main extends CI_Controller
 		$this->load->view('member/template');
 	}
         
+        function  opportunity()
+        {
+            $data['title']="Golden VIP: OPPORTUNITY";
+            $data['page'] = "public/opportunity";
+            $data['nav'] = "opportunity";
+            $data['template']=base_url()."asset/theme/mygoldenvip/"; 
+
+            $this->load->vars($data);
+            $this->load->view('member/template');
+        }
+
+
         /*
          * member more function redirect page
          */
@@ -94,7 +239,7 @@ class Main extends CI_Controller
 		$data['title']="Member | Home Page";
 		$data['page'] = "join-now";
 		$data['nav'] = "homepage";
-		$data['country'] = $this->Mix->dropdown_menu('uid','country','tx_rwmembermlm_phonecountrycode');
+		$data['country'] = $this->Mix->dropdown_menu('uid','country','tx_rwmembermlm_phonecountrycode','0');
 		$data['bank'] = $this->Mix->dropdown_menu('uid','bank','tx_rwmembermlm_bank');
 		$data['package'] = $this->Mix->dropdown_menu('uid','package','tx_rwmembermlm_package');
 		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
@@ -115,63 +260,79 @@ class Main extends CI_Controller
 		}
 		else
 		{
-			$data['pid']='67';
-			$data['firstname']=$this->input->post('firstname');
-			$data['lastname']=$this->input->post('lastname');
-			
-			$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
-			$data['email']=$this->input->post('email');
-			$data['username']=$this->input->post('username');
-			$data['password']=md5($this->input->post('password1'));
-			$data['country']=$this->input->post('country');
-			$data['mobilephone']=$this->input->post('countrycode2')."-".$this->input->post('mobilephone');
-			$data['homephone']=$this->input->post('countrycode1')."-".$this->input->post('homephone');
-			$data['province']=$this->input->post('province');
-			$data['city']=$this->input->post('city');
-			$data['address']=$this->input->post('address');
-			$data['regional']=$this->input->post('regional');
-			$data['sponsor']=$this->input->post('distributor');
-			$data['usercategory']=$this->input->post('usercategory');
-			$data['valid']='0';
-			$data['hidden'] = '1';
-			$d =$this->input->post('d');
-			$y =$this->input->post('y');
-			$m =$this->input->post('m');
-			
-			$data['dob']= "$y-$m-$d";
-			
-			$data['voucher_code']=$this->input->post('vc');
-			$data['bank_name']=$this->input->post('bank_name');
-			$data['bank_account_number']=$this->input->post('bank_account_number');
-			$data['name_on_bank_account']=$this->input->post('name_on_bank_account');
-			$dist = array();
-			if($this->input->post('package')=='1' or $this->input->post('package') =='2')
+			$e = $this->input->post('email');
+			$sql = "select username from tx_rwmembermlm_member where email = '$u' ";
+			$data = $this->Mix->read_rows_by_sql($sql);
+			if(empty($data))
 			{
-				if($this->input->post('package') =='2')
+				$data['pid']='67';
+				$data['firstname']=$this->input->post('firstname');
+				$data['lastname']=$this->input->post('lastname');
+				
+				$data['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
+				$data['email']=$this->input->post('email');
+				$data['username']=$this->input->post('username');
+				$data['password']=md5($this->input->post('password1'));
+				
+				$fedata['username']=$this->input->post('username');
+				$fedata['password']=md5($this->input->post('password1'));
+				
+				$data['country']=$this->input->post('country');
+				$data['mobilephone']=$this->input->post('countrycode2')."-".$this->input->post('mobilephone');
+				$data['homephone']=$this->input->post('countrycode1')."-".$this->input->post('homephone');
+				$data['province']=$this->input->post('province');
+				$data['city']=$this->input->post('city');
+				$data['address']=$this->input->post('address');
+				$data['regional']=$this->input->post('regional');
+				$data['sponsor']=$this->input->post('distributor');
+				$data['usercategory']=$this->input->post('usercategory');
+				$data['valid']='0';
+				$data['hidden'] = '1';
+				$d =$this->input->post('d');
+				$y =$this->input->post('y');
+				$m =$this->input->post('m');
+				
+				$data['dob']= "$y-$m-$d";
+				
+				$data['voucher_code']=$this->input->post('vc');
+				$data['bank_name']=$this->input->post('bank_name');
+				$data['bank_account_number']=$this->input->post('bank_account_number');
+				$data['name_on_bank_account']=$this->input->post('name_on_bank_account');
+				$dist = array();
+				if($this->input->post('package')=='1' or $this->input->post('package') =='2')
 				{
-					$data['grade'] = '3';
-					$data['permanent_grade'] = '1'; // 1 grade abal-abal
+					if($this->input->post('package') =='2')
+					{
+						$data['grade'] = '3';
+						$data['permanent_grade'] = '1'; // 1 grade abal-abal
+					}
+					else
+					{
+						$data['grade'] = '1';
+						$data['permanent_grade'] = '2';
+					}
+					$data['package']=$this->input->post('package');
 				}
 				else
-				{
-					$data['grade'] = '1';
-					$data['permanent_grade'] = '2';
+				{ 
+					$data['package']=$this->input->post('package');
+					if($this->input->post('package2'))
+					{
+						$data['package']=$this->input->post('package2');
+					}
+					$data['grade'] = '4';
+					$data['permanent_grade'] = '1';
 				}
-				$data['package']=$this->input->post('package');
+				$this->Mix->add_with_array($data,'tx_rwmembermlm_member');
+				$this->Mix->add_with_array($fedata,'fe_users');
+				$this->session->set_flashdata('info','Thank you for registering, please check your mail.');
+				redirect('member/join-now','refresh');
 			}
 			else
-			{ 
-				$data['package']=$this->input->post('package');
-				if($this->input->post('package2'))
-				{
-					$data['package']=$this->input->post('package2');
-				}
-				$data['grade'] = '4';
-				$data['permanent_grade'] = '1';
+			{
+				$this->session->set_flashdata('info','Sorry, Email Already Exist.');
+				redirect('member/join-now','refresh');
 			}
-			$this->Mix->add_with_array($data,'tx_rwmembermlm_member');
-			$this->session->set_flashdata('info','Thank you for registering, please check your mail.');
-			redirect('member/join-now','refresh');
 		}
 	}
 	
@@ -203,6 +364,7 @@ class Main extends CI_Controller
 				{
 					$this->Mix->update_record('uid',$this->input->post('uid'),$data,'tx_rwmembermlm_member');
 					$vc['status'] = '1';
+					$vc['tstamp'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 					$this->Mix->update_record('uid',$check['uid'],$vc,'tx_rwmembermlm_vouchercode');
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$this->input->post('package'),'uid');
 					$fast['bonus'] = $d['fee_dollar'];
@@ -223,7 +385,7 @@ class Main extends CI_Controller
 					$this->Mix->update_record('uid',$this->session->userdata('member'),$com,'tx_rwmembermlm_member'); // update commision
 					
 					$this->session->set_flashdata('info','Member now has been active.');
-					redirect('member/thank-you-registering','refresh');
+					$this->information_register_member($this->session->userdata('member'), $fast['uid_downline'] );
 				} 
 				else
 				{
@@ -264,6 +426,10 @@ class Main extends CI_Controller
 			$data['email']=$this->input->post('email');
 			$data['username']=$this->input->post('username');
 			$data['password']=md5($this->input->post('password1'));
+			
+			$fedata['username']=$this->input->post('username');
+			$fedata['password']=md5($this->input->post('password1'));
+				
 			$data['country']=$this->input->post('country');
 			$data['mobilephone']=$this->input->post('countrycode2')."-".$this->input->post('mobilephone');
 			$data['homephone']=$this->input->post('countrycode1')."-".$this->input->post('homephone');
@@ -336,7 +502,8 @@ class Main extends CI_Controller
 				if(!empty($check))
 				{
 					
-					$this->Mix->add_with_array($data,'tx_rwmembermlm_member');		
+					$this->Mix->add_with_array($data,'tx_rwmembermlm_member');
+					$this->Mix->add_with_array($fedata,'fe_users');		
 					$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package','fee_dollar',$this->input->post('package'),'uid');
 					
 					$fast['bonus'] = $d['fee_dollar'];
@@ -348,6 +515,7 @@ class Main extends CI_Controller
 					$this->Mix->add_with_array($fast,'tx_rwmembermlm_historyfastbonus'); // set fast bonus
 					
 					$vc['status'] = '1';
+					$vc['tstamp'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 					$check  = $this->Mix->update_record('uid',$check['uid'],$vc,'tx_rwmembermlm_vouchercode');
 					
 					update_point($d['uid'],$this->input->post('package')); # package
@@ -360,7 +528,7 @@ class Main extends CI_Controller
 					$this->Mix->update_record('uid',$data['sponsor'],$com,'tx_rwmembermlm_member'); // update commision
 					
 					$this->session->set_flashdata('info','Member now has been active.');
-					redirect('member/thank-you-registering','refresh');
+					$this->information_register_member($data['sponsor'], $fast['uid_downline'] );
 				} 
 				else
 				{
@@ -379,6 +547,7 @@ class Main extends CI_Controller
 	
 	function get_mentor_bonus($pack,$uid_downline,$uid_upline)
 	{
+		is_member();
 		$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','package',$uid_upline,'uid'); // ambil paket upline
 		$bonus = 0;
 		if($pack > 1)
@@ -394,6 +563,7 @@ class Main extends CI_Controller
 				$mb['paid'] = '0';
 				$mb['deleted'] = '0';
 				$mb['pid'] = '67';
+				$mb['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 				$this->Mix->add_with_array($mb,'tx_rwmembermlm_historymentorbonus');
 			}
 			
@@ -407,6 +577,7 @@ class Main extends CI_Controller
 				$mb['paid'] = '0';
 				$mb['deleted'] = '0';
 				$mb['pid'] = '67';
+				$mb['crdate'] = mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
 				$this->Mix->add_with_array($mb,'tx_rwmembermlm_historymentorbonus');
 			}
 			
@@ -428,7 +599,7 @@ class Main extends CI_Controller
 	
 	function thankyou() # thank you page
 	{
-		is_member(); # Hanya member yang boleh memasuki halaman ini
+		is_member();
 		$data['title']="Thank you for join us";
 		$data['page'] = "thankyou";
 		$data['nav'] = "thank you";
@@ -444,6 +615,8 @@ class Main extends CI_Controller
 		$this->session->unset_userdata("name");
 		$this->session->unset_userdata("regional");
 		$this->session->unset_userdata("ucat");
+		$this->session->unset_userdata("is_member");
+                $this->session->unset_userdata('open_profile');
 		redirect('member/back-office','refresh');
 	}
 	
@@ -455,6 +628,7 @@ class Main extends CI_Controller
 			$pwd = $this->input->post('pwd');
 			if(check_user($name,$pwd))
 			{
+				$data['is_member'] = 'member-on';
 				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','uid',$name,'username'); # ambil userId
 				$data['member'] = $d['uid'];
 				$d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','firstname',$name,'username'); # ambil firstname
@@ -480,11 +654,25 @@ class Main extends CI_Controller
 			}
 			else
 			{
-				redirect('member/back-office','refresh');
+				$pwd = md5($pwd);
+				$sql = "select username from tx_rwmembermlm_member where username = '$name' and password = '$pwd' and hidden = '1' and valid = '0' ";
+			
+				$c = $this->Mix->read_rows_by_sql($sql);
+				if(!empty($c))
+				{
+					$this->session->set_flashdata('info','Please call your distributor to active your accounts');
+					redirect('member/back-office','refresh');
+				}
+				else
+				{
+					$this->session->set_flashdata('info','Please Re-check your valid Username and Password !!');
+					redirect('member/back-office','refresh');
+				}
 			}
 		}
 		else
 		{
+			$this->session->set_flashdata('info','Please Re-check your valid Username and Password !!');
 			redirect('member/back-office','refresh');
 		}
 	}
@@ -544,7 +732,87 @@ class Main extends CI_Controller
 		$data['bank_name'] = $this->input->post('bank_name');
 		$data['name_on_bank_account'] = $this->input->post('name_on_bank_account');
 		$this->Mix->update_record('uid',$uid,$data,'tx_rwmembermlm_member');
+                
+                if($this->input->post('password2nd'))
+                {
+                    $uid_member = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$uid,'uid');
+                    $user = $uid_member['username'];
+                    $uid_fe= $this->Mix->read_row_ret_field_by_value('fe_users','uid',$user,'username');
+                    $update_2nd_password['password'] = md5($this->input->post('password2nd'));
+                    $this->Mix->update_record('uid',$uid_fe['uid'],$update_2nd_password,'fe_users');
+                }
+                $this->session->unset_userdata('open_profile');
 		$this->session->set_flashdata('info','Data has been update');
-		redirect('member/profile','refresh');
+		redirect('member/lock_profile','refresh');
 	}
+	
+	function information_register_member($uidupline = 0, $uiddownline = 0)
+	{
+		is_member();
+		$data['sponsor'] = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$uidupline,'uid');
+		$data['downline'] = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','username',$uiddownline,'uid');
+		$data['uid'] = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member','upline',$uiddownline,'uid');
+		
+		$sql = "SELECT a.crdate, a.bonus, b.username as downline_name, a.paid, b.package, c.package, c.point
+				FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b, tx_rwmembermlm_package c
+				WHERE a.deleted = 0 and a.hidden = 0 and 
+				a.uid_member='".$uidupline."' and a.pid='67' and a.uid_downline='".$uiddownline."' and a.uid_downline = b.uid
+				and c.uid = b.package
+				ORDER BY a.uid ASC";
+		$data['fast_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$day= mktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('y'));
+		$sql = "SELECT *  
+				FROM tx_rwmembermlm_historycycle
+				WHERE deleted = 0 and hidden = 0 and 
+					  uid_member='".$uidupline."' and pid='67' and crdate = '".$day."' 
+				ORDER BY uid DESC                    
+				";
+		$data['cycle_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		$sql = "SELECT a.*, b.username as downline_name 
+				FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
+				WHERE a.deleted = 0 and a.hidden = 0 and 
+					  a.uid_member='".$uidupline."' and a.pid='67' and a.uid_downline='".$uiddownline."'
+					  and a.uid_member = b.uid
+				ORDER BY a.uid DESC                    
+				";
+		$data['mentor_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+		
+		
+		$data['title']="Thank you for join us";
+		$data['page'] = "public/thankyou_with_detail";
+		$data['nav'] = "thank you";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+		
+		$this->load->vars($data);
+		$this->load->view('member/template');
+	}
+	function redeem_points()
+	{
+		
+		$data['title']="Golden VIP: OPPORTUNITY";
+		$data['page'] = "vip/reservation_redeem_points";
+		$data['nav'] = "redeem-points";
+		$data['template']=base_url()."asset/theme/mygoldenvip/"; 
+                /*
+                 * jika qty dari yang dimasukan memenuhi untuk ditukar dengan point pada redeem points maka.
+                 * tampilkan halaman redeem point.
+                 * update date dari personal account ke redeem point.
+                 * kurangi point rewards yang dimiliki.
+                 * tampilkan invoice nya.
+                 */
+                $uid =  $this->session->userdata('member');
+                $sql = "select 
+                        sum(point) as reward
+                        from 
+                        tx_rwmembermlm_pointrewards
+                        where 
+                        uid_member = $uid and 
+                        pid = 67";
+                $points = $this->Mix->read_rows_by_sql($sql);
+                
+		$this->load->vars($data);
+		$this->load->view('member/template');
+}
 }

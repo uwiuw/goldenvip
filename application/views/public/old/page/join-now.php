@@ -161,14 +161,14 @@
                                     
 									<div>
                                     	<label class="desc">Email * : </label>
-                                        <input class="text" value="" type="text" name="email" id="email" size="50" maxlength="100"/>
+                                        <input class="text" value="" type="text" name="email" id="email" size="50" maxlength="100" />
                                         <label id="error_email" class="errdisp"></label>
 										<div class="clr"></div>
 									</div>
                                     
 									<div>
                                     	<label class="desc">Username (max 12 chars, no space) * : </label>
-                                        <input class="text" value="" type="text" name="username" id="username" size="20" maxlength="12"/>
+                                        <input class="text" value="" type="text" name="username" id="username" size="20" maxlength="12" onchange="check_username();" />
                                         <label id="error_username" class="errdisp"></label>
 										<div class="clr"></div>
 
