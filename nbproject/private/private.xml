@@ -7,6 +7,10 @@
             <line>816</line>
         </file>
         <file>
+            <url>application/views/admin_tour/page/add_package.php</url>
+            <line>28</line>
+        </file>
+        <file>
             <url>application/views/admin_hotel/page/profile.php</url>
             <line>50</line>
         </file>

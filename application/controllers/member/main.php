@@ -219,6 +219,7 @@ class Main extends CI_Controller
         
         function  opportunity()
         {
+            is_member();
             $data['title']="Golden VIP: OPPORTUNITY";
             $data['page'] = "public/opportunity";
             $data['nav'] = "opportunity";
@@ -790,7 +791,7 @@ class Main extends CI_Controller
 	}
 	function redeem_points()
 	{
-		
+            is_member();
 		$data['title']="Golden VIP: OPPORTUNITY";
 		$data['page'] = "vip/reservation_redeem_points";
 		$data['nav'] = "redeem-points";

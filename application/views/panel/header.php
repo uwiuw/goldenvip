@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/wp/load-styles.css" type="text/css" media="all">
 <link rel="stylesheet" id="colors-css" href="<?php echo base_url(); ?>asset/theme/wp/colors-fresh.css" type="text/css" media="all">
-<!--[if lte IE 7]>
-<link rel='stylesheet' id='ie-css'  href='http://localhost/ashford/wp-admin/css/ie.css?ver=20101102' type='text/css' media='all' />
-<![endif]-->
-<!-- wp cms -->
+
 <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/wp/l10n.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/wp/load-scripts_002.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/wp/admin_post.css" type="text/css" media="screen">
@@ -25,6 +22,17 @@
 <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.tablesorter.min.js"></script>
 
 <script type="text/javascript">
-	var site = '<?php echo site_url(); ?>';
-	var image = "<?php echo base_url();?>asset/images/loading.gif";
+    jQuery(function(){
+        jQuery('ul#adminmenu li').click(function(){
+            id = jQuery(this).attr('id');
+            jQuery('ul#adminmenu li').removeClass('wp-menu-open');
+            jQuery('ul#adminmenu li').addClass('wp-menu-close');
+            id = 'ul#adminmenu li#'+id;
+            jQuery(id).removeClass('wp-menu-close');
+            jQuery(id).addClass('wp-menu-open');
+        });
+    });
+    var site = '<?php echo site_url(); ?>';
+    var image = "<?php echo base_url(); ?>asset/images/loading.gif";
 </script>
+

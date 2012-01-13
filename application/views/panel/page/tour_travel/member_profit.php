@@ -16,24 +16,24 @@
 <div id="member-profit">
     <strong>Member Profit</strong>
     <form name="selected_package">
-    <table cellspacing="1" cellpadding="0">
+        <table cellspacing="1" cellpadding="0">
             <tbody>
-            <tr class="odd">
+                <tr class="odd">
                     <td>Select Member Profit from Package :</td>
-                <td>
-                    <?php
+                    <td>
+                        <?php
                         $id = "id='package'";
-                        $data = array(""=>"-- Selected --","1"=>"Travel","2"=>"VIP");
-                        echo form_dropdown('package',$data,'',$id);
-                    ?>
-                    <input type="button" onclick="show_member_profit();" value="Show">
-                </td>
-            </tr>
+                        $data = array("" => "-- Selected --", "1" => "Travel", "2" => "VIP");
+                        echo form_dropdown('package', $data, '', $id);
+                        ?>
+                        <input type="button" onclick="show_member_profit();" value="Show">
+                    </td>
+                </tr>
             </tbody>
-    </table> 
-    <input type="hidden" value="1" name="vip">
-    <input type="hidden" value="3" name="cat">
-    
+        </table> 
+        <input type="hidden" value="1" name="vip">
+        <input type="hidden" value="3" name="cat">
+
     </form>
 </div>
 

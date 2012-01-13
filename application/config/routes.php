@@ -87,16 +87,16 @@ $route['_admin/comision_payed'] = 'panel/commission/comision_payed';
 $route['_admin/update_data_member'] = 'panel/main/update_data_member';
 
 # mlm extra
-$route['_admin/new_distributor'] = 'panel/main/new_distributor';
+#$route['_admin/new_distributor'] = 'panel/main/new_distributor';
 $route['_admin/member_migration'] = 'panel/main/member_migration';
-$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
+#$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
 $route['_admin/searching_form'] = 'panel/main/searching_form';
 
 # tour and travel
 $route['_admin/tour_travel/member_profit'] = 'panel/tour_travel';
 $route['_admin/tour_travel/vip_rate'] = 'panel/tour_travel/vip_rate';
 $route['_admin/tour_travel/travel_rate'] = 'panel/tour_travel/travel_rate';
-$route['_admin/tour_travel/tour_travel_admin'] = 'panel/tour_travel/tour_travel_admin';
+#$route['_admin/tour_travel/tour_travel_admin'] = 'panel/tour_travel/tour_travel_admin';
 $route['_admin/tour_travel/update_rate'] = 'panel/tour_travel/update_rate';
 $route['_admin/tour_travel/selected_profit_member'] = 'panel/tour_travel/select_profit_member';
 $route['_admin/tour_travel/paid_booking'] = 'panel/tour_travel/paid_booking';
@@ -112,7 +112,8 @@ $route['_admin/hotel/management'] = 'panel/admin_hotel';
 $route['_admin/hotel/member_profit'] = 'panel/admin_hotel/member_profit';
 $route['_admin/hotel/golden_vip_rate'] = 'panel/admin_hotel/golden_vip_rate';
 $route['_admin/hotel/destination'] = 'panel/admin_hotel/destination';
-$route['_admin/hotel/area_in_detail'] = 'panel/admin_hotel';
+$route['_admin/hotel/area_in_detail'] = 'panel/admin_hotel/area_in_detail';
+$route['_admin/hotel/area_in_detail/destination'] = 'panel/admin_hotel/area_in_detail_destination';
 $route['_admin/hotel/pagination'] = 'panel/admin_hotel';
 $route['_admin/hotel/get_detail'] = 'panel/admin_hotel/read_address';
 $route['_admin/hotel/read_address'] = 'panel/admin_hotel/read_address';
@@ -123,6 +124,9 @@ $route['_admin/hotel/update_data_golden_rate'] = 'panel/admin_hotel/update_data_
 $route['_admin/hotel/add_new_data_hotel'] = 'panel/admin_hotel/add_new_data_hotel';
 
 $route['_admin/hotel/saving_destination'] = 'panel/admin_hotel/saving_destination';
+$route['_admin/hotel/update_destination'] = 'panel/admin_hotel/update_destination';
+$route['_admin/hotel/saving_area_in_detail'] = 'panel/admin_hotel/saving_area_in_detail';
+$route['_admin/hotel/update_area_in_detail'] = 'panel/admin_hotel/update_area_in_detail';
 
 # member area
 $route['member'] = 'member/main';
@@ -174,6 +178,7 @@ $route['member/reservation/list-hotel'] = 'member/business/list_hotel';
 
 # test area
 $route['test'] = 'test';
+$route['test/lakukan_upload'] = 'test/do_upload_file';
 $route['engine'] = 'engine/mlmmanagement';
 
 
@@ -197,9 +202,9 @@ $route['admin-tour/check-login'] = "admin_tour/check_login";
 $route['admin-tour/home'] = "admin_tour/get_package";
 $route['admin-tour/package-management'] = "admin_tour/get_package";
 $route['admin-tour/booking'] = 'admin_tour/get_member_booking';
-$route['admin-tour/set-schedule'] = 'admin_tour/set_schedule';
+$route['admin-tour/time-schedule'] = 'admin_tour/set_schedule';
 $route['admin-tour/set-schedule/save-schedule'] = 'admin_tour/save_schedule';
-$route['admin-tour/last-schedule'] = 'admin_tour/last_schedule';
+$route['admin-tour/update-report'] = 'admin_tour/last_schedule';
 $route['admin-tour/last-schedule/browse'] = 'admin_tour/get_form';
 //$route['admin-tour/account-settings']='admin_tour/account_settings';
 //$route['admin-tour/account-settings/update']='admin_tour/account_settings_update';
@@ -209,5 +214,6 @@ $route['admin-tour/in-active-data']= 'admin_tour/get_form';
 $route['admin-tour/package-management/add-package'] = 'admin_tour/add_package';
 $route['admin-tour/package-management/add_data_package'] = 'admin_tour/save_data_package';
 $route['admin-tour/booking/cancel'] = 'admin_tour/get_form';
+$route['admin-tour/package-management/do-upload-file'] = 'admin_tour/do_upload_file';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -88,6 +88,15 @@
              * halaman utama dari admin-tour
              */
             $this->is_admin_tour();
+            
+            $limit = $_GET['per_page'];
+            $nilai = 10;
+            if($limit==0):
+                $limit = $nilai;
+            else:
+                $limit=$limit+$nilai;
+            endif;
+            
             $data['title'] = "MyGoldenVIP &raquo; home";
             $data['page']= "get_package";
             $data['nav']='pm';
@@ -121,6 +130,23 @@
                     order by a.uid desc";
             $data['vippackage'] = $this->Mix->read_more_rows_by_sql($sql);
             
+            $data['package_agen'] = array_merge($data['travelpackage'],$data['vippackage']);
+            
+            $this->load->library('pagination');
+            $total_rows = count($data['package_agen']);
+            $per_page = $nilai;
+            $num_links = $total_rows / $per_page;
+            $config['base_url']= site_url('admin-tour/package-management/?page');
+            $config['total_rows'] = $total_rows;
+            $config['per_page'] = $per_page;
+            $config['num_links'] = $num_links;
+            $config['full_tag_open'] = "<div id='pagination'>";
+            $config['full_tag_close'] = "</div>";
+            $config['page_query_string'] = TRUE;
+            
+            $this->pagination->initialize($config);
+            $data['limit'] = $limit;
+            $data['nilai'] = $nilai;
             $this->load->vars($data);
             $this->load->view('admin_tour/template');
         }
@@ -137,6 +163,15 @@
              * melakukan agreement booking
              */
             $this->is_admin_tour();
+            
+            $limit = $_GET['per_page'];
+            $nilai = 10;
+            if($limit==0):
+                $limit = $nilai;
+            else:
+                $limit=$limit+$nilai;
+            endif;
+            
             $data['title'] = "MyGoldenVIP &raquo; booking";
             $data['page']= "get_member_booking";
             $data['nav']='booking_member';
@@ -194,6 +229,24 @@
                     d.agen = $uid 
                     order by a.uid desc";
             $data['booking_travel'] = $this->Mix->read_more_rows_by_sql($sql);
+            
+            $data['booking_num'] = array_merge($data['booking_vip'],$data['booking_travel']);
+            
+            $this->load->library('pagination');
+            $total_rows = count($data['booking_num']);
+            $per_page = $nilai;
+            $num_links = $total_rows / $per_page;
+            $config['base_url']= site_url('admin-tour/booking/?page');
+            $config['total_rows'] = $total_rows;
+            $config['per_page'] = $per_page;
+            $config['num_links'] = $num_links;
+            $config['full_tag_open'] = "<div id='pagination'>";
+            $config['full_tag_close'] = "</div>";
+            $config['page_query_string'] = TRUE;
+            
+            $this->pagination->initialize($config);
+            $data['limit'] = $limit;
+            $data['nilai'] = $nilai;
             
             $this->load->vars($data);
             $this->load->view('admin_tour/template');
@@ -271,18 +324,27 @@
                $tb = 'tx_rwagen_vipschedule';
            else:
                $this->session->set_flashdata('info',"Data can't blank");
-               redirect('admin-tour/set-schedule','refresh');
+               redirect('admin-tour/time-schedule','refresh');
            endif;
            
            $this->Mix->add_with_array($data,$tb);
            $this->session->set_flashdata('info',"Data has been save");
-           redirect('admin-tour/set-schedule','refresh');
+           redirect('admin-tour/time-schedule','refresh');
         }
         
         function last_schedule()
         {
             $this->is_admin_tour();
-            $data['title'] = "MyGoldenVIP &raquo; home";
+            
+            $limit = $_GET['per_page'];
+            $nilai = 10;
+            if($limit==0):
+                $limit = $nilai;
+            else:
+                $limit=$limit+$nilai;
+            endif;
+            
+            $data['title'] = "MyGoldenVIP &raquo; Update Report";
             $data['page']= "last_schedule";
             $data['nav']='last_sch';
             $sql = "select 
@@ -326,6 +388,25 @@
                     c.pid = d.uid
                     order by a.time_sch desc";
             $data['last_sch_vip'] = $this->Mix->read_more_rows_by_sql($sql);
+            
+            $data['update_sch_tour'] = array_merge($data['last_sch_travel'],$data['last_sch_vip']);
+            
+            $this->load->library('pagination');
+            $total_rows = count($data['update_sch_tour']);
+            $per_page = $nilai;
+            $num_links = $total_rows / $per_page;
+            $config['base_url']= site_url('admin-tour/package-management/?page');
+            $config['total_rows'] = $total_rows;
+            $config['per_page'] = $per_page;
+            $config['num_links'] = $num_links;
+            $config['full_tag_open'] = "<div id='pagination'>";
+            $config['full_tag_close'] = "</div>";
+            $config['page_query_string'] = TRUE;
+            
+            $this->pagination->initialize($config);
+            $data['limit'] = $limit;
+            $data['nilai'] = $nilai;
+            
             $uid_agen = $this->session->userdata('id_agen');
             $this->load->vars($data);
             $this->load->view('admin_tour/template');
@@ -348,6 +429,9 @@
             $data['retail_rate'] = $this->input->post('retail_rate');
             $data['destination'] = $this->input->post('destination');
             $data['deskripsi']=$this->input->post('description');
+            if($this->input->post('filename')):
+                $data['itienary']=$this->input->post('filename');
+            endif;
             if($p==1):
                 $this->Mix->update_record('uid',$uid,$data,'tx_rwagen_travelpackage');
                 $this->edit_package_travel($uid,true);
@@ -408,18 +492,37 @@
             $data['retail_rate'] = $this->input->post('retail_rate');
             $data['hidden'] = 0;
             $data['deskripsi']=$this->input->post('description');
-            
+            $data['itienary'] = $this->input->post('filename');
             $pack = $this->input->post('mygoldenvippackage');
             if($pack == 1)
             {
-                $this->do_upload();
-                $data['destination'] = $this->input->post('destination_travel');
-                $this->Mix->add_with_array($data,'tx_rwagen_travelpackage');
+                $sql = "select * from tx_rwagen_travelpackage where nama like'%".$data['nama']."%' and agen like '%".$data['agen']."%' ";
+                $d = $this->Mix->read_rows_by_sql($sql);
+                if(empty($d))
+                {
+                   $data['destination'] = $this->input->post('destination_travel');
+                   $this->Mix->add_with_array($data,'tx_rwagen_travelpackage'); 
+                   echo "Package has been saved.";
+                }
+                else
+                {
+                    echo "Package is already exists";
+                }
+                
             }
             else if($pack == 2){
-                $this->do_upload();
-                $data['destination'] = $this->input->post('destination_vip');
-                $this->Mix->add_with_array($data,'tx_rwagen_vippackage');
+                $sql = "select * from tx_rwagen_vippackage where nama like'%".$data['nama']."%' and agen like '%".$data['agen']."%' ";
+                $d = $this->Mix->read_rows_by_sql($sql);
+                if(empty($d))
+                {
+                    $data['destination'] = $this->input->post('destination_vip');
+                    $this->Mix->add_with_array($data,'tx_rwagen_vippackage');
+                    echo "Package has been saved.";
+                }
+                else
+                {
+                    echo "Package is already exists";
+                }
             }
             else
             {
@@ -432,28 +535,26 @@
           
         }
         
-        function do_upload()
+        function do_upload_file()
 	{
             $this->is_admin_tour();
-            $config['upload_path'] = './upload/itienary/';
-            $config['allowed_types'] = 'gif|jpg|png|doc|docx';
-            $config['max_size']	= '100';
-            $config['max_width']  = '1024';
-            $config['max_height']  = '768';
-
-            $this->load->library('upload', $config);
-
-            if ( ! $this->upload->do_upload())
+            $uploaddir = './upload/itienary/'.$this->session->userdata('id_agen').'/';
+            
+            $dir = BASEPATH.'../upload/itienary/'.$this->session->userdata('id_agen');
+            if(!file_exists($dir))
             {
-                    $error = array('error' => $this->upload->display_errors());
-
-                    echo $error;
+                    mkdir($dir);
             }
-            else
+            
+            $file = $uploaddir . basename($_FILES['uploadfile']['name']); 
+            //debug_data($_FILES['uploadfile']);
+            if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $file)) 
+            { 
+              echo "success"; 
+            } 
+            else 
             {
-                    $data = array('upload_data' => $this->upload->data());
-
-                    echo "success";
+              echo "error";
             }
 	}
         
@@ -497,6 +598,7 @@
         
         function get_form()
         {
+            $this->is_admin_tour();
             /* menangkap method post dari halaman untuk memporses data */
             $pilihan = $_GET['search'];   
             $uid = $_GET['uid'];
@@ -562,6 +664,7 @@
         {
             # ambil data untuk paket travel
             $sql = "select a.*, 
+                    case a.itienary when a.itienary <> 0 then a.itienary else 'No file attachment' end as file,
                     b.destination as tujuan
                     from
                     tx_rwagen_travelpackage a,
@@ -595,6 +698,7 @@
         {
             # ambil data untuk paket vip
             $sql = "select a.*, 
+                    case a.itienary when a.itienary <> 0 then a.itienary else 'No file attachment' end as file,
                     b.destination as tujuan
                     from
                     tx_rwagen_vippackage a,
@@ -660,7 +764,7 @@
             $this->is_admin_tour();
             $data['hidden'] = 1;
             $this->Mix->update_record('uid',$uid,$data,'tx_rwagen_vipschedule');
-            redirect('admin-tour/last-schedule');
+            redirect('admin-tour/update-report');
         }
         
         function active_sch_vip($uid)
@@ -668,14 +772,14 @@
             $this->is_admin_tour();
             $data['hidden'] = 0;
             $this->Mix->update_record('uid',$uid,$data,'tx_rwagen_vipschedule');
-            redirect('admin-tour/last-schedule');
+            redirect('admin-tour/update-report');
         }
         function hidden_sch_travel($uid)
         {
             $this->is_admin_tour();
             $data['hidden'] = 1;
             $this->Mix->update_record('uid',$uid,$data,'tx_rwagen_travelschedule');
-            redirect('admin-tour/last-schedule');
+            redirect('admin-tour/update-report');
         }
         
         function active_sch_travel($uid)
@@ -683,7 +787,7 @@
             $this->is_admin_tour();
             $data['hidden'] = 0;
             $this->Mix->update_record('uid',$uid,$data,'tx_rwagen_travelschedule');
-            redirect('admin-tour/last-schedule');
+            redirect('admin-tour/update-report');
         }
         
         function brwose_sch_vip($uid_sch)
@@ -720,7 +824,9 @@
                     c.uid = $uid_sch
                     order by a.uid desc";
             $data['booking_vip'] = $this->Mix->read_more_rows_by_sql($sql);
-            
+            //debug_data($data['booking_vip']);
+            $data['limit'] = 5000;
+            $data['nilai'] = 5000;
             $this->load->vars($data);
             $this->load->view('admin_tour/template');
         }
@@ -759,7 +865,9 @@
                     c.uid = $uid_sch
                     order by a.uid desc";
             $data['booking_travel'] = $this->Mix->read_more_rows_by_sql($sql);
-            
+            //debug_data($data['booking_travel']);
+            $data['limit'] = 5000;
+            $data['nilai'] = 5000;
             $this->load->vars($data);
             $this->load->view('admin_tour/template');
         }

@@ -4,6 +4,9 @@
         <div id="tk"><img width="15px;" title="Add Package" src="<?php echo base_url(); ?>asset/admin_hotel/add-icon.png">Add Package</div>
         <br />
         </a>
+        <div id="reload_data"></div>
+       
+        <div id="site-content">
         <table id="myTable" class="tablesorter">
             <thead>
                 <tr>
@@ -17,7 +20,7 @@
             </thead>
             
             <tbody>
-                <?php $i=1; foreach($travelpackage as $row): ?>
+                <?php $i=1; foreach($travelpackage as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)):  ?>
                 <tr>
                     <td><?php echo $i; ?>.</td>
                     <td><?php echo $row['nama']; ?></td>
@@ -34,8 +37,8 @@
                     </td>
                 </tr>
                 <?php 
-                    $i++; endforeach; 
-                    foreach($vippackage as $row): 
+                   endif; $i++;  endforeach; 
+                    foreach($vippackage as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)):
                  ?>
                 <tr>
                     <td><?php echo $i; ?>.</td>
@@ -52,10 +55,10 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php $i++; endforeach; ?>
+                <?php endif; $i++; endforeach; ?>
             </tbody>
-            
-            
         </table>
+         <?php echo $this->pagination->create_links(); ?>
+    </div>
     </div>
 </div>

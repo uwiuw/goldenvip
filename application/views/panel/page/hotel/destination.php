@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/style/hotel/public.css" type="text/css">
-<script type="text/javascript" src="<?php echo base_url();?>asset/js/script/hotel/app_hotel.js.js" />
+<script type="text/javascript" src="<?php echo base_url(); ?>asset/js/script/hotel/app_hotel.js.js" />
 <script type="text/javascript">
     jQuery(function(){
         jQuery('#add_new_data').hide(); 
@@ -26,7 +26,7 @@
 </script>
 <p>&Colon; Hotel &gg; Destination <input type="button" value="Add new destination" onclick="show_form_inputan()" class="button" id="btn_show"> </p>
 <div id="add_new_data">
-    <form onsubmit="save_form_inputan();" name="form_inputan_destination">
+    <form onsubmit="false" name="form_inputan_destination">
         <table>
             <tr><td colspan="2" height="10px" id="error_message"></td></tr>
             <tr>
@@ -40,45 +40,46 @@
     </form>
 </div>
 <h2 style="display:none;"><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
-
 <form name="form_data">
-<table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
-    <thead>
-        <tr>
-            <th width="4%">
-                <a href="#"><span>No</span></a>
-            </th>
-            <th width="20%">
-                <a href="#">Destination</a>
-            </th>
-            <th width="8%">
-                <a href="#">Action</a>
-            </th>
-        </tr>
-    </thead>
-    
-    <tbody id="result-show-finding">
-    <?php 
-        $i=1;
-        foreach($d_golden_rate as $row) { 
-        if($i>=($limit-9)):
-    ?>
-        <tr valign="top"> 
-            <td width="7%">
-                <?php echo $i; ?>.
-            </td>
-            <td class="name-data">
-               <?php echo $row['destination']; ?>             
-            </td>
-            <td>
-                <a class="edit-icon" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&amp;act=edit_golden_rate','#site-content')" href="javascript:void();"></a>
-            </td>
-        </tr>  
-    <?php 
-        endif;
-        $i++;} 
-    ?>
-    </tbody>
-</table>    
-<?php echo $this->pagination->create_links(); ?>
+    <table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">
+        <thead>
+            <tr>
+                <th width="4%">
+                    <a href="#"><span>No</span></a>
+                </th>
+                <th width="20%">
+                    <a href="#">Destination</a>
+                </th>
+                <th width="8%">
+                    <a href="#">Action</a>
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody id="result-show-finding">
+            <?php
+            $i = 1;
+            foreach ($d_golden_rate as $row) {
+                if ($i >= ($limit - 9)):
+                    ?>
+                    <tr valign="top"> 
+                        <td width="7%">
+                            <?php echo $i; ?>.
+                        </td>
+                        <td class="name-data">
+                            <?php echo $row['destination']; ?>             
+                        </td>
+                        <td>
+                            <a class="edit-icon" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=edit_destination_hotel','#site-content')" href="javascript:void();"></a>
+                            <a id="hide<?php echo $row['uid']; ?>" class="<?php echo $row['lampu']; ?>" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=lampu_destination','#info-saving');" href="javascript:void(0)"></a>
+                        </td>
+                    </tr>  
+                    <?php
+                endif;
+                $i++;
+            }
+            ?>
+        </tbody>
+    </table>    
+    <?php echo $this->pagination->create_links(); ?>
 

@@ -10,20 +10,20 @@
  *
  * @author aceng nursamsudin
  */
-class Admin_hotel extends CI_Controller{
+class Admin_hotel extends CI_Controller {
+
     //put your code here
-    public function index()
-    {
+    public function index() {
         $this->hotel_management();
     }
-    function hotel_management()
-    {
+
+    function hotel_management() {
         is_admin();
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
         $sql = "select
                 c.uid,
@@ -41,43 +41,42 @@ class Admin_hotel extends CI_Controller{
                 c.uid_destination = a.uid 
                 order by c.hotel_name limit 0,$limit";
         $data['d_hotel'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+
         $this->load->library('pagination');
         $total_rows = $this->db->count_all('tx_rwadminhotel_hotel');
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/pagination/?page');
+        $config['base_url'] = site_url('_admin/hotel/pagination/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
         //debug_data($data);
-        $this->load->view('panel/page/hotel/management',$data);
+        $this->load->view('panel/page/hotel/management', $data);
     }
-    
-    function add_new_data_hotel()
-    {
-       $data['destination'] = $this->Mix->read_package_by_pid();
-       $data['compliment'] = array('1'=>'--yes--','0'=>'--No--');
-       $data['by_core'] = array('1'=>'--yes--','0'=>'--No--');
-       $data['star'] = array(''=>'-- select --', '4'=>'4','5'=>'5');
-       $this->load->vars($data);
-       $this->load->view('panel/page/hotel/add_new_hotel');
+
+    function add_new_data_hotel() {
+        is_admin();
+        $data['destination'] = $this->Mix->read_package_by_pid();
+        $data['compliment'] = array('1' => '--yes--', '0' => '--No--');
+        $data['by_core'] = array('1' => '--yes--', '0' => '--No--');
+        $data['star'] = array('' => '-- select --', '4' => '4', '5' => '5');
+        $this->load->vars($data);
+        $this->load->view('panel/page/hotel/add_new_hotel');
     }
-    
-    function member_profit()
-    {
+
+    function member_profit() {
         is_admin();
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
 //        with limit
         $sql = "select 
@@ -102,7 +101,7 @@ class Admin_hotel extends CI_Controller{
                 a.payed = 0
                 order by a.name_reservation limit 0,$limit";
         $data['d_member_profit'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+
 //        with out limit
         $sql2 = "select 
                 a.uid,
@@ -126,33 +125,32 @@ class Admin_hotel extends CI_Controller{
                 a.payed = 0
                 order by a.name_reservation";
         $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
-        
+
         $this->load->library('pagination');
         $total_rows = count($jumlah_data);
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/member_profit/?page');
+        $config['base_url'] = site_url('_admin/hotel/member_profit/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
 //        debug_data($data);
-        $this->load->view('panel/page/hotel/member_profit',$data);
+        $this->load->view('panel/page/hotel/member_profit', $data);
     }
-    
-    function golden_vip_rate()
-    {
+
+    function golden_vip_rate() {
         is_admin();
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
 //        with limit
         $sql = "select 
@@ -184,40 +182,40 @@ class Admin_hotel extends CI_Controller{
                 a.uid_hotel = b.uid and
                 a.hidden = 0
                 order by b.hotel_name";
-        
+
         $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
-        
+
         $this->load->library('pagination');
         $total_rows = count($jumlah_data);
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/golden_vip_rate/?page');
+        $config['base_url'] = site_url('_admin/hotel/golden_vip_rate/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
 //        debug_data($data);
-        $this->load->view('panel/page/hotel/golden_vip_rate',$data);
+        $this->load->view('panel/page/hotel/golden_vip_rate', $data);
     }
-    
-    function destination()
-    {
-         is_admin();
+
+    function destination() {
+        is_admin();
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
 //        with limit
         $sql = "select 
                 a.uid,
-                a.destination
+                a.destination,
+                case a.hidden when 1 then 'lampumati' else 'lampunyala' end as lampu
                 from
                 tx_rwmembermlm_destination a
                 where 
@@ -232,43 +230,114 @@ class Admin_hotel extends CI_Controller{
                 tx_rwmembermlm_destination a
                 where 
                 pid = 0";
-        
+
         $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
-        
+
         $this->load->library('pagination');
         $total_rows = count($jumlah_data);
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/destination/?page');
+        $config['base_url'] = site_url('_admin/hotel/destination/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
 //        debug_data($data);
-        $this->load->view('panel/page/hotel/destination',$data);
+        $this->load->view('panel/page/hotel/destination', $data);
     }
-    
-    function saving_destination()
-    {
+
+    function area_in_detail() {
+        is_admin();
+        $limit = $_GET['per_page'];
+        if ($limit == 0):
+            $limit = 10;
+        else:
+            $limit = $limit + 10;
+        endif;
+//        with limit
+        $sql = "select
+                a.uid,
+                b.destination,
+                a.destination_detail,
+                case a.hidden when 1 then 'lampumati' else 'lampunyala' end as lampu
+                from
+                tx_rwmembermlm_destination_detail a,
+                tx_rwmembermlm_destination b
+                where
+                a.uid_destination = b.uid
+                order by a.destination_detail limit 0,$limit";
+        $data['d_area_in_detail'] = $this->Mix->read_more_rows_by_sql($sql);
+        //        with out limit
+        $sql2 = "select
+                a.uid,
+                b.destination,
+                a.destination_detail,
+                case a.hidden when 1 then 'lampumati' else 'lampunyala' end as lampu
+                from
+                tx_rwmembermlm_destination_detail a,
+                tx_rwmembermlm_destination b
+                where
+                a.uid_destination = b.uid";
+
+        $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
+
+        $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
+
+        $this->load->library('pagination');
+        $total_rows = count($jumlah_data);
+        $per_page = 10;
+        $num_links = $total_rows / $per_page;
+        $config['base_url'] = site_url('_admin/hotel/area_in_detail/?page');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $per_page;
+        $config['num_links'] = $num_links;
+        $config['full_tag_open'] = "<div id='pagination'>";
+        $config['full_tag_close'] = "</div>";
+        $config['page_query_string'] = TRUE;
+
+        $this->pagination->initialize($config);
+        $data['limit'] = $limit;
+//        debug_data($data);
+        $this->load->view('panel/page/hotel/area_in_detail', $data);
+    }
+
+    function saving_destination() {
+        is_admin();
         $data['destination'] = $this->input->post('destination');
-        $sql = "select * from tx_rwmembermlm_destination where destination like '%".$data['destination']."%'";
+        $sql = "select * from tx_rwmembermlm_destination where destination like '%" . $data['destination'] . "%'";
         $d = $this->Mix->read_rows_by_sql($sql);
-        if(empty($d)):
+        if (empty($d)):
             $data['pid'] = 0;
             $tb = 'tx_rwmembermlm_destination';
-            $this->Mix->add_with_array($data,$tb);
+            $this->Mix->add_with_array($data, $tb);
             echo "New destination has been save";
         else:
             echo "sorry destination already exists";
         endif;
     }
-    function read_address()
-    {
+
+    function update_destination() {
+        is_admin();
+        $uid = $this->input->post('uid');
+        $data['destination'] = $this->input->post('destination');
+        $sql = "select * from tx_rwmembermlm_destination where destination like '%" . $data['destination'] . "%'";
+        $d = $this->Mix->read_rows_by_sql($sql);
+        if (empty($d)):
+            $data['pid'] = 0;
+            $tb = 'tx_rwmembermlm_destination';
+            $this->Mix->update_record('uid', $uid, $data, $tb);
+            echo "Destination has been update";
+        else:
+            echo "Sorry the same name of destination already exists, please check your data.";
+        endif;
+    }
+
+    function read_address() {
         is_admin();
         $act = $_GET['act'];
         switch ($act):
@@ -291,11 +360,26 @@ class Admin_hotel extends CI_Controller{
                 $uid = $_GET['uid'];
                 $this->edit_golden_rate($uid);
                 break;
+            case "edit_destination_hotel":
+                $uid = $_GET['uid'];
+                $this->edit_destination_hotel($uid);
+                break;
+            case "lampu_destination":
+                $uid = $_GET['uid'];
+                $this->lampu_destination($uid);
+                break;
+            case "lampu_destination_detail":
+                $uid = $_GET['uid'];
+                $this->lampu_destination_detail($uid);
+                break;
+            case "area_in_detail_destination":
+                $uid = $_GET['uid'];
+                $this->area_in_detail_destination($uid);
+                break;
         endswitch;
     }
-    
-    function get_detail($uid)
-    {
+
+    function get_detail($uid) {
         is_admin();
         $data = array();
         $sql = "select
@@ -327,25 +411,24 @@ class Admin_hotel extends CI_Controller{
                 order by destination asc";
         $data['d_hotel'] = $this->Mix->read_rows_by_sql($sql);
         $data['destination'] = $this->Mix->read_package_by_pid();
-        if($data['d_hotel']['destination_detail']!=''):
+        if ($data['d_hotel']['destination_detail'] != ''):
             $sql3 = "select 
                     uid,
                     destination_detail
                     from
                     tx_rwmembermlm_destination_detail
                     where 
-                    uid_destination = '".$data['d_hotel']['uid_destination']."'";
-            $data['destination_detail']=$this->Mix->read_rows_by_sql_to_dropdown($sql3,'destination_detail');
+                    uid_destination = '" . $data['d_hotel']['uid_destination'] . "'";
+            $data['destination_detail'] = $this->Mix->read_rows_by_sql_to_dropdown($sql3, 'destination_detail');
         endif;
-        $data['compliment'] = array('1'=>'--yes--','0'=>'--No--');
-        $data['by_core'] = array('1'=>'--yes--','0'=>'--No--');
-        $data['star'] = array(''=>'-- select --', '4'=>'4','5'=>'5');
+        $data['compliment'] = array('1' => '--yes--', '0' => '--No--');
+        $data['by_core'] = array('1' => '--yes--', '0' => '--No--');
+        $data['star'] = array('' => '-- select --', '4' => '4', '5' => '5');
         $this->load->vars($data);
         $this->load->view('panel/page/hotel/get_detail');
     }
-    
-    function get_detail_destination($uid=0)
-    {
+
+    function get_detail_destination($uid=0) {
         is_admin();
         $sql3 = "select 
                     uid,
@@ -353,80 +436,76 @@ class Admin_hotel extends CI_Controller{
                     from
                     tx_rwmembermlm_destination_detail
                     where 
-                    uid_destination = '".$uid."'";
-        $data=$this->Mix->read_rows_by_sql_to_dropdown($sql3,'destination_detail');
-        if(!empty($data)):
-            echo form_dropdown('destination_detail',$data);
+                    uid_destination = '" . $uid . "'";
+        $data = $this->Mix->read_rows_by_sql_to_dropdown($sql3, 'destination_detail');
+        if (!empty($data)):
+            echo form_dropdown('destination_detail', $data);
         else:
             echo "&nbsp;";
         endif;
     }
-    
-    function update_data_hotel()
-    {
+
+    function update_data_hotel() {
         is_admin();
-        if($this->input->post('uid')):
+        if ($this->input->post('uid')):
             $uid = $this->input->post('uid');
             $data['hotel_name'] = $this->input->post('hotel_name');
             $data['uid_destination'] = $this->input->post('destination');
             $data['star'] = $this->input->post('star');
             $data['compliment'] = $this->input->post('compliment');
-            $data['management_by'] = $this->input->post('management_by')." ";
-            if($this->input->post('destination_detail')):
+            $data['management_by'] = $this->input->post('management_by') . " ";
+            if ($this->input->post('destination_detail')):
                 $data['uid_destination_detail'] = $this->input->post('destination_detail');
             else:
                 $data['uid_destination_detail'] = 0;
             endif;
             $tb = 'tx_rwadminhotel_hotel';
-            $this->Mix->update_record('uid',$uid,$data,$tb);
+            $this->Mix->update_record('uid', $uid, $data, $tb);
             echo "Data has been update";
         else:
             $data['hotel_name'] = $this->input->post('hotel_name');
-            $sql = "select * from tx_rwadminhotel_hotel where hotel_name like '%".$data['hotel_name']."%' ";
+            $sql = "select * from tx_rwadminhotel_hotel where hotel_name like '%" . $data['hotel_name'] . "%' ";
             $d = $this->Mix->read_rows_by_sql($sql);
-            if(empty($d)):
+            if (empty($d)):
                 $data['uid_destination'] = $this->input->post('destination');
                 $data['star'] = $this->input->post('star');
                 $data['compliment'] = $this->input->post('compliment');
-                $data['management_by'] = $this->input->post('management_by')." ";
-                if($this->input->post('destination_detail')):
+                $data['management_by'] = $this->input->post('management_by') . " ";
+                if ($this->input->post('destination_detail')):
                     $data['uid_destination_detail'] = $this->input->post('destination_detail');
                 else:
                     $data['uid_destination_detail'] = 0;
                 endif;
                 $tb = 'tx_rwadminhotel_hotel';
-                $this->Mix->add_with_array($data,$tb);
+                $this->Mix->add_with_array($data, $tb);
                 echo "Data has been save";
-           else:
-               echo "Sorry data is already exists";
-           endif;
+            else:
+                echo "Sorry data is already exists";
+            endif;
         endif;
-        
     }
-    
-    function update_data_golden_rate()
-    {
+
+    function update_data_golden_rate() {
         is_admin();
         $uid = $this->input->post('uid');
         $data['category_name'] = $this->input->post('category_name');
         $data['rate'] = $this->input->post('retail');
         $data['retail_rate'] = $this->input->post('golden_rate');
         $tb = 'tx_rwadminhotel_cat_room';
-        $this->Mix->update_record('uid',$uid,$data,$tb);
+        $this->Mix->update_record('uid', $uid, $data, $tb);
         echo " Data has been update";
     }
-    
-    function searching_form()
-    {
+
+    function searching_form() {
         is_admin();
         $name = $this->input->post('search');
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
-       
+
         $sql = "select
                 c.uid,
                 c.hotel_name, 
@@ -445,34 +524,33 @@ class Admin_hotel extends CI_Controller{
                 order by c.hotel_name 
                 ";
         $data['d_hotel'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+
         $this->load->library('pagination');
         $total_rows = 0;
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/pagination/?page');
+        $config['base_url'] = site_url('_admin/hotel/pagination/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
         //debug_data($data);
-        $this->load->view('panel/page/hotel/management',$data);
+        $this->load->view('panel/page/hotel/management', $data);
     }
-    
-    function searching_form_member_profit()
-    {
+
+    function searching_form_member_profit() {
         is_admin();
         $name = $this->input->post('search');
         $limit = $_GET['per_page'];
-        if($limit==0):
+        if ($limit == 0):
             $limit = 10;
         else:
-            $limit=$limit+10;
+            $limit = $limit + 10;
         endif;
         $sql = "select 
                 a.uid,
@@ -497,34 +575,32 @@ class Admin_hotel extends CI_Controller{
                 b.username like '%$name%'
                 order by a.name_reservation";
         $data['d_member_profit'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+
         $this->load->library('pagination');
         $total_rows = 0;
         $per_page = 10;
         $num_links = $total_rows / $per_page;
-        $config['base_url']= site_url('_admin/hotel/member_profit/?page');
+        $config['base_url'] = site_url('_admin/hotel/member_profit/?page');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
         $config['num_links'] = $num_links;
         $config['full_tag_open'] = "<div id='pagination'>";
         $config['full_tag_close'] = "</div>";
         $config['page_query_string'] = TRUE;
-        
+
         $this->pagination->initialize($config);
         $data['limit'] = $limit;
         //debug_data($data);
-        $this->load->view('panel/page/hotel/member_profit',$data);
+        $this->load->view('panel/page/hotel/member_profit', $data);
     }
-    
-    function switch_status_data_hotel()
-    {
+
+    function switch_status_data_hotel() {
         is_admin();
         $uid = $_GET['uid'];
-        $d = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_hotel','hidden',$uid,'uid');
-        if($d['hidden'] == '0')
-        {
+        $d = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_hotel', 'hidden', $uid, 'uid');
+        if ($d['hidden'] == '0') {
             $data['hidden'] = '1';
-            $this->Mix->update_record('uid',$uid,$data,'tx_rwadminhotel_hotel');
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwadminhotel_hotel');
             echo "
                     <script type=\"text/javascript\">
                         jQuery(function(){
@@ -536,11 +612,9 @@ class Admin_hotel extends CI_Controller{
                     </script>
             ";
             echo "Hotel account has been Hide, and can't access their privillage page.";
-        }
-        else
-        {
+        } else {
             $data['hidden'] = '0';
-            $this->Mix->update_record('uid',$uid,$data,'tx_rwadminhotel_hotel');
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwadminhotel_hotel');
             echo "
                     <script type=\"text/javascript\">
                         jQuery(function(){
@@ -555,13 +629,12 @@ class Admin_hotel extends CI_Controller{
             echo "Now Hotel account can access their privillage page.";
         }
     }
-    
-    function  paid_profit($uid = 0)
-    {
+
+    function paid_profit($uid = 0) {
         is_admin();
         $data['payed'] = 1;
         $tb = 'tx_rwadminhotel_booking';
-        $this->Mix->update_record('uid',$uid,$data,$tb);
+        $this->Mix->update_record('uid', $uid, $data, $tb);
         echo "
                     <script type=\"text/javascript\">
                         jQuery(function(){
@@ -572,9 +645,8 @@ class Admin_hotel extends CI_Controller{
             ";
         echo "Data has been update";
     }
-    
-    function edit_golden_rate($uid)
-    {
+
+    function edit_golden_rate($uid) {
         is_admin();
         $sql = "select 
                 a.uid,
@@ -591,10 +663,126 @@ class Admin_hotel extends CI_Controller{
                 a.hidden = 0 and
                 a.uid = '$uid'
                 order by b.hotel_name";
-        $data['data']=$this->Mix->read_rows_by_sql($sql);
+        $data['data'] = $this->Mix->read_rows_by_sql($sql);
 //        debug_data($data);
-        $this->load->view('panel/page/hotel/edit_golden_rate',$data);
+        $this->load->view('panel/page/hotel/edit_golden_rate', $data);
     }
+
+    function edit_destination_hotel($uid) {
+        is_admin();
+        $sql = "select 
+                a.uid,
+                a.destination
+                from
+                tx_rwmembermlm_destination a
+                where 
+                pid = 0 and
+                a.uid = $uid";
+        $data['destination'] = $this->Mix->read_rows_by_sql($sql);
+        $this->load->view('panel/page/hotel/edit_destination_hotel', $data);
+    }
+
+    function lampu_destination($uid) {
+        is_admin();
+        $uid = $_GET['uid'];
+        $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_destination', 'hidden', $uid, 'uid');
+        if ($d['hidden'] == 0):
+            $data['hidden'] = '1';
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwmembermlm_destination');
+            echo "<script type='text/javascript'>
+                    jQuery(function(){
+                        jQuery('#browsedestination$uid').hide();
+                        jQuery('#hide$uid').removeClass('lampunyala');
+                        jQuery('#hide$uid').addClass('lampumati');
+                    });
+                  </script>";
+        else:
+            $data['hidden'] = '0';
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwmembermlm_destination');
+            echo "<script type='text/javascript'>
+                jQuery(function(){
+                    jQuery('#browsedestination$uid').show();
+                    jQuery('#hide$uid').removeClass('lampumati');
+                    jQuery('#hide$uid').addClass('lampunyala');
+                });
+              </script>";
+        endif;
+    }
+
+    function lampu_destination_detail($uid) {
+        is_admin();
+        $uid = $_GET['uid'];
+        $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_destination_detail', 'hidden', $uid, 'uid');
+        if ($d['hidden'] == 0):
+            $data['hidden'] = '1';
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwmembermlm_destination_detail');
+            echo "<script type='text/javascript'>
+                    jQuery(function(){
+                        jQuery('#browsedestination$uid').hide();
+                        jQuery('#hide$uid').removeClass('lampunyala');
+                        jQuery('#hide$uid').addClass('lampumati');
+                    });
+                  </script>";
+        else:
+            $data['hidden'] = '0';
+            $this->Mix->update_record('uid', $uid, $data, 'tx_rwmembermlm_destination_detail');
+            echo "<script type='text/javascript'>
+                jQuery(function(){
+                    jQuery('#browsedestination$uid').show();
+                    jQuery('#hide$uid').removeClass('lampumati');
+                    jQuery('#hide$uid').addClass('lampunyala');
+                });
+              </script>";
+        endif;
+    }
+
+    function area_in_detail_destination($uid=0) {
+        is_admin();
+        $data = array();
+        
+        $data['uid_destination'] = '';
+        $data['uid'] = '';
+        $data['destination_detail'] = '';
+        $data['action'] = 'saving_area_in_detail';
+        $data['val_btn'] = "save";
+        if ($uid != 0):
+            $sql = "select
+                    a.uid,
+                    b.uid as uid_destination,
+                    a.destination_detail
+                    from
+                    tx_rwmembermlm_destination_detail a,
+                    tx_rwmembermlm_destination b
+                    where
+                    a.uid_destination = b.uid and
+                    a.uid = $uid ";
+            $data = $this->Mix->read_rows_by_sql($sql);
+            $data['val_btn'] = 'update';
+            $data['action'] = 'update_area_in_detail';
+        endif;
+        $data['destination'] = $this->Mix->read_package_by_pid();
+        $this->load->view('panel/page/hotel/area_in_detail_destination', $data);
+    }
+
+    function saving_area_in_detail() {
+        is_admin();
+        $tb = "tx_rwmembermlm_destination_detail";
+        $data['uid_destination'] = $this->input->post('destination');
+        $data['destination_detail'] = $this->input->post('area_in_detail');
+        $this->Mix->add_with_array($data, $tb);
+        echo "New area has been saved";
+    }
+
+    function update_area_in_detail() {
+        is_admin();
+        $tb = "tx_rwmembermlm_destination_detail";
+        $data['uid_destination'] = $this->input->post('destination');
+        $data['destination_detail'] = $this->input->post('area_in_detail');
+        $val = $this->input->post('read_data');
+        $this->Mix->update_record('uid',$val,$data,$tb);
+        echo "Area in detail has been update";
+    }
+
 }
 
 ?>

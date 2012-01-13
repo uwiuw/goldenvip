@@ -1,4 +1,37 @@
 <script type="text/javascript">
+    jQuery(function(){
+        // start upload
+        var btnUpload=$('#upload');
+        var status=$('#erroritienary');
+        new AjaxUpload(btnUpload, {
+                action: '<?php echo site_url('admin-tour/package-management/do-upload-file'); ?>',
+                name: 'uploadfile',
+                onSubmit: function(file, ext){
+                         if (! (ext && /^(pdf|jpg|png|jpeg|gif|doc|docx|zip|rar)$/.test(ext))){ 
+            // extension is not allowed 
+                                status.text('Only PDF, ZIP, RAR, Doc, Docx, JPG, PNG or GIF files are allowed');
+                                return false;
+                        }
+                        status.text('Please wait for the file being uploaded');
+                        document.edit_data_package.submit_photo.disabled = true;
+                },
+                onComplete: function(file, response){
+                        //On completion clear the status
+                        //Add uploaded file to list
+                       
+                        if(response==="success"){
+                                document.edit_data_package.submit_photo.disabled = false;
+                                jQuery('#filename').val(file);
+                                status.text('file has been successfully upload, click btn save to saved itienary changed.');
+                        } else{
+                                jQuery('#erroritienary').text('file is to large or file is crash');
+                        }
+                }
+        });
+        // end upload
+
+    });
+    
     function validate_rate()
     {
         rate = document.getElementById('published_rate').value;
@@ -64,10 +97,17 @@
                         </td>
                     </tr>
                  <tr class="old">
-                        <td>Browse for itienary this package</td>
-                        <td><input id="itienary" type="file" name="itienary"> </div></td>
-                        <td><div style="color: red;" id="erroritienary"></td>
-                    </tr> 
+                    <td>Itienary</td>
+                    <td>
+                        <input type="button" value="Browse file for itienary this package" id="upload">
+                        <input type="hidden" id="filename" name="filename">
+                    </td>
+                    <td>
+                        <div style="color: red;" id="erroritienary">
+                            File : <a href="<?php echo base_url()."upload/itienary/".$this->session->userdata('id_agen')."/".$package['file'];?>" target="_blank"> <?php echo $package['file'] ; ?> </a>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <input type="submit" class="et-form-btn" id="submit_photo" name="submit" value="Save" onclick="check_validation();">

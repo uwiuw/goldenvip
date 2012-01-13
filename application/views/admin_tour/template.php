@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>asset/style/admin-hotel.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/wp/public.css">
         <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/jquery-1.4.3.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/old-site/js/ajaxupload.3.5.js"></script>
         <link type="text/css" href="<?php echo base_url(); ?>asset/admin_hotel/styleTableSorter1.css" rel="stylesheet" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>asset/style/tablesorter/blue.css" type="text/css"/>
         <script src="<?php echo base_url(); ?>asset/js/plugin/jquery.tablesorter.min.js"></script>

@@ -2,7 +2,38 @@
     jQuery(function(){
         jQuery('#travel_pack').hide();
         jQuery('#vip_pack').hide();
+        
+        // start upload
+        var btnUpload=$('#upload');
+        var status=$('#erroritienary');
+        new AjaxUpload(btnUpload, {
+                action: '<?php echo site_url('admin-tour/package-management/do-upload-file'); ?>',
+                name: 'uploadfile',
+                onSubmit: function(file, ext){
+                         if (! (ext && /^(pdf|jpg|png|jpeg|gif|doc|docx|zip|rar)$/.test(ext))){ 
+            // extension is not allowed 
+                                status.text('Only PDF, ZIP, RAR, Doc, Docx, JPG, PNG or GIF files are allowed');
+                                return false;
+                        }
+                        status.text('Please wait for the file being uploaded');
+                        document.edit_data_package.submit_photo.disabled = true;
+                },
+                onComplete: function(file, response){
+                        //On completion clear the status
+                        //Add uploaded file to list
+                        if(response==="success"){
+                                document.edit_data_package.submit_photo.disabled = false;
+                                jQuery('#filename').val(file);
+                                status.text('file has been successfully upload');
+                        } else{
+                                jQuery('#erroritienary').text('file is to large or file is crash');
+                        }
+                }
+        });
+        // end upload
+
     });
+    
     function check_validity()
     {
         var packages = jQuery('#package').val();
@@ -77,7 +108,7 @@
         jQuery.post("<?php echo site_url('admin-tour/package-management/add_data_package'); ?>",jQuery('#edit_data_package').serialize(), 
                function(data) {
                    jQuery('#add_p').addClass('error');
-                   jQuery('#add_p').text('New package has been added. '+data);
+                   jQuery('#add_p').text(data);
                });
     }
     function select_pack()
@@ -104,7 +135,7 @@
     <div class="tx-rwadminhotelmlm-pi1 isi-content-admin-tour">
         <div id="add_p"></div>
         
-        <form action="" method="POST" name="edit_data_package" id="edit_data_package"  enctype="multipart/form-data">
+        <form method="POST" name="edit_data_package" id="edit_data_package"  method="post" accept-charset="utf-8" enctype="multipart/form-data">
             <table cellspacing="1" cellpadding="0" border="0" class="tablesorter" id="tablesorter-demo">
                 <tbody>
                     <tr class="even">
@@ -174,8 +205,11 @@
                     </tr>
                    
                     <tr class="even">
-                        <td>Browse for itienary this package</td>
-                        <td><input id="itienary" type="file" name="itienary"> </div></td>
+                        <td>Itienary</td>
+                        <td>
+                            <input type="button" value="Browse file for itienary this package" id="upload">
+                            <input type="hidden" id="filename" name="filename">
+                        </td>
                         <td><div style="color: red;" id="erroritienary"></td>
                     </tr>  
                 </tbody>

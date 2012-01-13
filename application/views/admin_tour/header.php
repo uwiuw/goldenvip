@@ -43,8 +43,8 @@ $j = <<<HTML
                 <ul id="menu-admin">
                     <li><a href="$site/package-management" id="pm">Package Management</a></li>
                     <li><a href="$site/booking" id="booking_member">Booking</a></li>
-                    <li><a href="$site/set-schedule" id="set_sch">Time Schedule</a></li>
-                    <li><a href="$site/last-schedule" id="last_sch">Update Report</a></li>
+                    <li><a href="$site/time-schedule" id="set_sch">Time Schedule</a></li>
+                    <li><a href="$site/update-report" id="last_sch">Update Report</a></li>
                     
                 </ul>
                 <ul id="logo_core"><a id="c175"></a>

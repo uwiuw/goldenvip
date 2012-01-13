@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1; foreach($booking_travel as $row): ?>
+                <?php $i = 1; foreach($booking_travel as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)): ?>
                 <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row['uid']; ?></td>
@@ -42,8 +42,8 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php $i++; endforeach; ?>
-                <?php foreach($booking_vip as $row): ?>
+                <?php  endif; $i++; endforeach; ?>
+                <?php foreach($booking_vip as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)): ?>
                 <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row['uid']; ?></td>
@@ -64,8 +64,9 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php $i++; endforeach; ?>
+                <?php endif; $i++; endforeach; ?>
             </tbody>
         </table>
+        <?php echo $this->pagination->create_links(); ?>
     </div>
 </div>

@@ -3,11 +3,13 @@ class Commission extends CI_Controller
 {
 	public function index()
 	{
+            is_admin();
 		$this->comision_payment();
 	}
 	
 	function comision_payed()
 	{
+            is_admin();
 		if($this->input->post('bonus'))
 		{
 			if($this->input->post('bonus')=='fast')
@@ -35,6 +37,7 @@ class Commission extends CI_Controller
 	
 	function comision_payment()
 	{
+            is_admin();
 		echo "
 		<script type=\"text/javascript\">
 		jQuery(function(){
@@ -112,6 +115,7 @@ class Commission extends CI_Controller
 	
 	function all_bonus()
 	{
+            is_admin();
 		$sql = "select commission as bonus, uid,firstname, username, bank_name, bank_account_number  
 				from `tx_rwmembermlm_member` 
 				WHERE deleted = 0 and hidden = 0 and pid='67' and commission > 0             
@@ -142,6 +146,7 @@ class Commission extends CI_Controller
 	
 	function all_bonus_payed()
 	{
+            is_admin();
 		$sql = "select commission as bonus, uid,firstname, username, bank_name, bank_account_number  
 				from `tx_rwmembermlm_member` 
 				WHERE deleted = 0 and hidden = 0 and pid='67' and commission > 0             
@@ -193,6 +198,7 @@ class Commission extends CI_Controller
 	
 	function fast_bonus()
 	{
+            is_admin();
 		$sql = "select a.uid_member, sum(a.bonus) as bonus, a.paid, b.username, b.firstname, b.lastname, 
 				b.bank_name, b.bank_account_number
 				from tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b 
@@ -226,6 +232,7 @@ class Commission extends CI_Controller
 	
 	function fast_bonus_payed()
 	{
+            is_admin();
 		$sql = "select a.uid_member, sum(a.bonus) as bonus, a.paid, b.username, b.firstname, b.lastname, 
 				b.bank_name, b.bank_account_number
 				from tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b 
@@ -274,6 +281,7 @@ class Commission extends CI_Controller
 	
 	function cycle_bonus()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historycycle a,tx_rwmembermlm_member b
 				WHERE 
@@ -307,6 +315,7 @@ class Commission extends CI_Controller
 	}
 	function cycle_bonus_payed()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historycycle a,tx_rwmembermlm_member b
 				WHERE 
@@ -357,6 +366,7 @@ class Commission extends CI_Controller
 	
 	function matching_bonus()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historymatchingbonus a,tx_rwmembermlm_member b
 				WHERE 
@@ -391,6 +401,7 @@ class Commission extends CI_Controller
 	
 	function matching_bonus_payed()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historymatchingbonus a,tx_rwmembermlm_member b
 				WHERE 
@@ -442,6 +453,7 @@ class Commission extends CI_Controller
 	
 	function mentor_bonus()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historymentorbonus a,tx_rwmembermlm_member b
 				WHERE 
@@ -475,6 +487,7 @@ class Commission extends CI_Controller
 	}
 	function mentor_bonus_payed()
 	{
+            is_admin();
 		$sql = "SELECT a.uid_member, b.*, sum(a.bonus) as bonus   
 				FROM tx_rwmembermlm_historymentorbonus a,tx_rwmembermlm_member b
 				WHERE 

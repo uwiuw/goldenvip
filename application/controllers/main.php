@@ -429,49 +429,56 @@ class Main extends CI_Controller {
 	
 	function reservation_vip()
 	{
-		$uid = $this->uri->segment('4');
-		$sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
-				d.destination, b.deskripsi, b.retail_rate
-				from tx_rwagen_vipschedule a, 
-				tx_rwagen_vippackage b, 
-				tx_rwagen_agen c, 
-				tx_rwmembermlm_destination d 
-				where 
-				a.package = b.uid
-				and
-				b.agen = c.uid
-				and
-				b.destination = d.uid
-				and a.uid = '$uid'
-				";
-		$sql1 = "select reservation from tx_rwagen_vipbooking where uid_member = '".$this->session->userdata('member')."' and hidden = '1' ";
-		$res = $this->Mix->read_rows_by_sql($sql1);
-		$data['reservation'] = $res['reservation'];
-		$data['pack'] = $this->Mix->read_more_rows_by_sql($sql);
-		$data['title']="Member | Home Page | Reservation | Detail Package";
-        $data['page'] = "vip/detail_package";
-        $data['nav'] = "reservation";
-        
-        $this->load->vars($data);
-        $this->load->view('member/template');
+            $uid = $this->uri->segment('4');
+            $sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
+                    d.destination, b.deskripsi, b.retail_rate
+                    ,b.itienary,
+                    case b.itienary when b.itienary <> 0 then 1 else 0 end as file,
+                    c.uid as id_agen
+                    from tx_rwagen_vipschedule a, 
+                    tx_rwagen_vippackage b, 
+                    tx_rwagen_agen c, 
+                    tx_rwmembermlm_destination d 
+                    where 
+                    a.package = b.uid
+                    and
+                    b.agen = c.uid
+                    and
+                    b.destination = d.uid
+                    and a.uid = '$uid'
+                            ";
+            $sql1 = "select reservation from tx_rwagen_vipbooking where uid_member = '".$this->session->userdata('member')."' and hidden = '1' ";
+            $res = $this->Mix->read_rows_by_sql($sql1);
+            $data['reservation'] = $res['reservation'];
+            $data['pack'] = $this->Mix->read_more_rows_by_sql($sql);
+            $data['title']="Member | Home Page | Reservation | Detail Package";
+            $data['page'] = "vip/detail_package";
+            $data['nav'] = "reservation";
+
+            $this->load->vars($data);
+            $this->load->view('member/template');
 	}
 	function reservation_travel()
 	{
 		$uid = $this->uri->segment('4');
 		$sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
-				d.destination, b.deskripsi, b.retail_rate
-				from tx_rwagen_travelschedule a, 
-				tx_rwagen_travelpackage b, 
-				tx_rwagen_agen c, 
-				tx_rwmembermlm_destination d 
-				where 
-				a.package = b.uid
-				and
-				b.agen = c.uid
-				and
-				b.destination = d.uid
-				and a.uid = '$uid'
-				";
+                        d.destination, b.deskripsi, b.retail_rate
+                        ,b.itienary,
+                        case b.itienary when b.itienary <> 0 then 1 else 0 end as file,
+                        c.uid as id_agen
+                        from tx_rwagen_travelschedule a, 
+                        tx_rwagen_travelpackage b, 
+                        tx_rwagen_agen c, 
+                        tx_rwmembermlm_destination d 
+
+                        where 
+                        a.package = b.uid
+                        and
+                        b.agen = c.uid
+                        and
+                        b.destination = d.uid
+                        and a.uid = '$uid'
+                        ";
 		$sql1 = "select reservation from tx_rwagen_travelbooking where uid_member = '".$this->session->userdata('member')."' and hidden = '1' ";
 		
 		

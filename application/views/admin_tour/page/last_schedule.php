@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1; foreach ($last_sch_travel as $row): ?>
+                <?php $i = 1; foreach ($last_sch_travel as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)): ?>
                 <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row['time_sch']; ?></td>
@@ -35,8 +35,8 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php $i++; endforeach;?>
-                <?php foreach ($last_sch_vip as $row): ?>
+                <?php endif; $i++; endforeach;?>
+                <?php foreach ($last_sch_vip as $row): if(($i>=($limit-($nilai-1)))and ($i<=$limit)): ?>
                 <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row['time_sch']; ?></td>
@@ -55,8 +55,9 @@
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php $i++; endforeach;?>
+                <?php endif; $i++; endforeach;?>
             </tbody>
         </table>
+        <?php echo $this->pagination->create_links(); ?>
     </div>
 </div>
