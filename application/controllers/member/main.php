@@ -211,7 +211,7 @@ class Main extends CI_Controller {
                 f.pid = a.uid and 
                 a.hidden = '0' and
                 f.hidden = '0' and
-                a.uid_member = '106'
+                a.uid_member = '" . $this->session->userdata('member') . "'
                 group by a.uid_sch
                 order by a.uid desc
                 limit 0,10";
@@ -245,7 +245,7 @@ class Main extends CI_Controller {
                 f.pid = a.uid and 
                 a.hidden = '0' and
                 f.hidden = '0' and
-                a.uid_member = '106'
+                a.uid_member = '" . $this->session->userdata('member') . "'
                 group by a.uid_sch
                 order by a.uid desc
                 limit 0,10";
