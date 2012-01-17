@@ -157,8 +157,8 @@ class Admin_hotel extends CI_Controller {
                 a.uid,
                 a.category_name,
                 a.published_rate,
-                a.rate as retail,
-                a.retail_rate as golden_rate,
+                a.rate as golden_rate,
+                a.retail_rate as retail,
                 b.hotel_name
                 from
                 tx_rwadminhotel_cat_room a,
@@ -383,8 +383,11 @@ class Admin_hotel extends CI_Controller {
         is_admin();
         $data = array();
         $sql = "select
+                d.uid as idu,
                 c.uid,
                 c.hotel_name, 
+                d.username,
+                c.email,
                 a.destination,
                 a.uid as uid_destination,
                 b.uid as uid_destination_detail,
@@ -396,9 +399,11 @@ class Admin_hotel extends CI_Controller {
                 from
                 tx_rwadminhotel_hotel c left join 
                 tx_rwmembermlm_destination_detail b on c.uid_destination_detail = b.uid ,
-                tx_rwmembermlm_destination a
+                tx_rwmembermlm_destination a,
+                fe_users d
                 where
                 c.uid_destination = a.uid and
+                d.tx_rwadminhotel_hotel = c.uid and
                 c.uid = $uid";
         $sql2 = "select
                 uid,
@@ -454,6 +459,9 @@ class Admin_hotel extends CI_Controller {
             $data['star'] = $this->input->post('star');
             $data['compliment'] = $this->input->post('compliment');
             $data['management_by'] = $this->input->post('management_by') . " ";
+            if ($this->input->post('email')):
+                $data['email'] = $this->input->post('email');
+            endif;
             if ($this->input->post('destination_detail')):
                 $data['uid_destination_detail'] = $this->input->post('destination_detail');
             else:
@@ -461,24 +469,54 @@ class Admin_hotel extends CI_Controller {
             endif;
             $tb = 'tx_rwadminhotel_hotel';
             $this->Mix->update_record('uid', $uid, $data, $tb);
+            if ($this->input->post('pwd')):
+                $up_data_fe_user['password'] = md5($this->input->post('pwd'));
+                $val = $this->input->post('idu');
+                $tb = 'fe_users';
+                $this->Mix->update_record('uid', $val, $up_data_fe_user, $tb);
+            endif;
             echo "Data has been update";
         else:
             $data['hotel_name'] = $this->input->post('hotel_name');
+            $ins_data_fe_users['username'] = $this->input->post('username');
             $sql = "select * from tx_rwadminhotel_hotel where hotel_name like '%" . $data['hotel_name'] . "%' ";
+            $sql2 = "select * from fe_users where username like '%" . $ins_data_fe_users['username'] . "%'";
             $d = $this->Mix->read_rows_by_sql($sql);
+            $ins_d = $this->Mix->read_rows_by_sql($sql2);
             if (empty($d)):
-                $data['uid_destination'] = $this->input->post('destination');
-                $data['star'] = $this->input->post('star');
-                $data['compliment'] = $this->input->post('compliment');
-                $data['management_by'] = $this->input->post('management_by') . " ";
-                if ($this->input->post('destination_detail')):
-                    $data['uid_destination_detail'] = $this->input->post('destination_detail');
+                if (empty($ins_d)):
+                    $ins_data_fe_users['usergroup'] = '1';
+                    $pwd = $this->input->post('pwd');
+                    $pwd2 = $this->input->post('pwd2');
+                    if ($pwd != $pwd2):
+                        echo "Password not same";
+                    else:
+                        $ins_data_fe_users['password'] = md5($pwd);
+                        $data['email'] = $this->input->post('email');
+                        $data['uid_destination'] = $this->input->post('destination');
+                        $data['star'] = $this->input->post('star');
+                        $data['compliment'] = $this->input->post('compliment');
+                        $data['management_by'] = $this->input->post('management_by') . " ";
+                        if ($this->input->post('destination_detail')):
+                            $data['uid_destination_detail'] = $this->input->post('destination_detail');
+                        else:
+                            $data['uid_destination_detail'] = 0;
+                        endif;
+                        $tb = 'tx_rwadminhotel_hotel';
+                        $this->Mix->add_with_array($data, $tb);
+                        $d = $this->Mix->read_rows_by_sql($sql);
+
+                        $tb = 'fe_users';
+                        $ins_data_fe_users['tx_rwadminhotel_hotel'] = $d['uid'];
+                        $ins_data_fe_users['pid'] = '66';
+                        $ins_data_fe_users['cruser_id'] = '1';
+                        $this->Mix->add_with_array($ins_data_fe_users, $tb);
+
+                        echo "Data has been save";
+                    endif;
                 else:
-                    $data['uid_destination_detail'] = 0;
+                    echo "sorry username is already exists";
                 endif;
-                $tb = 'tx_rwadminhotel_hotel';
-                $this->Mix->add_with_array($data, $tb);
-                echo "Data has been save";
             else:
                 echo "Sorry data is already exists";
             endif;
@@ -489,8 +527,8 @@ class Admin_hotel extends CI_Controller {
         is_admin();
         $uid = $this->input->post('uid');
         $data['category_name'] = $this->input->post('category_name');
-        $data['rate'] = $this->input->post('retail');
-        $data['retail_rate'] = $this->input->post('golden_rate');
+        $data['rate'] = $this->input->post('golden_rate');
+        $data['retail_rate'] = $this->input->post('retail');
         $tb = 'tx_rwadminhotel_cat_room';
         $this->Mix->update_record('uid', $uid, $data, $tb);
         echo " Data has been update";
@@ -652,8 +690,8 @@ class Admin_hotel extends CI_Controller {
                 a.uid,
                 a.category_name,
                 a.published_rate,
-                a.rate as retail,
-                a.retail_rate as golden_rate,
+                a.rate as golden_rate,
+                a.retail_rate as retail,
                 b.hotel_name
                 from
                 tx_rwadminhotel_cat_room a,
@@ -739,7 +777,7 @@ class Admin_hotel extends CI_Controller {
     function area_in_detail_destination($uid=0) {
         is_admin();
         $data = array();
-        
+
         $data['uid_destination'] = '';
         $data['uid'] = '';
         $data['destination_detail'] = '';
@@ -779,7 +817,7 @@ class Admin_hotel extends CI_Controller {
         $data['uid_destination'] = $this->input->post('destination');
         $data['destination_detail'] = $this->input->post('area_in_detail');
         $val = $this->input->post('read_data');
-        $this->Mix->update_record('uid',$val,$data,$tb);
+        $this->Mix->update_record('uid', $val, $data, $tb);
         echo "Area in detail has been update";
     }
 

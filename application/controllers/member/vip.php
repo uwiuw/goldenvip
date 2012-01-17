@@ -301,48 +301,43 @@ class Vip extends CI_Controller
 	function set_reservation()
 	{
 		is_member();
-		$this->check_qty();
+		
 		$data = array();
 		$check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_vipbooking');
 		if(!empty($check))
 		{
-			$sql = "select a.uid as uid_booking, b.uid as uid_sch, c.harga as harga from 
-					tx_rwagen_vipbooking a, tx_rwagen_vipschedule b, tx_rwagen_vippackage c 
-					where a.hidden = '1' and
-					a.uid_sch = b.uid and
-					b.package  = c.uid 
-					and a.uid_member = '".$this->session->userdata('member')."'";
-			$get_data_sch = $this->Mix->read_rows_by_sql($sql);
-			$get_data_member = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
-			$data['hidden'] = '0';
-			$data['pid'] = $get_data_sch['uid_booking'];
-			$data['rate'] = $get_data_sch['harga'];
-			
-			$data['email'] = $this->input->post('email');
-			$data['insurance'] = '1';
-			
-			for($i=1;$i<=$this->input->post('qty');$i++)
-			{
-				$data['nama'] = $this->input->post('name'.$i);
-				$data['rate'] = $this->input->post('rate')+(100*$this->input->post('mega'.$i));
-				$this->Mix->add_with_array($data,'tx_rwagen_vipbookingdetails');
-			}
-			
-			$up['hidden'] = '0';
-			$this->Mix->update_record('uid',$get_data_sch['uid_booking'],$up,'tx_rwagen_vipbooking');
-			$this->get_pdf($check['uid'],$check['qty']);
-			/*
-			$page['title']="Member | Reservation | Thank you ";
-			$page['page'] = "business/save_reservation";
-			$page['nav'] = "reservation";
-		
-			$this->load->vars($page);
-			$this->load->view('member/template');
-			*/
+                    $this->check_qty();
+                    // dilakukan lagi pengecekan untuk updata data dari qty
+                    $check = $this->Mix->read_row_by_two('uid_member',$this->session->userdata('member'),'hidden','1','tx_rwagen_vipbooking');
+                    $sql = "select a.uid as uid_booking, b.uid as uid_sch, c.harga as harga from 
+                                    tx_rwagen_vipbooking a, tx_rwagen_vipschedule b, tx_rwagen_vippackage c 
+                                    where a.hidden = '1' and
+                                    a.uid_sch = b.uid and
+                                    b.package  = c.uid 
+                                    and a.uid_member = '".$this->session->userdata('member')."'";
+                    $get_data_sch = $this->Mix->read_rows_by_sql($sql);
+                    $get_data_member = $this->Mix->read_row_by_one('uid',$this->session->userdata('member'),'tx_rwmembermlm_member');
+                    $data['hidden'] = '0';
+                    $data['pid'] = $get_data_sch['uid_booking'];
+                    $data['rate'] = $get_data_sch['harga'];
+
+                    $data['email'] = $this->input->post('email');
+                    $data['insurance'] = '1';
+
+                    for($i=1;$i<=$this->input->post('qty');$i++)
+                    {
+                            $data['nama'] = $this->input->post('name'.$i);
+                            $data['rate'] = $this->input->post('rate')+(100*$this->input->post('mega'.$i));
+                            $this->Mix->add_with_array($data,'tx_rwagen_vipbookingdetails');
+                    }
+
+                    $up['hidden'] = '0';
+                    $this->Mix->update_record('uid',$get_data_sch['uid_booking'],$up,'tx_rwagen_vipbooking');
+                    $this->get_pdf($check['uid'],$check['qty']);
 		}
 		else
 		{
-			redirect('member/reservation/vip','refresh');
+                    redirect('member/reservation/vip','refresh');
 		}
 	}
 	
@@ -466,6 +461,7 @@ class Vip extends CI_Controller
 			else
 			{
 				$quote['booking'] = $qty;
+                                // kesalahan dalam mengupdate jumlah dari qty
 				$this->Mix->update_record('uid',$up['uid_sch'],$quote,'tx_rwagen_vipschedule');
 				$this->Mix->update_record('uid',$uidnum,$up,'tx_rwagen_vipbooking');
 			}

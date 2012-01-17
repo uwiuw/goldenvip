@@ -3,32 +3,112 @@
  * and open the template in the editor.
  */
 jQuery(function(){
-        jQuery("#myTable").tablesorter();
-        jQuery('#myTable tbody tr:odd').addClass('odd');
-        pagination();
+    jQuery("#myTable").tablesorter();
+    jQuery('#myTable tbody tr:odd').addClass('odd');
+    pagination();
 });
 // cek validasi form
 function management_hotel_edit_clear_form(){
     jQuery('#error_hotel_name').text("");
+    jQuery('#error_username').text("");
+    jQuery('#error_email').text("");
+    jQuery('#error_pwd').text("");
+    jQuery('#error_pwd2').text("");
     jQuery('#error_destination').text("");
     jQuery('#error_star').text("");
     jQuery('#error_star').text("");
     jQuery('#error_compliment').text("");
     jQuery('#error_core').text("");
+    
 }
-function management_hotel_cek_form(){
+
+function management_hotel_cek_form(fstat){
     hotel_name = jQuery('#hotel_name').val();
+    username = jQuery('#username').val();
+    email = jQuery('#email').val();
+    pwd = jQuery('#pwd').val();
+    pwd2 = jQuery('#pwd2').val();
     destination = jQuery('#destination').val();
     star = jQuery('#star').val();
     compliment = jQuery('#compliment').val();
     core = jQuery('#core').val();
     read_data = jQuery('#read_data').val();
+    lpwd = jQuery('#pwd').val().length;
+    lpwd2 = jQuery('#pwd2').val().length;
+    emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     
     management_hotel_edit_clear_form();
+    
+    if(fstat=="update"){
+        jQuery('#error_pwd').text("Put blank if not changed.");
+    }
+    
     if(!hotel_name){
         jQuery('#error_hotel_name').text("can't be empty");
         return false;
     }
+    if(!username){
+        jQuery('#error_username').text("can't be empty");
+        return false;
+    }
+    if(!email){
+        jQuery('#error_email').text("can't be empty");
+        return false;
+    }else{
+        if(!emailReg.test(email)){
+            jQuery('#error_email').text("enter a valid email address.");
+            return false;
+        }
+    }
+    
+    if(fstat!="update"){
+        if(!pwd){
+            jQuery('#error_pwd').text("can't be empty");
+            return false;
+        }else{
+            if(lpwd<6){
+                jQuery('#error_pwd').text("password is to short, min 6 character");
+                return false; 
+            }
+        }
+    
+        if(!pwd2){
+            jQuery('#error_pwd2').text("can't be empty");
+            return false;
+        }else{
+            if(lpwd2<6){
+                jQuery('#error_pwd2').text("password is to short, min 6 character");
+                return false; 
+            }
+        }
+    
+        if(pwd != pwd2){
+            jQuery('#error_pwd2').text("password not same!");
+            return false;
+        }
+    }else{
+        if(!pwd){
+        }else{
+            if(lpwd<6){
+                jQuery('#error_pwd').text("password is to short, min 6 character");
+                return false; 
+            }
+        }
+    
+        if(!pwd2){
+        }else{
+            if(lpwd2<6){
+                jQuery('#error_pwd2').text("password is to short, min 6 character");
+                return false; 
+            }
+        }
+    
+        if(pwd != pwd2){
+            jQuery('#error_pwd2').text("password not same!");
+            return false;
+        }
+    }
+    
     if(!destination){
         jQuery('#error_destination').text("can't be empty");
         return false;
@@ -111,11 +191,11 @@ function management_hotel_cek_detail(){
 }
 
 function searching_data(){
-        send_form(document.search_form,'_admin/hotel/searching_form','#site-content');
+    send_form(document.search_form,'_admin/hotel/searching_form','#site-content');
 }
 
 function searching_data_member_profit(){
-        send_form(document.search_form,'_admin/hotel/searching_form_member_profit','#site-content');
+    send_form(document.search_form,'_admin/hotel/searching_form_member_profit','#site-content');
 }
 function add_form_new_destination(){
     jQuery('#add_new_data').text("<form onsubmit=\"save_form_inputan();\" name=\"form_inputan_destination\"><table><tr><td colspan=\"2\" height=\"10px\" id=\"error_message\"></td></tr><td>Put new destination here</td> <td><input type=\"text\" value=\"\" name=\"destination\" id=\"destination\"></td><td><input type=\"button\" value=\"Save\" class=\"button\" onclick=\"save_form_inputan()\"></td><td><input type=\"button\" value=\"Cancel\" class=\"button\" onclick=\"cancel_form_inputan()\"></td></tr><tr><td colspan=\"2\" height=\"20px\"></td></tr></table></form>");

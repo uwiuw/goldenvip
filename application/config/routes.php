@@ -96,7 +96,11 @@ $route['_admin/searching_form'] = 'panel/main/searching_form';
 $route['_admin/tour_travel/member_profit'] = 'panel/tour_travel';
 $route['_admin/tour_travel/vip_rate'] = 'panel/tour_travel/vip_rate';
 $route['_admin/tour_travel/travel_rate'] = 'panel/tour_travel/travel_rate';
-#$route['_admin/tour_travel/tour_travel_admin'] = 'panel/tour_travel/tour_travel_admin';
+$route['_admin/tour_travel/tour_travel_admin'] = 'panel/tour_travel/tour_travel_admin';
+$route['_admin/tour_travel/add_new_data_admin'] = 'panel/tour_travel/add_new_data_admin';
+$route['_admin/tour_travel/save_agen_tour'] = 'panel/tour_travel/save_agen_tour';
+$route['_admin/tour_travel/update_agen_tour'] = 'panel/tour_travel/update_agen_tour';
+
 $route['_admin/tour_travel/update_rate'] = 'panel/tour_travel/update_rate';
 $route['_admin/tour_travel/selected_profit_member'] = 'panel/tour_travel/select_profit_member';
 $route['_admin/tour_travel/paid_booking'] = 'panel/tour_travel/paid_booking';
@@ -127,6 +131,12 @@ $route['_admin/hotel/saving_destination'] = 'panel/admin_hotel/saving_destinatio
 $route['_admin/hotel/update_destination'] = 'panel/admin_hotel/update_destination';
 $route['_admin/hotel/saving_area_in_detail'] = 'panel/admin_hotel/saving_area_in_detail';
 $route['_admin/hotel/update_area_in_detail'] = 'panel/admin_hotel/update_area_in_detail';
+
+$route['_admin/mail-settings'] = 'panel/mail_settings';
+$route['_admin/mail_settings/simpan_alamat_email'] = 'panel/mail_settings/simpan_alamat_email';
+
+$route['_admin/account'] = 'panel/account';
+$route['_admin/saving_account'] = 'panel/account/saving_account';
 
 # member area
 $route['member'] = 'member/main';

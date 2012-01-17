@@ -45,6 +45,10 @@
             <td>Agen</td>
             <td><?php echo $agen; ?></td>
         </tr>
+        <tr>
+            <td>Published rate</td>
+            <td><?php echo $harga; ?> USD</td>
+        </tr>
         <tr class="even">
             <td>Retail Rate</td>
             <td><input type="text" value="<?php echo $retail_rate; ?>" onkeypress="validate(event)" name="retail_rate" id="retail_rate">&nbsp;&nbsp;Just Number</td>

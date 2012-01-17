@@ -343,7 +343,7 @@
             else:
                 $limit=$limit+$nilai;
             endif;
-            
+            $uid_agen = $this->session->userdata('id_agen');
             $data['title'] = "MyGoldenVIP &raquo; Update Report";
             $data['page']= "last_schedule";
             $data['nav']='last_sch';
@@ -364,7 +364,8 @@
                     where
                     a.package = b.uid and
                     b.destination = c.uid and
-                    c.pid = d.uid
+                    c.pid = d.uid and
+                    b.agen = '".$uid_agen."'
                     order by a.time_sch desc";
             $data['last_sch_travel'] = $this->Mix->read_more_rows_by_sql($sql);
             
@@ -385,7 +386,8 @@
                     where
                     a.package = b.uid and
                     b.destination = c.uid and
-                    c.pid = d.uid
+                    c.pid = d.uid and
+                    b.agen = '".$uid_agen."'
                     order by a.time_sch desc";
             $data['last_sch_vip'] = $this->Mix->read_more_rows_by_sql($sql);
             
@@ -492,7 +494,9 @@
             $data['retail_rate'] = $this->input->post('retail_rate');
             $data['hidden'] = 0;
             $data['deskripsi']=$this->input->post('description');
-            $data['itienary'] = $this->input->post('filename');
+            if($this->input->post('filename')):
+                $data['itienary'] = $this->input->post('filename');
+            endif;
             $pack = $this->input->post('mygoldenvippackage');
             if($pack == 1)
             {

@@ -30,9 +30,10 @@
             id = 'ul#adminmenu li#'+id;
             jQuery(id).removeClass('wp-menu-close');
             jQuery(id).addClass('wp-menu-open');
+            clear_txt();
         });
     });
-    var site = '<?php echo site_url(); ?>';
-    var image = "<?php echo base_url(); ?>asset/images/loading.gif";
+        var site = '<?php echo site_url(); ?>';
+        var image = "<?php echo base_url(); ?>asset/images/loading.gif";
 </script>
 

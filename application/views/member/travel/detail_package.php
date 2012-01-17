@@ -66,10 +66,12 @@
                                                                 <option value="null" selected="selected">0</option>
                                                                 <?php for ($i = 1; $i <= ($row['qty'] - $row['booking']); $i++) { ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                                                <?php }
+                                                                <?php
+                                                                }
                                                             } else {
                                                                 echo "<option value='1'>1</option>";
-                                                            } ?>
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </td>
                                                     <td class="maxPeople" style="color: red; font-size: 16px; font-weight: bold;"><?php echo $row['retail_rate']; ?></td>
@@ -88,7 +90,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="maxPeople" colspan="6" id="download">
-                                                    <?php if ($row['file']): ?>
+                                                    <?php if ($row['file']): echo $row['file'] ?>
                                                         <a target="_blank" title="Download Itienary" class="download" href="<?php echo base_url() . "upload/itienary/" . $row['id_agen'] . "/" . $row['itienary']; ?>">*Download Itienary</a>
     <?php endif; ?>
                                                 </td>
