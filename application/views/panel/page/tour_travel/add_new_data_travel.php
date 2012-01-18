@@ -19,6 +19,13 @@
             <td id="error_destination"></td>
         </tr>
         <tr>
+            <td>Point </td>
+            <td>
+                <input id="point" type="text" name="point" value="<?php echo $point; ?>"  />
+            </td>
+            <td id="error_point"></td>
+        </tr>
+        <tr>
             <td>Tour & Travel Package </td>
             <td><?php $id = "id='package' "; echo form_dropdown('package',$package,$pid,$id); ?></td>
             <td id="error_package"></td>

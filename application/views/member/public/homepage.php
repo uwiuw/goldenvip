@@ -102,7 +102,7 @@
                         <img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/<?php echo $d['simbol'] ?>" style="vertical-align:middle; margin-left:20px;" />
 
                         <?php
-                        $sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '" . $this->session->userdata('member') . "' and hidden = '0'";
+                        $sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '" . $this->session->userdata('member') . "' and hidden = '0' and paid ='0'";
                         $point = $this->Mix->read_rows_by_sql($sql);
                         ?>
                     <div style="float:right; margin-top:-55px; margin-bottom:10px; margin-right:10px;">

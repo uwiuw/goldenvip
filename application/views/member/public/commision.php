@@ -226,7 +226,7 @@
                                                 <td><?php echo $row['qty']; ?></td>
                                                 <td><?php $night = diffDay($row['check_in'], $row['check_out']);
                                     echo $night; ?></td>
-                                                <td><?php $rate = $row['retail'] - $row['golden_rate'];
+                                                <td><?php $rate = $row['rate'] - $row['GVIP_Rate'];
                                             echo "IDR " . number_format($rate); ?></td>
                                                 <td><strong><?php
                                             if ($row['payed'] == '1') {

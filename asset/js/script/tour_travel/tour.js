@@ -1,16 +1,26 @@
 jQuery(function(){
-        jQuery("#myTable").tablesorter();
-        jQuery('#myTable tbody tr:odd').addClass('odd');
-        pagination();
+    jQuery("#myTable").tablesorter();
+    jQuery('#myTable tbody tr:odd').addClass('odd');
+    pagination();
 });
 
 function tour_travel_cek_form(){
     jQuery('#error_destination').text('');
     destination = jQuery('#destination').val();
+    point = jQuery('#point').val();
     read_data = jQuery('#read_data').val();
     if(!destination){
         jQuery('#error_destination').text("Can't be empty");
         return false;
+    }
+    if(!point){
+        jQuery('#error_point').text("Can't be empty");
+        return false;
+    }else{
+        if(isNaN(point)){
+            jQuery('#error_point').text("is not a number");
+            return false;
+        }
     }
     if(read_data=='new'){
         send_form(document.form_new_tour_destination,'_admin/tour_travel/saving_new_destination',"#info-saving");

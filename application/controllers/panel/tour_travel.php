@@ -336,7 +336,8 @@ class Tour_travel extends CI_Controller {
                 a.pid,
                 a.hidden,
                 a.destination,
-                b.package
+                b.package,
+                a.point
                 from
                 tx_rwmembermlm_destination a,
                 tx_rwmembermlm_package b
@@ -387,11 +388,13 @@ class Tour_travel extends CI_Controller {
             $data['destination'] = $edit['destination'];
             $data['pid'] = $edit['pid'];
             $data['uid'] = $edit['uid'];
+            $data['point'] = $edit['point'];
         endif;
         $sql = "select 
                 a.pid as uid,
                 a.hidden,
                 a.destination,
+                a.point,
                 b.package
                 from
                 tx_rwmembermlm_destination a,
@@ -416,6 +419,7 @@ class Tour_travel extends CI_Controller {
             echo "Destination Already Exixts";
         else:
             $data['destination'] = $destination;
+            $data['point'] = $this->input->post('point');
             $data['pid'] = $this->input->post('package');
 //            debug_data($data);
             $this->Mix->add_with_array($data, 'tx_rwmembermlm_destination');
@@ -427,6 +431,7 @@ class Tour_travel extends CI_Controller {
         is_admin();
         $val = $this->input->post('read_data');
         $data['destination'] = $this->input->post('destination');
+        $data['point'] = $this->input->post('point');
         $data['pid'] = $this->input->post('package');
 //        debug_data($data);
         $this->Mix->update_record('uid', $val, $data, "tx_rwmembermlm_destination");
@@ -462,6 +467,7 @@ class Tour_travel extends CI_Controller {
                 a.pid,
                 a.hidden,
                 a.destination,
+                a.point,
                 b.package
                 from
                 tx_rwmembermlm_destination a,

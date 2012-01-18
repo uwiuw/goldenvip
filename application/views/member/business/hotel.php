@@ -62,7 +62,7 @@
 															<div>Max</div>
 														</th>
 														<th class="maxPersons">
-															<div>Published Rates (USD)</div>
+															<div>Published Rates (IDR)</div>
 														</th>
 														<th class="roomAvailability">
 															<div>Available</div>

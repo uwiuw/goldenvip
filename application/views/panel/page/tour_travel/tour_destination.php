@@ -7,9 +7,7 @@
     <table width="100%">
         <tr align="right">
             <td id ="reload_data" align="left"></td>
-            <td class="no-color">Search By Name Here : </td>
-            <td width="10%" class="no-color"><input type="text" name="search" /></td>
-            <td width="5%" class="no-color"><input type="button" name="find" value="Find" onclick="searching_data()" class="button" /></td>
+            
         </tr>
     </table>
 </form>
@@ -26,6 +24,9 @@
                 </th>
                 <th width="16%">
                     <a href="#">Package</a>
+                </th>
+                <th width="16%">
+                    <a href="#">Point</a>
                 </th>
                 <th width="8%">
                     <a href="#">Action</a>
@@ -48,6 +49,9 @@
                         </td>
                         <td>
                             <?php echo $row['package']; ?>
+                        </td>
+                        <td>
+                            <?php echo $row['point']; ?>
                         </td>
                         <td>
                             <?php if ($row['hidden'] == '0'): ?>

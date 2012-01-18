@@ -98,8 +98,9 @@ class Admin_hotel extends CI_Controller {
                 a.uid_member = b.uid and
                 a.uid_room = c.uid and
                 c.uid_hotel = d.uid and 
-                a.payed = 0
-                order by a.name_reservation limit 0,$limit";
+                a.payed = 0 and
+                a.check_in < curdate()
+                order by a.uid asc limit 0,$limit";
         $data['d_member_profit'] = $this->Mix->read_more_rows_by_sql($sql);
 
 //        with out limit
@@ -122,7 +123,8 @@ class Admin_hotel extends CI_Controller {
                 a.uid_member = b.uid and
                 a.uid_room = c.uid and
                 c.uid_hotel = d.uid and 
-                a.payed = 0
+                a.payed = 0 and
+                a.check_in < curdate()
                 order by a.name_reservation";
         $jumlah_data = $this->Mix->read_more_rows_by_sql($sql2);
 
@@ -681,6 +683,9 @@ class Admin_hotel extends CI_Controller {
                        });
                     </script>
             ";
+        $update_point['hidden'] = '0';
+        $tb = "tx_rwmembermlm_pointrewards";
+        $this->Mix->update_record('uid_trx_hotel', $uid, $update_point, $tb);
         echo "Data has been update";
     }
 

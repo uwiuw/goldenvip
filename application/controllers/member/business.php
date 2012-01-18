@@ -113,7 +113,10 @@ class Business extends CI_Controller {
         $night = diffDay($d1['check_in'], $d2['check_out']);
 
         $data['qty'] = $this->input->post('jumlah');
-        $data['rate'] = $data['qty'] * $profit * $night;
+        $retail_rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room','retail_rate',$this->input->post('uid_room'),'uid');
+        $rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room','rate',$this->input->post('uid_room'),'uid');
+        $data['rate'] = $data['qty'] * $retail_rate['retail_rate'] * $night;
+        $data['gvip_rate'] = $data['qty'] * $rate['rate'] * $night;
         $data['email'] = $e['email'];
         $data['uid_room'] = $this->input->post('uid_room');
 
@@ -194,16 +197,16 @@ class Business extends CI_Controller {
         $check = $this->Mix->read_row_by_two('uid_member', $uid_member['uid'], 'hidden', '1', 'tx_rwadminhotel_booking');
         if (!empty($check)) {
             $sql = "select c.username, d.firstname,a.qty, a.check_in, a.rate as retail_rate, a.check_out, a.uid_room, a.uid_member, b.category_name from 
-					tx_rwadminhotel_booking a,
-					tx_rwadminhotel_cat_room b,
-					fe_users c,
-					tx_rwmembermlm_member d
-					where 
-					a.uid_room = b.uid and
-					c.uid = a.uid_member and
-					d.username = c.username and
-					a.uid_member = '" . $uid_member['uid'] . "' and 
-					a.hidden = '1'";
+                    tx_rwadminhotel_booking a,
+                    tx_rwadminhotel_cat_room b,
+                    fe_users c,
+                    tx_rwmembermlm_member d
+                    where 
+                    a.uid_room = b.uid and
+                    c.uid = a.uid_member and
+                    d.username = c.username and
+                    a.uid_member = '" . $uid_member['uid'] . "' and 
+                    a.hidden = '1'";
             /* data halaman */
             if ($check['reservation'] != 'Compliment') {
                 $data['compliment_only'] = '0';
@@ -226,12 +229,12 @@ class Business extends CI_Controller {
 
     function get_pdf($uid = 0) {
         $sql = "select a.uid as id_booking, a.name_reservation as name, a.reservation as status ,
-				a.check_in, a.check_out,c.hotel_name,b.category_name as room, 
-				a.qty, a.rate as price, a.payment 
-				from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid 
-				INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
-				where a.deleted=0
-				and a.uid='" . $uid . "'";
+                a.check_in, a.check_out,c.hotel_name,b.category_name as room, 
+                a.qty, a.rate as price, a.payment , a.rate - a.gvip_rate as profit
+                from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b ON a.uid_room=b.uid 
+                INNER JOIN tx_rwadminhotel_hotel c ON b.uid_hotel=c.uid 
+                where a.deleted=0
+                and a.uid='" . $uid . "'";
         $pdf = $this->Mix->read_rows_by_sql($sql);
 
         $this->fpdf->FPDF('P', 'cm', 'LEGAL');
@@ -273,24 +276,54 @@ class Business extends CI_Controller {
         $this->fpdf->text(6.6, $y + 3.5, ': ' . $pdf['qty']);
 
         $this->fpdf->text(1.6, $y + 4, 'Price ');
-        $this->fpdf->text(6.6, $y + 4, ': IDR ' . $pdf['price']);
+        $price = number_format($pdf['price']);
+        $this->fpdf->text(6.6, $y + 4, ': IDR ' . $price);
+        
+        $this->fpdf->text(1.6, $y + 4.5, 'Profit');
+        $profit = number_format($pdf['profit']);
+        $this->fpdf->text(6.6, $y + 4.5, ': IDR ' . $profit);
 
-        $this->fpdf->text(1.6, $y + 4.5, 'Payment ');
-        $this->fpdf->text(6.6, $y + 4.5, ': ' . $pdf['payment']);
+        $this->fpdf->text(1.6, $y + 5, 'Payment ');
+        $this->fpdf->text(6.6, $y + 5, ': ' . $pdf['payment']);
 
         $this->fpdf->Output();
     }
-    
-    function set_point_rewards(){
+
+    function set_point_rewards() {
 //        cek kondisional dari
 //        berapa lama ia menginap
 //        di hotel bintang apa ia menginap
+        is_member();
+        $u = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'username', $this->session->userdata('member'), 'uid');
+        $d = $this->Mix->read_row_ret_field_by_value('fe_users', 'uid', $u['username'], 'username');
+        $sql = "select
+                a.uid,
+                a.uid_room,
+                b.category_name,
+                c.star,
+                c.hotel_name,
+                a.qty,
+                case c.star when 4 then '5' else '10' end as point,
+                datediff(a.check_out,a.check_in) as lama,
+                a.qty * case c.star when 4 then '5' else '10' end * datediff(a.check_out,a.check_in) as totalpoint
+                from
+                tx_rwadminhotel_booking a,
+                tx_rwadminhotel_cat_room b,
+                tx_rwadminhotel_hotel c
+                where
+                a.uid_room = b.uid and
+                b.uid_hotel = c.uid and
+                a.uid_member = '".$d['uid']."'
+                order by a.uid asc";
+        $data = $this->Mix->read_rows_by_sql($sql);
+        
         $pb['pid'] = '67';
         $pb['crdate'] = date('Y-m-d');
         $pb['uid_member'] = $this->session->userdata('member');
         $pb['uid_downline'] = '';
-        $pb['point'] = 5;
-        $pb['hidden'] = '0';
+        $pb['point'] = $data['totalpoint'];
+        $pb['hidden'] = '1';
+        $pb['uid_trx_hotel'] = $data['uid'];
         $this->Mix->add_with_array($pb, 'tx_rwmembermlm_pointrewards');
     }
 
