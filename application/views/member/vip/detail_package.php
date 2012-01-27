@@ -59,17 +59,19 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="roomtype"><?php echo $row['time_sch']; ?></td>
-                                                    <td class="maxPeople"><?php echo $row['qty'] - $row['booking']; ?></td>
+                                                    <td class="maxPeople"><?php echo $row['totaly']; ?></td>
                                                     <td class="maxPeople">
                                                         <select id="jumlah_book<?php echo $row['uid']; ?>" name="qty" class="qty">
-                                                            <?php if ($reservation == 'Personal Account') { ?>
+                                                            <?php if ($reservation == 'Personal Account' || $reservation == 'Redeem') { ?>
                                                                 <option value="null" selected="selected">0</option>
-                                                                <?php for ($i = 1; $i <= ($row['qty'] - $row['booking']); $i++) { ?>
+                                                                <?php for ($i = 1; $i <= $total; $i++) { ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                                                <?php }
+                                                                <?php
+                                                                }
                                                             } else {
                                                                 echo "<option value='1'>1</option>";
-                                                            } ?>
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </td>
                                                     <td class="maxPeople" style="color: red; font-size: 16px; font-weight: bold;"><?php echo $row['retail_rate']; ?></td>
@@ -89,7 +91,7 @@
                                             <tr>
                                                 <td class="maxPeople" colspan="6" id="download">
                                                     <?php if ($row['file']): ?>
-                                                        <a target="_blank" title="Download Application Form" class="download" href="http://new.goldenvip.com/upload/document/application_form.doc">*Download Application Form</a>
+                                                        <a target="_blank" title="Download Itienary" class="download" href="<?php echo base_url() . "upload/itienary/" . $row['id_agen'] . "/" . $row['itienary']; ?>">*Download Itienary</a>
     <?php endif; ?>
                                                 </td>
                                             </tr>

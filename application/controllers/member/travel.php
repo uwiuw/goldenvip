@@ -22,6 +22,57 @@ class Travel extends CI_Controller {
             $data['set_compliment'] = '1';
         }
 
+        /*
+         * cek apakah ada point yang bisa ditukar ?
+         */
+        $sql = "select 
+                sum(a.point)- b.pointrewards as total_point
+                from 
+                tx_rwmembermlm_pointrewards a,
+                tx_rwmembermlm_member b
+                where 
+                a.uid_member = b.uid and
+                a.uid_member = '" . $this->session->userdata('member') . "' and 
+                a.hidden = '0' and 
+                a.paid ='0'";
+        $point = $this->Mix->read_rows_by_sql($sql);
+
+        if ($point['total_point'] == '0'):
+            /*
+             * update data point di table point rewards paid jadi 1
+             * dan update member.pointrewards jadi 0
+             * artinya reset kembali point rewards
+             */
+            $sql = "UPDATE 
+                    tx_rwmembermlm_pointrewards
+                    SET 
+                    paid=1 
+                    where 
+                    hidden = 0 and
+                    uid_member = '" . $this->session->userdata('member') . "'";
+            $this->db->query($sql);
+            $sql2 = "UPDATE 
+                    tx_rwmembermlm_member
+                    SET 
+                    pointrewards=0 
+                    where 
+                    uid = '" . $this->session->userdata('member') . "'";
+            $this->db->query($sql2);
+        endif;
+
+        $sql = "select 
+                *
+                from
+                tx_rwmembermlm_destination
+                where
+                pid = 2 and
+                point < '" . $point['total_point'] . "'";
+        $cek_point = $this->Mix->read_rows_by_sql($sql);
+        if (!empty($cek_point)):
+            $data['opt_point'] = "<option value='Redeem'>Redeem Point</option>";
+        else:
+            $data['opt_point'] = '';
+        endif;
         $this->load->vars($data);
         $this->load->view('member/template');
     }
@@ -55,11 +106,39 @@ class Travel extends CI_Controller {
                 $insert['payment'] = $this->input->post('select_payment');
             }
         }
-        if ($this->input->post('payment') == 'Credit Card') {
-            $insert['credit_card_number'] = 0;
-            $insert['nameOnCC'] = 0;
-            $insert['validThru'] = 0;
-            $insert['signature'] = 0;
+        if ($this->input->post('select_payment') == 'Redeem') {
+            /*
+             * cek apakah terdapat point rewards yang bisa ditukar dengan destination yang dituju?
+             * pointreward.point-member.point > destination.point
+             */
+            $sql = "select 
+                    sum(a.point)- b.pointrewards as total_point
+                    from 
+                    tx_rwmembermlm_pointrewards a,
+                    tx_rwmembermlm_member b
+                    where 
+                    a.uid_member = b.uid and
+                    a.uid_member = '" . $this->session->userdata('member') . "' and 
+                    a.hidden = '0' and 
+                    a.paid ='0'";
+            $point = $this->Mix->read_rows_by_sql($sql);
+
+            $sql = "select 
+                *
+                from
+                tx_rwmembermlm_destination
+                where
+                pid = 2 and
+                point < '" . $point['total_point'] . "'";
+
+            $cek_point = $this->Mix->read_rows_by_sql($sql);
+            if (!empty($cek_point)):
+                $insert['reservation'] = $this->input->post('select_payment');
+                $insert['payment'] = 'Cash';
+            else:
+                echo "Sorry no point found to redeem, ";
+                redirect('member/reservation/travel', 'refresh');
+            endif;
         }
         $this->Mix->add_with_array($insert, 'tx_rwagen_travelbooking');
         /* end */
@@ -121,7 +200,7 @@ class Travel extends CI_Controller {
 
     function set_for_myself() {
         is_member();
-        
+
         $check = $this->Mix->read_row_by_two('uid_member', $this->session->userdata('member'), 'hidden', '1', 'tx_rwagen_travelbooking');
         if (!empty($check)) {
             $up['hidden'] = '0';
@@ -262,11 +341,10 @@ class Travel extends CI_Controller {
             }
 
             $up['hidden'] = '0';
-           
-            $this->Mix->update_record('uid', $get_data_sch['uid_booking'], $up, 'tx_rwagen_travelbooking');
-            
-            $this->get_pdf($check['uid'], $check['qty']);
 
+            $this->Mix->update_record('uid', $get_data_sch['uid_booking'], $up, 'tx_rwagen_travelbooking');
+
+            $this->get_pdf($check['uid'], $check['qty']);
         } else {
             redirect('member/reservation/travel', 'refresh');
         }
@@ -274,6 +352,7 @@ class Travel extends CI_Controller {
 
     function get_pdf($uid = 0, $limit = 0) {
         is_member();
+
         $sql = "select 
                         a.uid, 
                         a.uid_sch, 
@@ -310,7 +389,9 @@ class Travel extends CI_Controller {
             $pdf['id_booking'] = $row['uid'];
             $pdf['agen'] = $row['agen'];
         }
-
+        if ($pdf['status'] == 'Redeem'):
+            $this->kurangi_point($pdf['id_booking']);
+        endif;
         //debug_data($pdf);
 
         $this->fpdf->FPDF('P', 'cm', 'A4');
@@ -325,9 +406,12 @@ class Travel extends CI_Controller {
 
         $this->fpdf->text(1.6, 4, 'ID Booking ');
         $this->fpdf->text(6.6, 4, ': ' . $pdf['id_booking']);
+        
+        $this->fpdf->text(1.6, 4.5, 'Invoice No ');
+        $this->fpdf->text(6.6, 4.5, ': 1000' . $pdf['id_booking']);
 
-        $y = 4.5;
-        $this->fpdf->text(1.6, 4.5, 'Name Reservation ');
+        $y = 5;
+        $this->fpdf->text(1.6, 5, 'Name Reservation ');
 
         $price = 0;
         foreach ($data as $row) {
@@ -386,6 +470,29 @@ class Travel extends CI_Controller {
                 $this->Mix->update_record('uid', $uidnum, $up, 'tx_rwagen_travelbooking');
             }
         }
+    }
+
+    function kurangi_point($id_booking) {
+        $sql = "update 
+                tx_rwmembermlm_member 
+                set 
+                pointrewards = (
+                        select
+                        e.point * b.qty as point
+                        from 
+                        tx_rwagen_travelbooking b,
+                        tx_rwagen_travelschedule c,
+                        tx_rwagen_travelpackage d,
+                        tx_rwmembermlm_destination e
+                        where
+                        b.uid_sch = c.uid and
+                        c.package = d.uid and
+                        d.destination = e.uid and
+                        b.uid = $id_booking
+                ) + pointrewards
+                where 
+                uid = '" . $this->session->userdata('member') . "'";
+        $this->db->query($sql);
     }
 
 }

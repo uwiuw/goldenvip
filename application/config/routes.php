@@ -61,11 +61,12 @@ $route['products/travel'] = "main/travel";
 $route['products/participant-hotels'] = "main/participant_hotels";
 $route['products/catalogue-of-point-rewards'] = "main/catalogue_of_point_rewards";
 
-
-
 $route['news'] = "main/news";
 $route['faq'] = "main/faq";
 $route['contact-us'] = "main/contact";
+$route['member/forget-password'] = 'main/forget_password';
+$route['member/reset-password'] = 'main/reset_password';
+$route['member/reset-password-true'] = 'main/reset_password_true';
 
 # admin gvip area
 $route['_admin/login'] = 'panel/main/login';
@@ -89,7 +90,7 @@ $route['_admin/update_data_member'] = 'panel/main/update_data_member';
 # mlm extra
 #$route['_admin/new_distributor'] = 'panel/main/new_distributor';
 $route['_admin/member_migration'] = 'panel/main/member_migration';
-#$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
+$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
 $route['_admin/searching_form'] = 'panel/main/searching_form';
 
 # tour and travel
@@ -148,6 +149,8 @@ $route['member/lock_profile']='member/main/lock_profile';
 $route['member/open_profile']='member/main/open_profile';
 $route['member/profile'] = 'member/main/profile';
 $route['member/profile/update-profile'] = 'member/main/update_profile';
+$route['member/profile/forget-secondary-password'] = 'member/main/forget_password';
+$route['member/profile/reset-password'] = 'member/main/reset_password';
 $route['member/report/genealogy'] = 'member/main/report';
 $route['member/report/commision'] = 'member/main/commision';
 $route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';

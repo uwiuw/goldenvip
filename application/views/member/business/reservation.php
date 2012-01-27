@@ -223,14 +223,14 @@ if ($get_compliment['compliment'] == '1' || $set_compliment == '0') {
                                     <div class="clr"></div>
                                 </div>
 
-                                <div id="lipo">By clicking "yes", <a href="lippo-insurance/">Your Travel Lippo Insurance</a> is authomatically activated</div>
+                                <div id="lipo">By clicking "yes", <a href="lippo-insurance/">Your Mega Insurance</a> is automatically activated</div>
 
                                 <div id="payment">
                                     <label class="desc">Payment :</label>
                                     <select id="select_payment" name="select_payment" onchange="get_select_payment();">
                                         <option selected="selected" value="0">-- Select Payment --</option>
                                         <option value="Cash">Cash</option>
-                                        <option value="Credit Card">Credit Card</option>
+                                       
                                     </select>
                                     <div class="clr"></div>
                                 </div>

@@ -151,6 +151,57 @@ class Main extends CI_Controller {
         $this->load->view('public/old/template');
     }
 
+    function forget_password() {
+        $data['title'] = "Golden VIP : Forget Password ";
+        $data['page'] = "forget-password";
+        $data['nav'] = "forget-password";
+        $data['template'] = base_url() . "asset/theme/mygoldenvip/";
+
+        $this->load->vars($data);
+        $this->load->view('public/old/template');
+    }
+
+    function reset_password_true() {
+        $data['title'] = "Golden VIP : Forget Password ";
+        $data['page'] = "reset-password-true";
+        $data['nav'] = "forget-password";
+        $data['template'] = base_url() . "asset/theme/mygoldenvip/";
+
+        $this->load->vars($data);
+        $this->load->view('public/old/template');
+    }
+
+    function reset_password() {
+        $this->load->helper('email');
+        $email = $this->input->post('username');
+        if (valid_email($email)):
+            $tb = 'tx_rwmembermlm_member';
+            $data_user = $this->Mix->read_row_by_one('email', $email, $tb);
+            debug_data($data_user);
+            if (!empty($data_user)):
+                $data = array($email);
+                $len = 6;
+                $base = 'ABCDEFGHJKLMNPQRSTWXYZ2345789';
+                $max = strlen($base) - 1;
+                $pwd = '';
+                mt_srand((double) microtime() * 100);
+                while (strlen($pwd) < $len) {
+                    $pwd .= $base{mt_rand(0, $max)};
+                }
+                $msg = "New Password : $pwd";
+                $update_pwd['password'] = md5($pwd);
+                $this->Mix->update_record('email',$email, $update_pwd, $tb);
+                kirim_kirim_email($data, 'Reset Password', $msg);
+                redirect('member/reset-password-true');
+            else:
+                redirect('member/reset-password-true');
+            endif;
+        else:
+            $this->session->set_flashdata('info', 'Invalid email, please try again');
+            redirect('member/forget-password', 'refresh');
+        endif;
+    }
+
     function post_data($data) { # fungsi untuk redirect url path
         switch ($data) {
             case "del_dist": # site_url/segment_2/del_dist/segment_4
@@ -408,28 +459,66 @@ class Main extends CI_Controller {
     }
 
     function reservation_vip() {
+        is_member();
         $uid = $this->uri->segment('4');
-        $sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
-                d.destination, b.deskripsi, b.retail_rate
-                ,b.itienary,
-                case b.itienary when b.itienary <> ''  then 1 else 0 end as file,
-                c.uid as id_agen
+        // uid dari jadwal
+        $sql = "select 
+                a.uid, 
+                a.time_sch, 
+                a.qty, 
+                a.booking, 
+                d.point,
+                b.nama, 
+                c.name as travel, 
+                d.destination, 
+                b.deskripsi, 
+                b.retail_rate,
+                b.itienary,
+                case b.itienary when b.itienary = '0' then 1 else 0 end as file,
+                c.uid as id_agen,
+                a.qty - a.booking as totaly
                 from tx_rwagen_vipschedule a, 
                 tx_rwagen_vippackage b, 
                 tx_rwagen_agen c, 
-                tx_rwmembermlm_destination d 
+                tx_rwmembermlm_destination d
+
                 where 
-                a.package = b.uid
-                and
-                b.agen = c.uid
-                and
-                b.destination = d.uid
-                and a.uid = '$uid'
-                            ";
+                a.package = b.uid and
+                b.agen = c.uid and
+                b.destination = d.uid and 
+                a.uid = '$uid'
+                ";
+        $pack = $this->Mix->read_more_rows_by_sql($sql);
+
+        $sql = "select 
+                sum(a.point)- b.pointrewards as total_point
+                from 
+                tx_rwmembermlm_pointrewards a,
+                tx_rwmembermlm_member b
+                where 
+                a.uid_member = b.uid and
+                a.uid_member = '" . $this->session->userdata('member') . "' and 
+                a.hidden = '0' and 
+                a.paid ='0'";
+        $tpoint = $this->Mix->read_rows_by_sql($sql);
+
         $sql1 = "select reservation from tx_rwagen_vipbooking where uid_member = '" . $this->session->userdata('member') . "' and hidden = '1' ";
         $res = $this->Mix->read_rows_by_sql($sql1);
+
         $data['reservation'] = $res['reservation'];
-        $data['pack'] = $this->Mix->read_more_rows_by_sql($sql);
+        $data['pack'] = $pack;
+
+        $data['pack'] = $pack;
+
+        if ($res['reservation'] == 'Compliment'):
+            $data['total'] = 1;
+        elseif ($res['reservation'] == 'Personal Account'):
+            $data['total'] = $pack[0]['totaly'];
+        else:
+            $total = $tpoint['total_point'] / $pack[0]['point'];
+            $data['total'] = (int) $total;
+        endif;
+
         $data['title'] = "Member | Home Page | Reservation | Detail Package";
         $data['page'] = "vip/detail_package";
         $data['nav'] = "reservation";
@@ -439,31 +528,69 @@ class Main extends CI_Controller {
     }
 
     function reservation_travel() {
+        is_member();
         $uid = $this->uri->segment('4');
-        $sql = "select a.uid, a.time_sch, a.qty, a.booking, b.nama, c.name as travel, 
-                d.destination, b.deskripsi, b.retail_rate
-                ,b.itienary,
-                case b.itienary when b.itienary <> '' then 1 else 0 end as file,
-                c.uid as id_agen
+        // uid dari jadwal
+        $sql = "select 
+                a.uid, 
+                a.time_sch, 
+                a.qty, 
+                a.booking, 
+                d.point,
+                b.nama, 
+                c.name as travel, 
+                d.destination, 
+                b.deskripsi, 
+                b.retail_rate,
+                b.itienary,
+                case b.itienary when b.itienary = '0' then 1 else 0 end as file,
+                c.uid as id_agen,
+                a.qty - a.booking as totaly
                 from tx_rwagen_travelschedule a, 
                 tx_rwagen_travelpackage b, 
                 tx_rwagen_agen c, 
-                tx_rwmembermlm_destination d 
+                tx_rwmembermlm_destination d
 
                 where 
-                a.package = b.uid
-                and
-                b.agen = c.uid
-                and
-                b.destination = d.uid
-                and a.uid = '$uid'
+                a.package = b.uid and
+                b.agen = c.uid and
+                b.destination = d.uid and 
+                a.uid = '$uid'
                 ";
+        $pack = $this->Mix->read_more_rows_by_sql($sql);
+
+        $sql = "select 
+                sum(a.point)- b.pointrewards as total_point
+                from 
+                tx_rwmembermlm_pointrewards a,
+                tx_rwmembermlm_member b
+                where 
+                a.uid_member = b.uid and
+                a.uid_member = '" . $this->session->userdata('member') . "' and 
+                a.hidden = '0' and 
+                a.paid ='0'";
+        $tpoint = $this->Mix->read_rows_by_sql($sql);
+
         $sql1 = "select reservation from tx_rwagen_travelbooking where uid_member = '" . $this->session->userdata('member') . "' and hidden = '1' ";
-
-
         $res = $this->Mix->read_rows_by_sql($sql1);
+        /*
+         * yang diperlukan adalah point dari destination 
+         * dan point terakhir yang dimiliki member
+         */
+
         $data['reservation'] = $res['reservation'];
-        $data['pack'] = $this->Mix->read_more_rows_by_sql($sql);
+
+        $data['pack'] = $pack;
+
+        if ($res['reservation'] == 'Compliment'):
+            $data['total'] = 1;
+        elseif ($res['reservation'] == 'Personal Account'):
+            $data['total'] = $pack[0]['totaly'];
+        else:
+            $total = $tpoint['total_point'] / $pack[0]['point'];
+            $data['total'] = (int) $total;
+        endif;
+
         $data['title'] = "Member | Home Page | Reservation | Detail Package";
         $data['page'] = "travel/detail_package";
         $data['nav'] = "reservation";

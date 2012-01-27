@@ -44,7 +44,7 @@
             <div class="box-detail-hotel">
                 <div class="tx-rwadminhotelmlm-pi1">
 
-                    <div id="jumlah_hotel">Available <?php echo count($sch); ?> Schedule</div>
+                    <div id="jumlah_hotel">Available : &nbsp;&nbsp;&nbsp;&nbsp; <?php echo count($sch); ?> Travel Package</div>
                     <table cellpadding="8" align="center">
                         <tbody>
                             <tr>

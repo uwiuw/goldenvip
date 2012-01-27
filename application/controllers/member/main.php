@@ -9,13 +9,39 @@ class Main extends CI_Controller {
 
     function homepage() { # home
         is_member(); # Hanya member yang boleh memasuki halaman ini
-        $sql = "select count(uid) as req from tx_rwmembermlm_member where sponsor = '" . $this->session->userdata('member') . "' and valid = '0' and hidden = '1'";
+        $sql2 = "select count(uid) as req 
+                from 
+                tx_rwmembermlm_member 
+                where 
+                sponsor = '" . $this->session->userdata('member') . "' and 
+                valid = '0' and 
+                hidden = '1'";
         $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'package', $this->session->userdata('member'), 'uid');
         if ($d['package'] == 0) {
             $d['package'] = '1';
         }
+        $sql = "select 
+                sum(point) as point_rewards 
+                from 
+                tx_rwmembermlm_pointrewards 
+                where 
+                uid_member = '" . $this->session->userdata('member') . "' and 
+                hidden = '0' and 
+                paid ='0'";
+        $sql = "select 
+                sum(a.point)- b.pointrewards as point_rewards 
+                from 
+                tx_rwmembermlm_pointrewards a,
+                tx_rwmembermlm_member b
+                where 
+                a.uid_member = b.uid and
+                a.uid_member = '" . $this->session->userdata('member') . "' and 
+                a.hidden = '0' and 
+                a.paid ='0'";
+        $data['point'] = $this->Mix->read_rows_by_sql($sql);
+
         $data['p'] = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_package', 'package', $d['package'], 'uid');
-        $data['mreq'] = $this->Mix->read_rows_by_sql($sql);
+        $data['mreq'] = $this->Mix->read_rows_by_sql($sql2);
         $data['title'] = "Member | Home Page";
         $data['page'] = "public/homepage";
         $data['nav'] = "homepage";
@@ -61,6 +87,49 @@ class Main extends CI_Controller {
         $this->load->vars($data);
         $this->load->view('member/template');
     }
+    
+    function forget_password(){
+        is_member();
+        $data['title'] = "Member | Home Page";
+        $data['page'] = "public/forget_password";
+        $data['nav'] = "profile";
+        $data['template'] = base_url() . "asset/theme/mygoldenvip/";
+        $this->load->vars($data);
+        $this->load->view('member/template');
+    }
+    
+    function reset_password(){
+        $this->load->helper('email');
+        $email = $this->input->post('log');
+        if (valid_email($email)):
+            $tb = 'fe_users';
+            $data_user = $this->Mix->read_row_by_one('email', $email, $tb);
+            debug_data($data_user);
+            if (!empty($data_user)):
+                $data = array($email);
+                $len = 6;
+                $base = 'ABCDEFGHJKLMNPQRSTWXYZ2345789';
+                $max = strlen($base) - 1;
+                $pwd = '';
+                mt_srand((double) microtime() * 100);
+                while (strlen($pwd) < $len) {
+                    $pwd .= $base{mt_rand(0, $max)};
+                }
+                $msg = "New 2nd Password : $pwd";
+                $update_pwd['password'] = md5($pwd);
+                $this->Mix->update_record('email',$email, $update_pwd, $tb);
+                kirim_kirim_email($data, 'Reset Password', $msg);
+                $this->session->set_flashdata('info', 'Please check your email to receive your password');
+                redirect('member/profile/forget-secondary-password');
+            else:
+                $this->session->set_flashdata('info', 'Please check your email to receive your password');
+                redirect('member/profile/forget-secondary-password');
+            endif;
+        else:
+            $this->session->set_flashdata('info', 'Invalid email, please try again');
+            redirect('member/profile/forget-secondary-password');
+        endif;
+    }
 
     function open_profile() {
         is_member();
@@ -102,87 +171,119 @@ class Main extends CI_Controller {
 
     function commision() {
         is_member(); # Hanya member yang boleh memasuki halaman ini
-        $sql = "SELECT a.crdate, a.bonus, b.username as downline_name, a.paid, b.package, c.package
-				FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b, tx_rwmembermlm_package c
-				WHERE a.deleted = 0 and a.hidden = 0 and 
-				a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid
-				and c.uid = b.package
-				ORDER BY a.uid ASC";
+        $sql = "SELECT 
+                a.crdate, 
+                a.bonus, 
+                b.username as downline_name, 
+                case a.paid when 1 then 'paid' else 'unpaid' end as paid,
+                b.package, 
+                c.package
+                FROM 
+                tx_rwmembermlm_historyfastbonus a, 
+                tx_rwmembermlm_member b, 
+                tx_rwmembermlm_package c
+                WHERE 
+                a.deleted = 0 and 
+                a.hidden = 0 and 
+                a.uid_member='" . $this->session->userdata('member') . "' and 
+                a.pid='67' and 
+                a.uid_downline=b.uid and 
+                c.uid = b.package
+                ORDER BY a.uid ASC";
         $data['fast_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
 
         $sql = "SELECT  sum(a.bonus) as fast
-				FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b
-				WHERE a.deleted = 0 and a.hidden = 0 and a.paid = 0 
-				and a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid";
+                FROM tx_rwmembermlm_historyfastbonus a, tx_rwmembermlm_member b
+                WHERE a.deleted = 0 and a.hidden = 0 and a.paid = 0 
+                and a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid";
 
         $data['total_fastbonus'] = $this->Mix->read_rows_by_sql($sql);
 
-        $sql = "SELECT *  
-				FROM tx_rwmembermlm_historycycle
-				WHERE deleted = 0 and hidden = 0 and 
-					  uid_member='" . $this->session->userdata('member') . "' and pid='67' 
-				ORDER BY uid DESC                    
-				";
+        $sql = "SELECT 
+                *,
+                case paid when 1 then 'paid' else 'unpaid' end as payed
+                FROM 
+                tx_rwmembermlm_historycycle
+                WHERE 
+                deleted = 0 and 
+                hidden = 0 and 
+                uid_member='" . $this->session->userdata('member') . "' and 
+                pid='67' 
+                ORDER BY uid DESC ";
         $data['cycle_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
 
         $sql = "SELECT sum(bonus) as cycle 
-				FROM tx_rwmembermlm_historycycle
-				WHERE deleted = 0 and hidden = 0 and paid = 0
-					  and uid_member='" . $this->session->userdata('member') . "' and pid='67' 
-				ORDER BY uid DESC";
+                FROM tx_rwmembermlm_historycycle
+                WHERE deleted = 0 and hidden = 0 and paid = 0
+                and uid_member='" . $this->session->userdata('member') . "' and pid='67' 
+                ORDER BY uid DESC";
         $data['total_cycle'] = $this->Mix->read_rows_by_sql($sql);
 
-        $sql = "SELECT *  
-				FROM tx_rwmembermlm_historymatchingbonus
-				WHERE deleted = 0 and hidden = 0 and 
-					  uid_member='" . $this->session->userdata('member') . "' and pid='67'
-				ORDER BY uid DESC                    
-				";
+        $sql = "SELECT 
+                *,
+                case paid when 1 then 'paid' else 'unpaid' end as payed
+                FROM 
+                tx_rwmembermlm_historymatchingbonus
+                WHERE 
+                deleted = 0 and 
+                hidden = 0 and 
+                uid_member='" . $this->session->userdata('member') . "' and 
+                pid='67'
+                ORDER BY uid DESC ";
         $data['matching_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
 
         $sql = "SELECT sum(bonus)as matching  
-				FROM tx_rwmembermlm_historymatchingbonus
-				WHERE deleted = 0 and hidden = 0 and paid = 0 
-					  and uid_member='" . $this->session->userdata('member') . "' and pid='67'
-				ORDER BY uid DESC                    
+                FROM tx_rwmembermlm_historymatchingbonus
+                WHERE deleted = 0 and hidden = 0 and paid = 0 
+                and uid_member='" . $this->session->userdata('member') . "' and pid='67'
+                ORDER BY uid DESC                    
 				";
         $data['total_matching'] = $this->Mix->read_rows_by_sql($sql);
 
-        $sql = "SELECT a.*, b.username as downline_name 
-				FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
-				WHERE a.deleted = 0 and a.hidden = 0 and 
-					  a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid
-				ORDER BY a.uid DESC                    
-				";
+        $sql = "SELECT 
+                a.*, 
+                b.username as downline_name,
+                case paid when 1 then 'paid' else 'unpaid' end as payed
+                FROM 
+                tx_rwmembermlm_historymentorbonus a, 
+                tx_rwmembermlm_member b
+                WHERE 
+                a.deleted = 0 and 
+                a.hidden = 0 and 
+                a.uid_member='" . $this->session->userdata('member') . "' and 
+                a.pid='67' and 
+                a.uid_downline=b.uid
+                ORDER BY a.uid DESC                    
+                ";
         #$sql = "select * from tx_rwmembermlm_historymentorbonus where uid_member = ";
         $data['mentor_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
 
         $sql = "SELECT sum(a.bonus) as mentor
-				FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
-				WHERE a.deleted = 0 and a.hidden = 0 and paid = 0 and
-					  a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid                    
-				";
+                FROM tx_rwmembermlm_historymentorbonus a, tx_rwmembermlm_member b
+                WHERE a.deleted = 0 and a.hidden = 0 and paid = 0 and
+                a.uid_member='" . $this->session->userdata('member') . "' and a.pid='67' and a.uid_downline=b.uid                    
+                ";
         #$sql = "select * from tx_rwmembermlm_historymentorbonus where uid_member = ";
         $data['total_mentor'] = $this->Mix->read_rows_by_sql($sql);
 
         # untuk retail bonus akan disesuaikan dengan paket yg diambil member, pending untuk sementara. 
         $u = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'username', $this->session->userdata('member'), 'uid');
         $d = $this->Mix->read_row_ret_field_by_value('fe_users', 'uid', $u['username'], 'username');
-        if (isset($d['uid'])) {
+        $data['retail_bonus'] = array();
+        if (isset($d['uid'])) :
             $sql = "select a.*,
-                b.category_name,
-                b.retail_rate as retail,
-                b.rate as golden_rate,
-                c.hotel_name 
-                from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b 
-                ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c 
-                ON b.uid_hotel=c.uid 
-                where a.deleted=0 and a.PA=1 and a.uid_member='" . $d['uid'] . "' order by a.uid desc";
-        } else {
-            $sql = "select uid from fe_users where username = '" . $u['username'] . "'";
-        }
-        $data['retail_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+                    b.category_name,
+                    b.retail_rate as retail,
+                    b.rate as golden_rate,
+                    c.hotel_name,
+                    case a.payed when 1 then 'paid' else 'unpaid' end as payed
+                    from tx_rwadminhotel_booking a INNER JOIN tx_rwadminhotel_cat_room b 
+                    ON a.uid_room=b.uid INNER JOIN tx_rwadminhotel_hotel c 
+                    ON b.uid_hotel=c.uid 
+                    where a.deleted=0 and a.PA=1 and a.uid_member='" . $d['uid'] . "' order by a.uid desc";
+            $data['retail_bonus'] = $this->Mix->read_more_rows_by_sql($sql);
+        endif;
+
         $sql = "select a.reservation, 
                 c.nama as package, 
                 d.name as agen,  
@@ -216,7 +317,7 @@ class Main extends CI_Controller {
                 order by a.uid desc
                 limit 0,10";
         $data['retail_travel'] = $this->Mix->read_more_rows_by_sql($sql);
-        
+
         $sql = "select a.reservation, 
                 c.nama as package, 
                 d.name as agen,  
@@ -330,6 +431,7 @@ class Main extends CI_Controller {
 
                 $fedata['username'] = $this->input->post('username');
                 $fedata['password'] = md5($this->input->post('password1'));
+                $fedata['email'] = $this->input->post('email');
 
                 $data['country'] = $this->input->post('country');
                 $data['mobilephone'] = $this->input->post('countrycode2') . "-" . $this->input->post('mobilephone');
@@ -456,6 +558,7 @@ class Main extends CI_Controller {
 
             $fedata['username'] = $this->input->post('username');
             $fedata['password'] = md5($this->input->post('password1'));
+            $fedata['email'] = $this->input->post('email');
 
             $data['country'] = $this->input->post('country');
             $data['mobilephone'] = $this->input->post('countrycode2') . "-" . $this->input->post('mobilephone');
