@@ -3,7 +3,7 @@
 <p>&Colon; Hotel &gg; Member Profit</p>
 
 <h2 style="display:none;"><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
-<form name="search_form" onsubmit="searching_data_member_profit();">
+<form name="search_form" onsubmit="searching_data_member_profit(); return false;">
 	<table width="100%">
     	<tr align="right">
             <td id ="reload_data" align="left"></td>

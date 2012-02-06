@@ -33,24 +33,24 @@
 $get_compliment = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'compliment', $this->session->userdata('member'), 'uid');
 if ($get_compliment['compliment'] == '1' || $set_compliment == '0') {
     ?>
-                            jQuery('#compliment_true').hide();
+                jQuery('#compliment_true').hide();
     <?php
 } else {
     ?>
-                             jQuery('#payment').hide();
+                jQuery('#payment').hide();
 <?php } ?>
-                        jQuery('#lipo').hide(); 
-                        jQuery('#cash_payment').hide();
-                    });
+        jQuery('#lipo').hide(); 
+        jQuery('#cash_payment').hide();
+    });
 	
-                    function get_time_sch()
-                    {
+    function get_time_sch()
+    {
 <?php
 $data = $this->Mix->read_rows_by_one('pid', $pid, 'tx_rwmembermlm_destination');
 foreach ($data as $row) {
     ?>
-                            if(document.getElementById('packagetravel').value == <?php echo $row['uid']; ?>)
-                            {
+                if(document.getElementById('packagetravel').value == <?php echo $row['uid']; ?>)
+                {
     <?php
     # ambil waktu penerbangan jika ada.
     # uid dari destination yang akan menjadi tolak ukurnya
@@ -59,19 +59,19 @@ foreach ($data as $row) {
     # ambil time_sch dari schedule
     $day = date('Y-m-d');
     $sql = "select a.time_sch, a.package, b.uid, 
-                                                                b.destination, c.uid
-                                                                from
-                                                                tx_rwagen_travelschedule a, 
-                                                                tx_rwagen_travelpackage b,
-                                                                tx_rwmembermlm_destination c
-                                                                where a.package = b.uid
-                                                                and b.destination = c.uid
-                                                                and a.hidden = 0
-                                                                and a.time_sch > '$day'
-                                                                and b.destination = '" . $row['uid'] . "'";
+            b.destination, c.uid
+            from
+            tx_rwagen_travelschedule a, 
+            tx_rwagen_travelpackage b,
+            tx_rwmembermlm_destination c
+            where a.package = b.uid
+            and b.destination = c.uid
+            and a.hidden = 0
+            and a.time_sch > '$day'
+            and b.destination = '" . $row['uid'] . "'";
     $sch = $this->Mix->read_more_rows_by_sql($sql);
     ?>
-                                                        schDays = [
+                    schDays = [
     <?php
     $i = 1;
     foreach ($sch as $list) {
@@ -81,107 +81,107 @@ foreach ($data as $row) {
         $i++;
     }
     ?>
-                                                                ];
-                                                            }
+                    ];
+                }
     <?
 }
 ?>
 		
-                    }
+    }
 	
-                    // data nantinya akan mengambil dari basis data
+    // data nantinya akan mengambil dari basis data
 	
 	
-                    function scheduleDays(date) {
-                        for (i = 0; i < schDays.length; i++) {
-                            if (date.getMonth() == schDays[i][0] - 1
-                                && date.getDate() == schDays[i][1]) {
-                                return [true, schDays[i][2] + '_day'];
-                            }
-                        }
-                        return [false, ''];
-                    }
-                    function check_destination_detail()
-                    {
-                        uid = jQuery('#destination').val();
-                        load('member/post_data/get_destnation_detail/'+uid,'#destination_detail');
-                    }
+    function scheduleDays(date) {
+        for (i = 0; i < schDays.length; i++) {
+            if (date.getMonth() == schDays[i][0] - 1
+                && date.getDate() == schDays[i][1]) {
+                return [true, schDays[i][2] + '_day'];
+            }
+        }
+        return [false, ''];
+    }
+    function check_destination_detail()
+    {
+        uid = jQuery('#destination').val();
+        load('member/post_data/get_destnation_detail/'+uid,'#destination_detail');
+    }
 	
-                    function get_complimentary()
-                    {
-                        if(jQuery('#compliment').val()=='Compliment')
-                        {
-                            jQuery('#lipo').fadeIn();
-                            jQuery('#payment').hide();
-                            jQuery('#cash_payment').hide();
-                        }
-                        else if(jQuery('#compliment').val()=='Personal Account')
-                        {
-                            jQuery('#lipo').hide();
-                            jQuery('#payment').fadeIn();
-                            jQuery('#cash_payment').hide();
-                        }
-                        else
-                        {
-                            jQuery('#lipo').hide();
-                            jQuery('#payment').hide();
-                            jQuery('#cash_payment').hide();
-                        }
-                    }
-                    function get_select_payment()
-                    {
+    function get_complimentary()
+    {
+        if(jQuery('#compliment').val()=='Compliment')
+        {
+            jQuery('#lipo').fadeIn();
+            jQuery('#payment').hide();
+            jQuery('#cash_payment').hide();
+        }
+        else if(jQuery('#compliment').val()=='Personal Account')
+        {
+            jQuery('#lipo').hide();
+            jQuery('#payment').fadeIn();
+            jQuery('#cash_payment').hide();
+        }
+        else
+        {
+            jQuery('#lipo').hide();
+            jQuery('#payment').hide();
+            jQuery('#cash_payment').hide();
+        }
+    }
+    function get_select_payment()
+    {
 		
-                        if(jQuery('#select_payment').val == '1')
-                        {
-                            jQuery('#cash_payment').fadeIn();
-                        }
-                        else if(jQuery('#select_payment').val == '2')
-                        {
-                            jQuery('#cash_payment').fadeIn();
-                        }
-                        else
-                        {
-                            jQuery('#cash_payment').fadeIn();
-                        }
-                    }
-                    function check()
+        if(jQuery('#select_payment').val == '1')
+        {
+            jQuery('#cash_payment').fadeIn();
+        }
+        else if(jQuery('#select_payment').val == '2')
+        {
+            jQuery('#cash_payment').fadeIn();
+        }
+        else
+        {
+            jQuery('#cash_payment').fadeIn();
+        }
+    }
+    function check()
+    {
+        if(document.getElementById('packagetravel').value == '')
+        {
+            document.getElementById("error").innerHTML = "You must fill all data";
+        }
+        else{
+            if(document.getElementById('datepicker').value == '')
+            {
+                document.getElementById("error").innerHTML = "You must fill all data";
+            }
+            else
+            {
+                if(document.getElementById('compliment').value == 'Personal Account' || document.getElementById('compliment').value == '0')
+                {
+                    if(document.getElementById('select_payment').value == 0)
                     {
-                        if(document.getElementById('packagetravel').value == '')
-                        {
-                            document.getElementById("error").innerHTML = "You must fill all data";
-                        }
-                        else{
-                            if(document.getElementById('datepicker').value == '')
-                            {
-                                document.getElementById("error").innerHTML = "You must fill all data";
-                            }
-                            else
-                            {
-                                if(document.getElementById('compliment').value == 'Personal Account' || document.getElementById('compliment').value == '0')
-                                {
-                                    if(document.getElementById('select_payment').value == 0)
-                                    {
-                                        document.getElementById("error").innerHTML = "You must fill all data";
-                                    }
-                                    else
-                                    {
-                                        document.forms["reservasi"].submit();
-                                    }
-                                }
-                                else
-                                {
-                                    if(document.getElementById('compliment').value == 'Compliment')
-                                    {
-                                        document.forms["reservasi"].submit();
-                                    }
-                                    else
-                                    {
-                                        document.getElementById("error").innerHTML = "You must fill all data";
-                                    }
-                                }
-                            }
-                        }
+                        document.getElementById("error").innerHTML = "You must fill all data";
                     }
+                    else
+                    {
+                        document.forms["reservasi"].submit();
+                    }
+                }
+                else
+                {
+                    if(document.getElementById('compliment').value == 'Compliment')
+                    {
+                        document.forms["reservasi"].submit();
+                    }
+                    else
+                    {
+                        document.getElementById("error").innerHTML = "You must fill all data";
+                    }
+                }
+            }
+        }
+    }
 </script>
 <style type="text/css">
     .line-visit-hotel {
@@ -204,7 +204,8 @@ foreach ($data as $row) {
         float: left;
     }
     .line-visit-hotel li img {width:120px; height:120px;}
-    .sch_day{background:#F00;}
+    .sch_day{background:#000;}
+    .sch_day:hover{background:#f00;}
 </style>
 <div class="container">
     <div id="box-reservation">
@@ -221,10 +222,10 @@ foreach ($data as $row) {
 
                                 <div>
                                     <label class="desc">Destination :</label>
-<?php
-$id = "id = 'packagetravel' onchange = 'get_time_sch();'";
-echo form_dropdown('destination', $destination, '0', $id);
-?>
+                                    <?php
+                                    $id = "id = 'packagetravel' onchange = 'get_time_sch();'";
+                                    echo form_dropdown('destination', $destination, '0', $id);
+                                    ?>
                                     <div class="clr"></div>
                                 </div>
 
@@ -244,24 +245,25 @@ echo form_dropdown('destination', $destination, '0', $id);
                                     <div class="clr"></div>
                                 </div>
 
-                                <div id="lipo">By clicking "yes", <a href="lippo-insurance/">Your Travel Lippo Insurance</a> is authomatically activated</div>
+                                <div id="lipo">By clicking "yes", <a href="#">Your Mega Insurance</a> is authomatically activated</div>
 
                                 <div id="payment">
                                     <label class="desc">Payment :</label>
                                     <select id="select_payment" name="select_payment" onchange="get_select_payment();">
                                         <option selected="selected" value="0">-- Select Payment --</option>
                                         <option value="Cash">Cash</option>
-                                        <option value="Credit Card">Credit Card</option>
+                                        <?php echo $opt_point; ?>
                                     </select>
                                     <div class="clr"></div>
                                 </div>
 
                                 <div id="cash_payment">
-                                    <div id="lipo">
+                                    <div id="lipo" style="font-size: 14px; margin-top: 15px; margin-right: 10px;">
                                         <center>
-                                            <font color="#FF0000">
+                                            <font color="#FF0000" style="line-height: 20px;">
 
-                                            IDR payment should be transfered to PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN VIP) at 
+                                            IDR payment should be transfered to :<br /> PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN VIP)
+                                            <br /><br />
                                             <b style="font-size:larger;">Permata Bank Acct. No. 070.137.5068</b>
                                             </font>
                                         </center>
@@ -309,8 +311,8 @@ echo form_dropdown('destination', $destination, '0', $id);
                                     </tr>
                                 </thead>
                                 <tbody>
-<?php
-$sql = "select a.reservation, 
+                                    <?php
+                                    $sql = "select a.reservation, 
         c.nama as package, 
         d.name as agen,  
         e.time_sch, 
@@ -341,15 +343,15 @@ $sql = "select a.reservation,
         group by a.uid_sch
         order by a.uid desc
         limit 0,10 ";
-$retail = $this->Mix->read_more_rows_by_sql($sql);
-if (!empty($retail)) {
-    $i = 1;
-    foreach ($retail as $row) {
-        ?>
+                                    $retail = $this->Mix->read_more_rows_by_sql($sql);
+                                    if (!empty($retail)) {
+                                        $i = 1;
+                                        foreach ($retail as $row) {
+                                            ?>
                                             <tr class="even">
                                                 <td><?php echo $i; ?>.</td>
                                                 <td><?php echo $row['destination']; ?></td>
-                                                <td><?php echo $row['tiket']." ticket ".$row['package']; ?></td>
+                                                <td><?php echo $row['tiket'] . " ticket " . $row['package']; ?></td>
                                                 <td><?php echo $row['time_sch']; ?></td>
                                             </tr>
                                             <?php

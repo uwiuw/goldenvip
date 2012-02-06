@@ -19,7 +19,7 @@
 						<h1></h1>
 						<div class="box-detail-hotel"><a id="c122"></a>
 							<div class="tx-rwadminhotelmlm-pi1">
-								<link rel="stylesheet" href="http://wpver.com/typo3conf/ext/rw_admin_hotel_mlm/css/reservation.css" type="text/css">
+								<link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/reservation.css" type="text/css">
 								<script type="text/javascript">
 
 function check(){

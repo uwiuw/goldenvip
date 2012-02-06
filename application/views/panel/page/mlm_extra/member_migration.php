@@ -17,7 +17,7 @@
 </script>
 
 <h2 style="display:none;"><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
-<form name="search_form_migration" onsubmit="searching_data();">
+<form name="search_form_migration" onsubmit="searching_data_migration(); return false;" methot='post'>
 	<table width="100%">
     	<tr align="right">
         	<td class="no-color" align="left"></td>
@@ -76,17 +76,12 @@
                 <a href="javascript:void();" onclick="
                     if(confirm('Are you sure want to migration this data : <?php echo $row['firstname']." ".$row['lastname']; ?> to Travel Package ?'))
                         load('_admin/member_set_new_grade?id=<?php echo $row['uid'];?>&pack=13','#info-saving');
-                        jQuery('#info-saving').addClass('update-nag');
-                        jQuery('#t-<?php echo $row['uid']; ?>').hide();
                     endif;" 
                     id="t-<?php echo $row['uid']; ?>">Travel | </a>
                 <?php endif; endif; ?>
                 <a href="javascript:void();" onclick="
                     if(confirm('Are you sure want to migration this data : <?php echo $row['firstname']." ".$row['lastname']; ?> to VIP Package ?'))
                         load('_admin/member_set_new_grade?id=<?php echo $row['uid'];?>&pack=12','#info-saving');
-                        jQuery('#info-saving').addClass('update-nag');
-                        jQuery('#t-<?php echo $row['uid']; ?>').hide();
-                        jQuery('#v-<?php echo $row['uid']; ?>').hide();
                     endif;"
                     id="v-<?php echo $row['uid']; ?>">VIP</a>
             </td>

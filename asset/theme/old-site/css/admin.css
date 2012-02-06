@@ -37,8 +37,8 @@ body{font-family:Arial, Helvetica, sans-serif;}
     display: none;
 }
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 div.clear { clear:both; font-size:1px; }
@@ -191,7 +191,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
 
 
 .tx-rwadminhotelmlm-pi1 img {
-    
+
 }
 .tx-rwadminhotelmlm-pi1 #pack #box{
     float:left;
@@ -203,7 +203,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
 }
 .tx-rwadminhotelmlm-pi1 #pack #box .jml{
     width: 100%;
- }
+}
 
 /*** Halaman Back Office ***/
 
@@ -244,12 +244,12 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     background: #fff3c5;
     width:960px;
     margin-bottom: 6px;    
-    
-	border: 1px solid #fff3c5;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	behavior: url(css/border-radius.htc);
+
+    border: 1px solid #fff3c5;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    behavior: url(css/border-radius.htc);
 }
 #home-office #home-top{  
     background: none repeat scroll 0 0 #D1BC8E;
@@ -262,11 +262,11 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     margin-top: -1px;
     padding: 0 23px 5px 15px;
     width: 922px;
-    
-	-moz-border-radius: 25px 25px 0 0;
-	-webkit-border-radius: 25px 25px 0 0;
-	border-radius: 25px 25px 0 0;
-	behavior: url(css/border-radius.htc);
+
+    -moz-border-radius: 25px 25px 0 0;
+    -webkit-border-radius: 25px 25px 0 0;
+    border-radius: 25px 25px 0 0;
+    behavior: url(css/border-radius.htc);
 }
 #home-office #home-top h2{
     float: left;
@@ -323,15 +323,15 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     font-family: Trebuchet Ms,tahoma,arial;
     margin-bottom: 5px;
     width: 469px;
-    
+
     -moz-border-radius: 20px 20px 0 0;
-	-webkit-border-radius: 20px 20px 0 0;
-	border-radius: 20px 20px 0 0;
-	behavior: url(css/border-radius.htc);
+    -webkit-border-radius: 20px 20px 0 0;
+    border-radius: 20px 20px 0 0;
+    behavior: url(css/border-radius.htc);
 }
 
 #page-backoffice .heading h2{
-    
+
     font-size: 15px;
     height: 30px;
     padding-left: 45px;
@@ -371,11 +371,11 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     margin-bottom: 15px;
     min-height: 200px;
     width: 470px;
-    
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	behavior: url(css/border-radius.htc);
+
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    behavior: url(css/border-radius.htc);
 }
 
 #page-backoffice .left-backoffice, #page-backoffice .right-backoffice{
@@ -391,12 +391,12 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     width:960px;
     margin-bottom: 6px; 
     margin-left: 45px;   
-    
-	border: 1px solid #fff3c5;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	behavior: url(css/border-radius.htc);
+
+    border: 1px solid #fff3c5;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    behavior: url(css/border-radius.htc);
 }
 #detail-backoffice .backoffice-top{  
     background: none repeat scroll 0 0 #D1BC8E;
@@ -409,11 +409,11 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     margin-top: -1px;
     padding: 0 23px 5px 15px;
     width: 922px;
-    
-	-moz-border-radius: 25px 25px 0 0;
-	-webkit-border-radius: 25px 25px 0 0;
-	border-radius: 25px 25px 0 0;
-	behavior: url(css/border-radius.htc);
+
+    -moz-border-radius: 25px 25px 0 0;
+    -webkit-border-radius: 25px 25px 0 0;
+    border-radius: 25px 25px 0 0;
+    behavior: url(css/border-radius.htc);
 }
 #detail-backoffice .backoffice-top h2{
 
@@ -451,11 +451,11 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     padding: 0 23px 5px 15px;
     width: 1001px;
     height:40px;
-    
-	-moz-border-radius: 25px 25px 0 0;
-	-webkit-border-radius: 25px 25px 0 0;
-	border-radius: 25px 25px 0 0;
-	behavior: url(css/border-radius.htc);
+
+    -moz-border-radius: 25px 25px 0 0;
+    -webkit-border-radius: 25px 25px 0 0;
+    border-radius: 25px 25px 0 0;
+    behavior: url(css/border-radius.htc);
 }
 #box-reservation #reservation-top h2{
     padding-top: 10px;
@@ -475,28 +475,28 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     
 }
 */
-    
+
 #reservation{
     background: #fff3c5;
     width: 100%;
     min-height: 582px;
     border: 1px solid #fff3c5;
-	-moz-border-radius: 0 0 25px 25px;
-	-webkit-border-radius: 0 0 25px 25px;
-	border-radius: 0 0 25px 25px;
-	behavior: url(css/border-radius.htc);
+    -moz-border-radius: 0 0 25px 25px;
+    -webkit-border-radius: 0 0 25px 25px;
+    border-radius: 0 0 25px 25px;
+    behavior: url(css/border-radius.htc);
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-#reservation{
-    background: #fff3c5;
-    width: 100%;
-    min-height: 635px;
-    border: 1px solid #fff3c5;
-	-moz-border-radius: 0 0 25px 25px;
-	-webkit-border-radius: 0 0 25px 25px;
-	border-radius: 0 0 25px 25px;
-	behavior: url(css/border-radius.htc);
-}
+    #reservation{
+        background: #fff3c5;
+        width: 100%;
+        min-height: 635px;
+        border: 1px solid #fff3c5;
+        -moz-border-radius: 0 0 25px 25px;
+        -webkit-border-radius: 0 0 25px 25px;
+        border-radius: 0 0 25px 25px;
+        behavior: url(css/border-radius.htc);
+    }
 }
 #reservation #left, #reservation #right{
     float: left;
@@ -514,7 +514,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     border-left: 1px solid #a6a6a6;
     border-right: 1px solid #a6a6a6;
     width: 308px;
-    
+
 }
 #left .res-middle input.search-res{
     background: url(../images/button_search_res.png) no-repeat;
@@ -545,7 +545,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
 #right{
     margin-left: 136px;
     margin-top : 20px;
-    
+
 }
 #right h2{
     color: #121212;
@@ -563,7 +563,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     /*background: url(../images/line_visit_hotel.png) no-repeat bottom;*/
     width: 557px;
     margin-bottom: 25px;
- }
+}
 #right .visit-hotel .box-visit-left{
     background: url(../images/res_cont_left.png) no-repeat;
     height: 107px;
@@ -572,12 +572,12 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     display: none;
 }
 #right .visit-hotel .box-visit-middle{
-    
+
     height: 105px;
     min-width: 540px;
     float: left;
     /*border-bottom: 1px solid #a6a6a6;*/
-   
+
 }
 #right .visit-hotel .box-visit-right{
     background: url(../images/res_cont_right.png) no-repeat;
@@ -710,7 +710,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     color: #484848;
     font-family: arial, tahoma;
     font-size: 13px;
-   
+
 }
 .info .rate{
     margin: 5px 5px 0;
@@ -736,7 +736,7 @@ h2.deal-cities{ background: url(../images/deal_cities.png) no-repeat; height: 30
     color: #0059A3;
     font-size: 10px;
     padding-left: 5px;
-    
+
     width: 180px;
 }
 .box-detail table{
@@ -774,13 +774,13 @@ td div{
     border-bottom-style: dotted;
 }
 .tx-rwadminhotelmlm-pi1 .rate-hotel .button-price a{
-    
-    
+
+
     font-family: calibri, arial, tahoma;
     color: #ffffff;
     font-weight: bold;  
     padding-left:  25px;
-    
+
 }
 .tx-rwadminhotelmlm-pi1 .rate-hotel .button-price {
     background: url(../images/button_price.png) no-repeat;
@@ -795,85 +795,85 @@ td div{
 }
 #pagination{
     text-align: right;
-   
+
 }
 #pagination a{
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
--moz-border-radius-bottomleft:3px;
--moz-border-radius-bottomright:3px;
--moz-border-radius-topleft:3px;
--moz-border-radius-topright:3px;
-background-attachment:scroll;
-background-color:#FFFFFF;
-background-image:url(../images/page_gradient.jpg);
-background-position:0 100%;
-background-repeat:repeat-x;
-border-bottom-color:#D3D3D3;
-border-bottom-style:solid;
-border-bottom-width:1px;
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background-attachment:scroll;
+    background-color:#FFFFFF;
+    background-image:url(../images/page_gradient.jpg);
+    background-position:0 100%;
+    background-repeat:repeat-x;
+    border-bottom-color:#D3D3D3;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
 
-border-top-color:#D3D3D3;
-border-top-style:solid;
-border-top-width:1px;
+    border-top-color:#D3D3D3;
+    border-top-style:solid;
+    border-top-width:1px;
 
-border-left-color:#D3D3D3;
-border-left-style:solid;
-border-left-width:1px;
-border-right-color:#D3D3D3;
-border-right-style:solid;
-border-right-width:1px;
-color:#5E5E5E;
-font-size:11px;
-font-weight:normal;
-margin-bottom:0;
-margin-left:0;
-margin-right:2px;
-margin-top:0;
-padding-bottom:2px;
-padding-left:5px;
-padding-right:5px;
-padding-top:2px;
-text-decoration:none;
+    border-left-color:#D3D3D3;
+    border-left-style:solid;
+    border-left-width:1px;
+    border-right-color:#D3D3D3;
+    border-right-style:solid;
+    border-right-width:1px;
+    color:#5E5E5E;
+    font-size:11px;
+    font-weight:normal;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:2px;
+    margin-top:0;
+    padding-bottom:2px;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:2px;
+    text-decoration:none;
 }
 #pagination b{
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
--moz-border-radius-bottomleft:3px;
--moz-border-radius-bottomright:3px;
--moz-border-radius-topleft:3px;
--moz-border-radius-topright:3px;
-background-attachment:scroll;
-background-color:#FFFFFF;
-background-image:url(../images/page_gradient.jpg);
-background-position:0 100%;
-background-repeat:repeat-x;
-border-bottom-color:#D4BF92;
-border-bottom-style:solid;
-border-bottom-width:1px;
-border-left-color:#D4BF92;
-border-left-style:solid;
-border-left-width:1px;
-border-right-color:#D4BF92;
-border-right-style:solid;
-border-right-width:1px;
-border-top-color:#D4BF92;
-border-top-style:solid;
-border-top-width:1px;
-color:#D4BF92;
-font-size:11px;
-font-weight:bold;
-margin-bottom:0;
-margin-left:0;
-margin-right:2px;
-margin-top:0;
-padding-bottom:2px;
-padding-left:5px;
-padding-right:5px;
-padding-top:2px;
-text-decoration:none;
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background-attachment:scroll;
+    background-color:#FFFFFF;
+    background-image:url(../images/page_gradient.jpg);
+    background-position:0 100%;
+    background-repeat:repeat-x;
+    border-bottom-color:#D4BF92;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-left-color:#D4BF92;
+    border-left-style:solid;
+    border-left-width:1px;
+    border-right-color:#D4BF92;
+    border-right-style:solid;
+    border-right-width:1px;
+    border-top-color:#D4BF92;
+    border-top-style:solid;
+    border-top-width:1px;
+    color:#D4BF92;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:2px;
+    margin-top:0;
+    padding-bottom:2px;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:2px;
+    text-decoration:none;
 }
 #list_hotel{
     padding-bottom: 230px;
@@ -927,7 +927,7 @@ p .compliment{
     -moz-border-radius-topleft:10px;
     -moz-border-radius-topright:10px;
     background-color:red;
-    
+
     color:#FFFFFF;
     cursor:pointer;
     display:block;
@@ -937,21 +937,21 @@ p .compliment{
     padding:4px 30px;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-#maxotelRoomArea .button-price{
-    -moz-border-radius-bottomleft:10px;
-    -moz-border-radius-bottomright:10px;
-    -moz-border-radius-topleft:10px;
-    -moz-border-radius-topright:10px;
-    background-color:red;
-    
-    color:#FFFFFF;
-    cursor:pointer;
-    display:block;
-    font-size:16px;
-    font-weight:bold;
-    margin:17px 3px 15px 13px;
-    padding:4px 30px;
-} 
+    #maxotelRoomArea .button-price{
+        -moz-border-radius-bottomleft:10px;
+        -moz-border-radius-bottomright:10px;
+        -moz-border-radius-topleft:10px;
+        -moz-border-radius-topright:10px;
+        background-color:red;
+
+        color:#FFFFFF;
+        cursor:pointer;
+        display:block;
+        font-size:16px;
+        font-weight:bold;
+        margin:17px 3px 15px 13px;
+        padding:4px 30px;
+    } 
 }
 #reservation-top #home-top h2{
     -moz-background-clip:border;
@@ -962,6 +962,11 @@ p .compliment{
 }
 #download a{
     float: right;
+    color: red;
+    font-size: 18px;
+}
+#sertificate a{
+    float: left;
     color: red;
     font-size: 18px;
 }
@@ -978,7 +983,9 @@ p .compliment{
 }
 .gen-business{ background:url(../images/member/business.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px;}
 .gen-travel{ background:url(../images/member/travel.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px;}
-.gen-vip{ background:url(../images/member/vip.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px;}
+a.gen-travel{color:#fff; }
+.gen-vip{ background:url(../images/member/vip.png) no-repeat center; display:inline-table; width:120px; height:23px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:23px; margin-top:10px; color:#fff;}
+a.gen-vip{color:#fff;}
 div.clear-line{border-bottom:1px solid #FEC9A5;}
 #genelogy-cepat,#direct-sponsored,#info-binary{padding:10px;font-family:Arial, Helvetica, sans-serif; font-size:14px;}
 strong{font-size:12px;}
@@ -1077,7 +1084,7 @@ a.button, a.button:hover{text-decoration:none;}
 }
 #lipo {
     margin-left: 60px;
-	font-size:0.6em;
+    font-size:0.6em;
 }
 #lipo a {
     color: red;
@@ -1085,17 +1092,17 @@ a.button, a.button:hover{text-decoration:none;}
 
 #next {
     background: url("../images/reservation/next_res.png") no-repeat scroll 2px 50px transparent;
-	width:40px;
-	height:100%;
-	display:block;
-	cursor:pointer;
+    width:40px;
+    height:100%;
+    display:block;
+    cursor:pointer;
 }
 #prev {
     background: url("../images/reservation/prev_res.png") no-repeat scroll 2px 50px transparent;
     width:40px;
-	height:100%;
-	display:block;
-	cursor:pointer;
+    height:100%;
+    display:block;
+    cursor:pointer;
 }
 .shadow-right {
     background: url("../images/reservation/shadow_right.png") no-repeat scroll 0 0 transparent;
@@ -1103,8 +1110,8 @@ a.button, a.button:hover{text-decoration:none;}
     right: -8px;
     top: -5px;
     width: 15px;
-	display:block;
-	float:left;
+    display:block;
+    float:left;
 }
 .shadow-left {
     background: url("../images/reservation/shadow_left.png") no-repeat scroll 0 0 transparent;
@@ -1112,8 +1119,8 @@ a.button, a.button:hover{text-decoration:none;}
     left: -17px; 
     top: -5px;
     width: 15px;
-	display:block;
-	float:left;
+    display:block;
+    float:left;
 }
 
 .display-none{

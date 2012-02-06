@@ -9,7 +9,9 @@
                 <div id="show-message">
                     <div class="tx-rwmembermlm-pi1">
                         <div class="not_null">
-                            <a href="<?php echo site_url('member/list-member-request'); ?>"><?php echo $mreq['req']; ?> Members Request</a>
+                            <a href="<?php echo site_url('member/list-member-request'); ?>">
+                                <?php echo $mreq['req']; ?> Members Request
+                            </a>
                         </div>
                     </div>
                 </div>						
@@ -18,11 +20,11 @@
 
                 <p>
                     Welcome <b><?php echo $this->session->userdata('name'); ?></b>, 
-                    <?php if ($this->session->userdata('ucat') != '4') : ?>
-                        Our Main Regional Distributor of <b><?php
+                    <?php if ($this->session->userdata('ucat') != '4') : ?> Our Main Regional Distributor of <b> <?php
                     echo $this->session->userdata('regional');
                 endif;
-                    ?></b>. 
+                    ?>
+                    </b>. 
                     <br />
                     By clicking 
                     <a target="_blank" href="<?php echo site_url("member/post_data/join-now/" . $this->session->userdata('member')); ?>">
@@ -42,8 +44,19 @@
                         	  Conratulation on achieving your 6000 poin point rewards, you've entitle to have your 1 (one) complimentary of VIP Package.
                 </pre>
                 </p>
+                <div id="sertificate">
+                    <p>
+                        <a href="<?php echo base_url(); ?>member/download/sertificate" class="download" title="Download Sertificate" target="_blank">
+                            *Download Sertificate
+                        </a>
+                    </p>
+                </div>
                 <div id="download">
-                    <p><a href="<?php echo base_url(); ?>upload/document/application_form.doc" class="download" title="Download Application Form" target="_blank">*Download Application Form</a></p>
+                    <p>
+                        <a href="<?php echo base_url(); ?>upload/document/application_form.doc" class="download" title="Download Application Form" target="_blank">
+                            *Download Application Form
+                        </a>
+                    </p>
                 </div>
             </div>
         </div> 
@@ -100,16 +113,11 @@
                         <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'grade', $this->session->userdata('member'), 'uid'); ?>
                         <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_grade', 'simbol', $d['grade'], 'uid'); ?>
                         <img src="<?php echo base_url(); ?>/asset/theme/old-site/images/icon/<?php echo $d['simbol'] ?>" style="vertical-align:middle; margin-left:20px;" />
-
-                        <?php
-                        $sql = "select sum(point) as point_rewards from `tx_rwmembermlm_pointrewards` where uid_member = '" . $this->session->userdata('member') . "' and hidden = '0' and paid ='0'";
-                        $point = $this->Mix->read_rows_by_sql($sql);
-                        ?>
                     <div style="float:right; margin-top:-55px; margin-bottom:10px; margin-right:10px;">
                         <img src="<?php echo base_url(); ?>upload/pics/gift.png" style="vertical-align:middle;" />
                         <b>Point Rewards : <font color="red" ><?php echo $point['point_rewards']; ?></font></b>
                         <br />
-                        <a href="#fitur" rel="facebox">
+                        <a href="<?php echo site_url('member/reservation/travel'); ?>" rel="facebox">
                             <strong style="color: red; font-size: 12px; float:right;">click here to redeem points</strong>
                         </a> 
                     </div>
@@ -120,29 +128,61 @@
                     <p>
                     <table width="100%" border="0">
                         <tr>
-                            <td>Left Poin : <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'point_left', $this->session->userdata('member'), 'uid');
-                        echo "<b>" . $d['point_left'] . "</b>"; ?></td>
-                            <td>Right Point: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'point_right', $this->session->userdata('member'), 'uid');
-                                echo "<b>" . $d['point_right'] . "</b>"; ?></td>
+                            <td>
+                                Left Poin : 
+                                <?php
+                                $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'point_left', $this->session->userdata('member'), 'uid');
+                                echo "<b>" . $d['point_left'] . "</b>";
+                                ?>
+                            </td>
+                            <td>
+                                Right Point: 
+                                <?php
+                                $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'point_right', $this->session->userdata('member'), 'uid');
+                                echo "<b>" . $d['point_right'] . "</b>";
+                                ?>
+                            </td>
                         </tr>
                         <tr>
-                            <?php $d = getDirectSponsored($this->session->userdata('member'), '67'); ?>
-                            <td>Direct Sponsored - Left : <b><?php
-                            if (isset($d['kiri'])):
-                                echo count($d['kiri']);
-                            endif;
-                            ?></b></td>
-                            <td>Direct Sponsored - Right : <b><?php
+                            <?php
+                            $d = getDirectSponsored($this->session->userdata('member'), '67');
+                            ?>
+                            <td>
+                                Direct Sponsored - Left : 
+                                <b>
+                                    <?php
+                                    if (isset($d['kiri'])):
+                                        echo count($d['kiri']);
+                                    endif;
+                                    ?>
+                                </b>
+                            </td>
+                            <td>
+                                Direct Sponsored - Right : 
+                                <b>
+                                    <?php
                                     if (isset($d['kanan'])) :
                                         echo count($d['kanan']);
                                     endif;
-                            ?></b></td>
+                                    ?>
+                                </b>
+                            </td>
                         </tr>
                         <tr>
-                            <td>Commision: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'commission', $this->session->userdata('member'), 'uid');
-                                    echo "<b>$" . $d['commission'] . "</b>"; ?></td>
-                            <td>CV Point: <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'cv', $this->session->userdata('member'), 'uid');
-                                echo "<b>" . $d['cv'] . "</b>"; ?></td>
+                            <td>
+                                Commision: 
+                                <?php
+                                $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'commission', $this->session->userdata('member'), 'uid');
+                                echo "<b>$" . $d['commission'] . "</b>";
+                                ?>
+                            </td>
+                            <td>
+                                CV Point: 
+                                <?php
+                                $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'cv', $this->session->userdata('member'), 'uid');
+                                echo "<b>" . $d['cv'] . "</b>";
+                                ?>
+                            </td>
                         </tr>
 
                     </table>
@@ -172,14 +212,20 @@
                             <?php foreach ($direct_sponsor as $row) { ?>
                                 <tr>
                                     <td width="30%">
-                                        <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'username', $row['uid'], 'uid');
-                                        echo $d['username']; ?>
+                                        <?php
+                                        $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'username', $row['uid'], 'uid');
+                                        echo $d['username'];
+                                        ?>
                                     </td>
                                     <td>
-                                        <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'firstname', $row['uid'], 'uid');
-                                        echo $d['firstname']; ?>
-                                        <?php $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'lastname', $row['uid'], 'uid');
-                                        echo $d['lastname']; ?>
+                                        <?php
+                                        $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'firstname', $row['uid'], 'uid');
+                                        echo $d['firstname'];
+                                        ?>
+                                        <?php
+                                        $d = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'lastname', $row['uid'], 'uid');
+                                        echo $d['lastname'];
+                                        ?>
                                     </td>
                                     <td>
                                         <?php

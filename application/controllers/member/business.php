@@ -113,8 +113,8 @@ class Business extends CI_Controller {
         $night = diffDay($d1['check_in'], $d2['check_out']);
 
         $data['qty'] = $this->input->post('jumlah');
-        $retail_rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room','retail_rate',$this->input->post('uid_room'),'uid');
-        $rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room','rate',$this->input->post('uid_room'),'uid');
+        $retail_rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room', 'retail_rate', $this->input->post('uid_room'), 'uid');
+        $rate = $this->Mix->read_row_ret_field_by_value('tx_rwadminhotel_cat_room', 'rate', $this->input->post('uid_room'), 'uid');
         $data['rate'] = $data['qty'] * $retail_rate['retail_rate'] * $night;
         $data['gvip_rate'] = $data['qty'] * $rate['rate'] * $night;
         $data['email'] = $e['email'];
@@ -145,7 +145,7 @@ class Business extends CI_Controller {
 
         $u = $this->Mix->read_row_ret_field_by_value('tx_rwmembermlm_member', 'username', $this->session->userdata('member'), 'uid');
         $uid_member = $this->Mix->read_row_ret_field_by_value('fe_users', 'uid', $u['username'], 'username');
-        $sql = "select uid from tx_rwadminhotel_booking where hidden = '1' and uid_member = '" . $uid_member['uid'] . "' ";
+        $sql = "select uid,reservation from tx_rwadminhotel_booking where hidden = '1' and uid_member = '" . $uid_member['uid'] . "' ";
         $uid = $this->Mix->read_rows_by_sql($sql);
 
         if (!empty($uid)) {
@@ -163,7 +163,9 @@ class Business extends CI_Controller {
 
             $this->Mix->update_record('uid', $uid2, $data, 'tx_rwadminhotel_booking');
             $this->update_hotel($uid2);
-            disable_complimentary();
+            if ($uid['reservation'] == 'Compliment'):
+                disable_complimentary();
+            endif;
             $this->set_point_rewards();
             $this->get_pdf($uid['uid']);
         } else {
@@ -249,7 +251,7 @@ class Business extends CI_Controller {
 
         $this->fpdf->text(1.6, 4, 'ID Booking ');
         $this->fpdf->text(6.6, 4, ': ' . $pdf['id_booking']);
-
+        $this->kirim_email_reservasi_hotel($pdf['id_booking']);
         $y = 4.5;
         $this->fpdf->text(1.6, 4.5, 'Name Reservation ');
         $this->fpdf->text(6.6, $y, ': ' . $pdf['name']);
@@ -278,7 +280,7 @@ class Business extends CI_Controller {
         $this->fpdf->text(1.6, $y + 4, 'Price ');
         $price = number_format($pdf['price']);
         $this->fpdf->text(6.6, $y + 4, ': IDR ' . $price);
-        
+
         $this->fpdf->text(1.6, $y + 4.5, 'Profit');
         $profit = number_format($pdf['profit']);
         $this->fpdf->text(6.6, $y + 4.5, ': IDR ' . $profit);
@@ -287,6 +289,30 @@ class Business extends CI_Controller {
         $this->fpdf->text(6.6, $y + 5, ': ' . $pdf['payment']);
 
         $this->fpdf->Output();
+    }
+
+    function kirim_email_reservasi_hotel($uid) {
+        $sql = "select
+                a.name_reservation,
+                a.email as email_member,
+                c.email as email_hotel,
+                c.hotel_name,
+                a.check_in, 
+                a.check_out
+                from
+                tx_rwadminhotel_booking a,
+                tx_rwadminhotel_cat_room b,
+                tx_rwadminhotel_hotel c
+                where 
+                a.uid_room = b.uid and
+                b.uid_hotel = c.uid and
+                a.uid = $uid            
+                ";
+        $e = $this->Mix->read_rows_by_sql($sql);
+        $email = array($e['email_member']);
+        kirim_kirim_email($email, 'Reservation information', "Thank you for making reservation at " . $e['hotel_name'] . " from " . $e['check_in'] . " to " . $e['check_out']);
+        $email2 = array($e['email_hotel']);
+        kirim_kirim_email($email2, 'Reservation information from mygoldenvip.com', $e['name_reservation'] . " has been reservation from mygoldenvip.com");
     }
 
     function set_point_rewards() {
@@ -313,10 +339,10 @@ class Business extends CI_Controller {
                 where
                 a.uid_room = b.uid and
                 b.uid_hotel = c.uid and
-                a.uid_member = '".$d['uid']."'
+                a.uid_member = '" . $d['uid'] . "'
                 order by a.uid asc";
         $data = $this->Mix->read_rows_by_sql($sql);
-        
+
         $pb['pid'] = '67';
         $pb['crdate'] = date('Y-m-d');
         $pb['uid_member'] = $this->session->userdata('member');

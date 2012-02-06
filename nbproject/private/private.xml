@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
-        <file>
-            <url>application/controllers/admin_hotel.php</url>
-            <line>550</line>
-            <line>816</line>
-        </file>
-        <file>
-            <url>application/views/admin_tour/page/add_package.php</url>
-            <line>28</line>
-        </file>
-        <file>
-            <url>application/views/admin_hotel/page/profile.php</url>
-            <line>50</line>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
 </project-private>

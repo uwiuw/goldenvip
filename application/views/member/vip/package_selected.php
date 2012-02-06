@@ -44,7 +44,7 @@
     		<div class="box-detail-hotel">
     			<div class="tx-rwadminhotelmlm-pi1">
                 	
-    				<div id="jumlah_hotel">Available <?php echo count($sch); ?> Schedule</div>
+                            <div id="jumlah_hotel">Available : &nbsp;&nbsp;&nbsp;&nbsp; <?php echo count($sch); ?> VIP Package</div>
                     <table cellpadding="8" align="center">
                         <tbody>
                         	<tr>
@@ -52,7 +52,6 @@
                                 <th>Time Schedule</th>
                                 <th class="star-hotel">Qty</th>
                                 <th>Booking</th>
-                                <th>Agen Travel</th>
                                 <th>Package</th>
                                 <th>Destination</th>
                                 <th>Action</th>
@@ -63,7 +62,7 @@
                                 <td class="link"><?php echo $row['time_sch']; ?></td>
                                 <td class="star-hotel"><?php echo $row['qty']; ?></td>
                                 <td><?php echo $row['booking']; ?></td>
-                                <td><?php echo $row['name']; ?></td>
+                                
                                 <td><?php echo $row['nama']; ?></td>
                                 <td><?php echo $row['destination']; ?></td>
                                 <td class="link"><a href="<?php echo site_url('member/post_data/reservation-vip/'.$row['uid']);?>">Select</a></td>

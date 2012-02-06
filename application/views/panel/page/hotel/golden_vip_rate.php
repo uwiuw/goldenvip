@@ -3,16 +3,6 @@
 <p>&Colon; Hotel &gg; Golden VIP Rate</p>
 
 <h2 style="display:none;"><a class="button add-new-h2" href="javascript:void();" onclick="test();">Export To Excel</a></h2>
-<form name="search_form" onsubmit="searching_data_member_profit();">
-	<table width="100%">
-    	<tr align="right">
-            <td id ="reload_data" align="left"></td>
-            <td class="no-color">Search By Member / Username Here : </td>
-            <td width="10%" class="no-color"><input type="text" name="search" /></td>
-            <td width="5%" class="no-color"><input type="button" name="find" value="Find" onclick="searching_data_member_profit()" class="button" /></td>
-        </tr>
-    </table>
-</form>
 
 <form name="form_data">
 <table id="myTable" class="wp-list-table widefat fixed pages tablesorter" cellspacing="0">

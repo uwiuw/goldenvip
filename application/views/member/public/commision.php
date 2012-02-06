@@ -37,13 +37,7 @@
                                                 <td><?php echo $row['downline_name'] ?></td>
                                                 <td><?php echo $row['package'] ?></td>
                                                 <td>$ <?php echo $row['bonus']; ?></td>
-                                                <td><strong><?php
-                                    if ($row['paid'] == '1') {
-                                        echo "paid";
-                                    } else {
-                                        echo "unpaid";
-                                    };
-                                            ?></strong></td>
+                                                <td><strong><?php echo $row['paid']; ?></strong></td>
                                             </tr>
                                             <?php $i++;
                                         } ?>
@@ -82,13 +76,7 @@
                                                 <td width="30px"><?php echo $i; ?>.</td>
                                                 <td><?php echo date('Y-m-d H:i:s', $row['crdate']); ?></td>
                                                 <td>$ <?php echo $row['bonus']; ?></td>
-                                                <td><strong><?php
-                                    if ($row['paid'] == '1') {
-                                        echo "paid";
-                                    } else {
-                                        echo "unpaid";
-                                    };
-                                            ?></strong></td>
+                                                <td><strong><?php echo $row['payed']; ?></strong></td>
                                             </tr>
                                             <?php $i++;
                                         } ?>
@@ -127,13 +115,7 @@
                                                 <td width="30px"><?php echo $i; ?>.</td>
                                                 <td><?php echo date('Y-m-d H:i:s', $row['crdate']); ?></td>
                                                 <td>$ <?php echo $row['bonus']; ?></td>
-                                                <td><strong><?php
-                                    if ($row['paid'] == '1') {
-                                        echo "paid";
-                                    } else {
-                                        echo "unpaid";
-                                    };
-                                            ?></strong></td>
+                                                <td><strong><?php echo $row['payed']; ?></strong></td>
                                             </tr>
                                             <?php $i++;
                                         } ?>
@@ -172,13 +154,7 @@
                                                 <td><?php echo date('Y-m-d H:i:s', $row['crdate']); ?></td>
                                                 <td><?php echo $row['downline_name']; ?></td>
                                                 <td>$ <?php echo $row['bonus']; ?></td>
-                                                <td><strong><?php
-                                    if ($row['paid'] == '1') {
-                                        echo "paid";
-                                    } else {
-                                        echo "unpaid";
-                                    };
-                                            ?></strong></td>
+                                                <td><strong><?php echo $row['payed']; ?></strong></td>
                                             </tr>
                                             <?php $i++;
                                         } ?>
@@ -228,13 +204,7 @@
                                     echo $night; ?></td>
                                                 <td><?php $rate = $row['rate'] - $row['GVIP_Rate'];
                                             echo "IDR " . number_format($rate); ?></td>
-                                                <td><strong><?php
-                                            if ($row['payed'] == '1') {
-                                                echo "paid";
-                                            } else {
-                                                echo "unpaid";
-                                            }
-                                            ?></strong></td>
+                                                <td><strong><?php echo $row['payed']; ?></strong></td>
                                             </tr> 
                                             <?php $i++;
                                         } ?>

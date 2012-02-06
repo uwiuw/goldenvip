@@ -69,11 +69,11 @@
             </td>
             <td>
                 <?php if($row['hidden']=='0'): ?>
-                    <a href="javascript:void(0);" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=get_detail','#site-content')" class="browse" id="browsemember<?php echo $row['uid'];?>" ></a>
-                    <a href="javascript:void(0)" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=switch_data_hotel','#info-saving');" class="lampunyala" id="hide<?php echo $row['uid']; ?>"></a>
+                    <a href="javascript:void(0);" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=get_detail','#site-content')" class="browse" id="browsemember<?php echo $row['uid'];?>" alt="browse data" ></a>
+                    <a href="javascript:void(0)" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=switch_data_hotel','#info-saving');" class="lampunyala" id="hide<?php echo $row['uid']; ?>" alt="Avalaible for now"></a>
                 <?php else:?>
-                    <a href="javascript:void(0);" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=get_detail','#site-content')" class="browse hidden-data" id="browsemember<?php echo $row['uid'];?>" ></a>
-                    <a href="javascript:void(0)" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=switch_data_hotel','#info-saving');" class="lampumati"  id="hide<?php echo $row['uid']; ?>"></a>
+                    <a href="javascript:void(0);" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=get_detail','#site-content')" class="browse hidden-data" id="browsemember<?php echo $row['uid'];?>" alt="browse data" ></a>
+                    <a href="javascript:void(0)" onclick="load('_admin/hotel/get_detail/?uid=<?php echo $row['uid']; ?>&act=switch_data_hotel','#info-saving');" class="lampumati"  id="hide<?php echo $row['uid']; ?>" alt="Not avalaible for now" ></a>
                 <?php endif; ?>
             </td>
         </tr>  

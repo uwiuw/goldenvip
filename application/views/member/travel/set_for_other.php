@@ -81,7 +81,7 @@ document.getElementById("payment").innerHTML = "WIth out insurance you must pay 
                     <div id="kwitansi">
                         <form name="kwitansi" class="et-form" action="<?php echo site_url('member/reservation/travel/set-reservation?uid=' . $_GET['uid'] . "&qty=" . $_GET['qty'] . "&uidnum=" . $_GET['uidnum']); ?>" method="POST">
                             <div style="width:100%; text-align:center">
-                                <label>Use this reservation for <?php echo $qty; ?> People <?php echo $me; ?></label>
+                                <label>Please fill this form for making reservation </label>
                                 <div class="clr"></div>
                             </div>
                             <div>

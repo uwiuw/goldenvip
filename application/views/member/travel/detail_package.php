@@ -17,7 +17,7 @@
         jQuery('.qty').fadeIn();
     }
 </script>
-<link rel="stylesheet" href="http://wpver.com/typo3conf/ext/rw_admin_hotel_mlm/css/reservation.css" type="text/css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/old-site/css/reservation.css" type="text/css">
 <div class="container">
     <div id="hotel-detail">
         <div id="detail-top"></div>
@@ -59,14 +59,14 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="roomtype"><?php echo $row['time_sch']; ?></td>
-                                                    <td class="maxPeople"><?php echo $row['qty'] - $row['booking']; ?></td>
+                                                    <td class="maxPeople"><?php echo $row['totaly']; ?></td>
                                                     <td class="maxPeople">
                                                         <select id="jumlah_book<?php echo $row['uid']; ?>" name="qty" class="qty">
-                                                            <?php if ($reservation == 'Personal Account') { ?>
+                                                            <?php if ($reservation == 'Personal Account' || $reservation == 'Redeem') { ?>
                                                                 <option value="null" selected="selected">0</option>
-                                                                <?php for ($i = 1; $i <= ($row['qty'] - $row['booking']); $i++) { ?>
+                                                                <?php for ($i = 1; $i <= $total; $i++) { ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                                                <?php
+                                                                    <?php
                                                                 }
                                                             } else {
                                                                 echo "<option value='1'>1</option>";
@@ -85,21 +85,21 @@
                                             <tr>
                                                 <td class="fasilitas" colspan="4">
                                                     <div style="font-weight: bold; text-align: left">Package <?php echo $row['nama']; ?> (<?php echo $row['travel']; ?> Travel) Facilities :</div>
-    <?php echo $row['deskripsi']; ?>
+                                                    <?php echo $row['deskripsi']; ?>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="maxPeople" colspan="6" id="download">
                                                     <?php if ($row['file']): echo $row['file'] ?>
                                                         <a target="_blank" title="Download Itienary" class="download" href="<?php echo base_url() . "upload/itienary/" . $row['id_agen'] . "/" . $row['itienary']; ?>">*Download Itienary</a>
-    <?php endif; ?>
+                                                    <?php endif; ?>
                                                 </td>
                                             </tr>
 
                                             </tbody>
                                         </table>
                                     </form>
-<?php } ?>
+                                <?php } ?>
                             </div>                                        
                         </div>
                     </div>

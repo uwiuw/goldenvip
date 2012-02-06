@@ -524,7 +524,7 @@ if(!function_exists('getAccountMLM'))
 {
 	function getAccountMLM($cat = '3',$limit = '10000')
 	{
-		$sql="select m.uid, m.pid, m.firstname, m.lastname, m.email, m.username, m.mobilephone, c.city from tx_rwmembermlm_member m, tx_rwmembermlm_city c where c.uid = m.regional and m.usercategory='".$cat."' and m.pid = '67' limit 0,$limit";
+		$sql="select m.uid, m.pid, m.firstname, m.lastname, m.email, m.username, m.mobilephone, c.city, m.compliment from tx_rwmembermlm_member m, tx_rwmembermlm_city c where c.uid = m.regional and m.usercategory='".$cat."' and m.pid = '67' limit 0,$limit";
 		$CI =& get_instance();
 		$result = $CI->Mix->read_more_rows_by_sql($sql);
 		return $result;
