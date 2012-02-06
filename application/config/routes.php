@@ -61,13 +61,11 @@ $route['products/travel'] = "main/travel";
 $route['products/participant-hotels'] = "main/participant_hotels";
 $route['products/catalogue-of-point-rewards'] = "main/catalogue_of_point_rewards";
 
+
+
 $route['news'] = "main/news";
 $route['faq'] = "main/faq";
 $route['contact-us'] = "main/contact";
-$route['terms-conditions'] = 'main/terms_conditions';
-$route['member/forget-password'] = 'main/forget_password';
-$route['member/reset-password'] = 'main/reset_password';
-$route['member/reset-password-true'] = 'main/reset_password_true';
 
 # admin gvip area
 $route['_admin/login'] = 'panel/main/login';
@@ -77,8 +75,6 @@ $route['_admin'] = 'panel/main';
 $route['_admin/home_page'] = 'panel/main/home_page';
 
 $route['_admin/distributor'] = 'panel/main/list_distributor'; # admin area for distributor
-$route['_admin/distributor/add_new'] = 'panel/main/add_new_distributor';
-$route['_admin/saving_new_member'] = 'panel/main/saving_new_member';
 $route['_admin/del_distributor'] = 'panel/main/del_distributor'; # delete distributor
 $route['_admin/member'] = 'panel/main/list_member'; # admin area for member GVIP
 $route['_admin/voucher_code'] = 'panel/main/list_voucher'; # admin area for manage voucher code
@@ -93,7 +89,7 @@ $route['_admin/update_data_member'] = 'panel/main/update_data_member';
 # mlm extra
 #$route['_admin/new_distributor'] = 'panel/main/new_distributor';
 $route['_admin/member_migration'] = 'panel/main/member_migration';
-$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
+#$route['_admin/member_set_new_grade'] = 'panel/main/member_set_new_grade';
 $route['_admin/searching_form'] = 'panel/main/searching_form';
 
 # tour and travel
@@ -144,19 +140,14 @@ $route['_admin/saving_account'] = 'panel/account/saving_account';
 
 # member area
 $route['member'] = 'member/main';
-$route['member/download/sertificate'] = 'member/sertificate';
 $route['member/home-page'] = 'member/main';
 $route['member/list-member-request'] = 'member/main/list_member_request';
 $route['member/opportunity'] = 'member/main/opportunity';
-$route['member/back-office/menu-back-office/opportunity/developing-your-business'] = 'member/main/developing_your_business';
-$route['member/back-office/menu-back-office/opportunity/bonus-income'] = 'member/main/bonus_income';
 $route['member/news'] = 'member/main/news';
 $route['member/lock_profile']='member/main/lock_profile';
 $route['member/open_profile']='member/main/open_profile';
 $route['member/profile'] = 'member/main/profile';
 $route['member/profile/update-profile'] = 'member/main/update_profile';
-$route['member/profile/forget-secondary-password'] = 'member/main/forget_password';
-$route['member/profile/reset-password'] = 'member/main/reset_password';
 $route['member/report/genealogy'] = 'member/main/report';
 $route['member/report/commision'] = 'member/main/commision';
 $route['member/report/direct-sponsored'] = 'member/main/direct_sponsored';

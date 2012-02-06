@@ -40,7 +40,7 @@ if ($get_compliment['compliment'] == '1' || $set_compliment == '0') {
     $compliment = FALSE;
     ?>
                 jQuery('#compliment_true').hide();
-            		
+        		
     <?php
 } else {
     ?>
@@ -223,29 +223,21 @@ if ($get_compliment['compliment'] == '1' || $set_compliment == '0') {
                                     <div class="clr"></div>
                                 </div>
 
-                                <div id="lipo">By clicking "yes", <a href="#">Your Mega Insurance</a> is automatically activated</div>
+                                <div id="lipo">By clicking "yes", <a href="lippo-insurance/">Your Travel Lippo Insurance</a> is authomatically activated</div>
 
                                 <div id="payment">
                                     <label class="desc">Payment :</label>
                                     <select id="select_payment" name="select_payment" onchange="get_select_payment();">
                                         <option selected="selected" value="0">-- Select Payment --</option>
                                         <option value="Cash">Cash</option>
-
+                                        <option value="Credit Card">Credit Card</option>
                                     </select>
                                     <div class="clr"></div>
                                 </div>
 
                                 <div id="cash_payment">
-                                    <div id="lipo" style="font-size: 14px; margin-top: 15px; margin-right: 10px;">
-                                        <center>
-                                            <font color="#FF0000" style="line-height: 20px;">
-
-                                            IDR payment should be transfered to :<br /> PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN VIP)
-                                            <br /><br />
-                                            <b style="font-size:larger;">Permata Bank Acct. No. 070.137.5068</b>
-                                            </font>
-                                        </center>
-                                    </div>
+                                    <div id="lipo"><center><font color="#FF0000">Payment in Indonesian Rupiah. Kindly Transfer should be made to PT. GOLDEN VICTORY INSANI PRATAMAYINTARA (GOLDEN VIP) Permata Bank, Jl. Prof. Dr. Soepomo No. 30 Jakarta 12810.
+                                            Account No. (IDR) 070.137.5068</font></center></div>
                                 </div>
 
                                 <div id="creditCardNumber"></div>
@@ -279,7 +271,7 @@ if ($get_compliment['compliment'] == '1' || $set_compliment == '0') {
                 </div>
 
                 <div class="visit-hotel">
-                    <h2>Thank you for making your reservation. Your confirmed booking hotels as follows :</h2>
+                    <h2>Thank you for making your reservatiion. Your confirmed booking hotels as follows :</h2>
                     <div class="box-visit-left"></div>
                     <div class="box-visit-middle">
                         <div class="tx-rwadminhotelmlm-pi1">
